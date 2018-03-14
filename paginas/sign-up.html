@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<link rel="icon" href="../images/shortcut-ubi.png">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style-sign-login.css" >
+<link rel="shortcut icon" href="../images/shortcut-ubi.ico">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registrate</title>
+</head>
+
+<body>
+<div class="divFloat col-sm-7 col-md-5">
+  <div class="container-fluid">
+	<div class="form">
+ 		<div class="img">
+ 		<a href="../index.html">
+  		<img src="../images/ubimark.svg" alt=""/>
+  		</a>
+  		</div>
+  		<h3>Registro</h3>
+  		<div id="alertas"></div>
+  		<form action="">
+  		<div class="form-group">
+    		<label for="inputNombre">Nombre</label>
+    		<input type="text" class="form-control" id="inputNombre" placeholder="Nombre(s)" required>
+  		</div>
+  		<div class="form-group">
+    		<label for="inputApellido">Apellidos</label>
+    		<input type="text" class="form-control" id="inputApellido" placeholder="Apellidos" required>
+  		</div>
+   		<div class="form-group">
+    		<label for="inputEmail">Correo electrónico</label>
+    		<input type="email" class="form-control" id="inputEmail" placeholder="Correo electrónico" onfocusout ="emailVal()">
+    		<span id="alertE"></span>
+ 		</div>
+  		<div class="form-group">
+    		<label for="inputPass">Contraseña</label>
+    		<input type="password" class="form-control" id="inputPass" placeholder="Contraseña" oninput="passOk()">
+        	<span id="alertP"></span>
+  		</div>
+  		<div class="form-group">
+    		<label for="inputPass1">Confirma Contraseña</label>
+    		<input type="password" class="form-control" id="inputPass1" placeholder="Contraseña" oninput="equalPass()">
+    		<span id="alertP1"></span>
+		</div>
+  		<button type="submit" class="btn btn-primary" id="sign-up">Siguiente</button>
+  		</form>
+  		<br>
+  		<div>¿Ya tienes cuenta? <a href="login.html">Inicia Sesión</a> <br></div>
+	</div>
+  </div>
+  </div>
+  
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/validate-sign.js"></script>
+</body>
+</html>

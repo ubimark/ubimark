@@ -1,0 +1,35 @@
+$principal:#002F3F;
+*{
+    margin:0;
+    padding:0;
+}
+nav{
+    background: $principal;
+}
+header+section{
+    margin-top:4.1rem;
+}
+
+a:hover{
+    cursor:pointer; 
+}
+
+#menu-user{
+    color:dodgerblue;
+}
+
+#add2cart-cont #cantidad{
+    width:4rem; 
+}
+
+.tag {
+    font-size: 12px;
+    color: #666;
+    border-radius: 5px;
+}
+.contenido{
+    margin-bottom:3rem; 
+}
+
+
+
