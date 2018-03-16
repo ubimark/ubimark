@@ -61,6 +61,11 @@ function actualizarCarrito(folio, cantidad) {
         switch (result.status_code) {
             case 200:
                 datos = result.data;
+                if(datos[0].cantidad>datos[0].existencias){
+                    clase = "btn-outline-danger text-dark";
+                }else{
+                    clase = "";
+                }
                 $("#fc_" + folio).html('<div class="ml-4 d-flex justify-content-end close-carrito" folio="' + datos[0].folio_carrito + '">' +
                     ' <i class="fa fa-close " ></i>' +
                     '</div>' +
@@ -72,14 +77,16 @@ function actualizarCarrito(folio, cantidad) {
                     ' <h4>$ ' + datos[0].precio + '</h4>' +
                     '</li>' +
                     '<li class="d-flex">' +
-                    '<input class="form-control col-1 in_cantidad" type="number" value="' + datos[0].cantidad + '" folio="' + datos[0].folio_carrito + '" name="cantidad" id="cantidad">' +
+                    '<input class="form-control col-3 col-md-2 col-lg-1 in_cantidad ' + clase + '" type="number" value="' + datos[0].cantidad + '" folio="' + datos[0].folio_carrito + '" name="cantidad" id="cantidad">' +
+                    '<span class="p-2"> en existencia '+ datos[0].existencias +'</span>'+
                     '<h5 class="ml-auto p-2">Total: $<span id="t_' + datos[0].folio_carrito + '">' + (datos[0].precio * datos[0].cantidad) + '</span></h5>' +
                     '</li>' +
                     '</ul>');
                 $("#cart-total").html(total + (datos[0].precio * datos[0].cantidad));
                 $(".in_cantidad").change(function (e) {
-                    if ($(this).val() === 0) {
+                    if ($(this).val() == 0) {
                         $(".close-carrito[folio=" + $(this).attr("folio") + "]").trigger('click');
+                        return;
                     }
                     actualizarCarrito($(this).attr("folio"), $(this).val());
                 });
@@ -209,7 +216,11 @@ function cargarCarrito() {
 
                     if (window.location.pathname.indexOf("mostrar-carrito.html") != -1) {
                         total += (datos[key].precio * datos[key].cantidad);
-
+                        if(datos[key].cantidad>datos[key].existencias){
+                            clase = "btn-outline-danger text-dark";
+                        }else{
+                            clase = "";
+                        }
                         $("#carrito").append('<div class="d-flex flex-nowrap mb-3" id="cont_' + datos[key].folio_carrito + '">' +
                             '<div class="card col-4 col-md-2">' +
                             '<img class="card-img" src="' + dir + "intranet/usuarios/" + datos[key].vendedor + "/uploads/" + datos[key].path + '" alt="Foto del producto">' +
@@ -226,7 +237,8 @@ function cargarCarrito() {
                             ' <h4>$ ' + datos[key].precio + '</h4>' +
                             '</li>' +
                             '<li class="d-flex">' +
-                            '<input class="form-control col-3 col-md-2 col-lg-1 in_cantidad" type="number" value="' + datos[key].cantidad + '" folio="' + datos[key].folio_carrito + '" name="cantidad" id="cantidad">' +
+                            '<input class="form-control col-3 col-md-2 col-lg-1 in_cantidad ' + clase + '" type="number" value="' + datos[key].cantidad + '" folio="' + datos[key].folio_carrito + '" name="cantidad" id="cantidad">' +
+                            '<span class="p-2"> en existencia '+ datos[key].existencias +'</span>'+
                             '<h5 class="ml-auto p-2">Total: $<span id="t_' + datos[key].folio_carrito + '">' + (datos[key].precio * datos[key].cantidad) + '</span></h5>' +
                             '</li>' +
                             '</ul>' +
@@ -256,8 +268,9 @@ function cargarCarrito() {
                     href("paginas/mostrar-carrito.html");
                 });
                 $(".in_cantidad").change(function (e) {
-                    if ($(this).val() === 0) {
+                    if ($(this).val() == 0) {
                         $(".close-carrito[folio=" + $(this).attr("folio") + "]").trigger('click');
+                        return;
                     }
                     actualizarCarrito($(this).attr("folio"), $(this).val());
                 });
@@ -266,6 +279,47 @@ function cargarCarrito() {
     });
 
 
+}
+
+function cargarCompras(){
+    $.ajax({
+        url:dir+"php/getCompras.php",
+        type:"post",
+        dataType:"json"
+    }).done(function (result){
+        switch(result.status_code){
+            case 200:
+                for(var key in result.data){
+                    datos = result.data[key];
+                    $("#compras").append(
+                        '<div class="d-flex flex-nowrap mb-2">'+
+                            '<div class="card col-4 col-md-2">'+
+                                '<img class="card-img" src="'+dir+"intranet/usuarios/"+datos.imagen.Id_usuario+"/uploads/"+datos.imagen.path+'" alt="Foto del producto">'+
+                            '</div>'+
+                            '<div class="card col-11">'+
+                                '<div class="ml-4 d-flex justify-content-end">'+
+                                    '<i class="fa fa-caret-down"></i>'+
+                                '</div>'+
+                                '<ul class="list-unstyled">'+
+                                    '<li class="">'+
+                                        '<h3>'+
+                                        datos.nombre_producto+
+                                        '</h3>'+
+                                    '</li>'+
+                                    '<li class="">'+
+                                        '<h4>$ '+datos.total+'</h4>'+
+                                    '</li>'+
+                                    '<li class="">Estado: '+
+                                        datos.estado+
+                                    '</li>'+
+                                '</ul>'+
+                            '</div>'+
+                        '</div>'
+                    );
+                }
+                break;
+        }
+    });
 }
 
 /**
@@ -286,20 +340,15 @@ function cargarDatos(){
                     if(datos[key] === null){
                         datos[key] = "";
                     }
-                    console.log(key+" - "+datos.key);
+                    if(key == 'sexo'){
+                        console.log( $("input[name='"+key+"'][value='"+datos[key]+"']"));
+                        $("input[name='"+key+"'][value='"+datos[key]+"']").prop("checked",true);
+                        console.log( $("input[name='"+key+"'][value='"+datos[key]+"']"));
+                    }else{
+                        $("input[name='"+key+"']").val(datos[key]);
+                    }
+                    $("#personal_"+key).html(" "+datos[key]);
                 }
-                $("#personal_nombre").append(" "+datos.nombre);
-				$("#personal_apellido").append(" "+datos.apellidos);
-				$("#personal_nacimiento").append(" "+datos.nacimiento);
-				$("#personal_sexo").append(" "+datos.sexo);
-                $("#personal_calle").append(" "+datos.calle);
-				$("#personal_numero").append(" "+datos.numero);
-				$("#personal_colonia").append(" "+datos.colonia);
-				$("#personal_ciudad").append(" "+datos.delegacion);
-				$("#personal_estado").append(" "+datos.estado);
-				$("#personal_cp").append(" "+datos.cp);
-				$("#personal_telefono").append(" "+datos.telefono);
-				$("#personal_correo_back").append(" "+datos.correo_back);
                 break;
         }
     });
@@ -313,15 +362,33 @@ function cargarDatos(){
                 datos = result.data[0];
                 $("#registra_empresa").remove();
                 $("#mc-menu-empresa").removeClass("d-none");
-                $("#empresa_nombre").append(" "+datos.nombre);
-                $("#empresa_correo").append(" "+datos.email);
-                $("#empresa_telefono").append(" "+datos.telefono);
-                $("#empresa_calle").append(" "+datos.calle);
-				$("#empresa_numero").append(" "+datos.numero);
-				$("#empresa_colonia").append(" "+datos.colonia);
-				$("#empresa_ciudad").append(" "+datos.delegacion);
-				$("#empresa_estado").append(" "+datos.estado);
-				$("#empresa_cp").append(" "+datos.cp);
+                $("#empresa_nombre").html(" "+datos.nombre_empresa);
+                $("#empresa_RFC").html(" "+datos.RFC);
+                $("#empresa_email").html(" "+datos.email);
+                $("#empresa_telefono").html(" "+datos.telefono);
+                $("#empresa_calle").html(" "+datos.calle);
+				$("#empresa_num_ext").html(" "+datos.numero);
+				$("#empresa_num_int").html(" "+datos.numinterior);
+				$("#empresa_colonia").html(" "+datos.colonia);
+				$("#empresa_ciudad").html(" "+datos.delegacion);
+				$("#empresa_estado").html(" "+datos.estado);
+				$("#empresa_pais").html(" "+datos.pais);
+				$("#empresa_delegacion").html(" "+datos.delegacion);
+                $("#empresa_cp").html(" "+datos.cp);
+
+                $("#nombre-inp-emp").val(datos.nombre_empresa);
+                $("#rfc-inp-emp").val(datos.RFC);
+                $("#email-inp-emp").val(datos.email);
+                $("#tel-inp-emp").val(datos.telefono);
+                $("#calle-inp-emp").val(datos.calle);
+				$("#num-ext-inp-emp").val(datos.numero);
+				$("#num-int-inp-emp").val(datos.numinterior);
+				$("#colonia-inp-emp").val(datos.colonia);
+				$("#ciudad-inp-emp").val(datos.delegacion);
+				$("#est-inp-emp").val(datos.estado);
+				$("#dele-inp-emp").val(datos.delegacion);
+                $("#cp-inp-emp").val(datos.cp);
+
                 break;
         }
     });
@@ -333,7 +400,6 @@ function cargarDatos(){
  * @author Luis Sanchez
  */
 function cargarProductosDestacados() {
-    console.log("p");
     $.ajax({
         url:dir+"php/getProductosDestacados.php",
         dataType:"json",
@@ -350,7 +416,7 @@ function cargarProductosDestacados() {
                         nombre_producto = datos.nombre_producto;
                         n = result.data.length;
                         if(n > 6){
-                            n = 6 
+                            n = 6;
                         }
                         switch(n){
                             case 4:
@@ -432,6 +498,48 @@ function cargarProductosDestacados() {
 
 }
 
+function cargarPublicaciones(){
+    $.ajax({
+        url:dir+"php/getProductos.php",
+        type:"post",
+        dataType:"json"
+    }).done(function (result){
+        switch(result.status_code){
+            case 200:
+            console.log(result.data);
+                for(var key in result.data){
+                    datos = result.data[key];
+                    $("#publicaciones").append(
+                        '<div class="d-flex flex-nowrap mb-2">'+
+                            '<div class="card col-4 col-md-2">'+
+                                '<img class="card-img" src="'+dir+"intranet/usuarios/"+datos.imagen.Id_usuario+"/uploads/"+datos.imagen.path+'" alt="Foto del producto">'+
+                            '</div>'+
+                            '<div class="card col-11">'+
+                                '<div class="ml-4 d-flex justify-content-end">'+
+                                    '<i class="fa fa-caret-down"></i>'+
+                                '</div>'+
+                                '<ul class="list-unstyled">'+
+                                    '<li class="">'+
+                                        '<h3>'+
+                                        datos.nombre_producto+
+                                        '</h3>'+
+                                    '</li>'+
+                                    '<li class="">'+
+                                        '<h4>$ '+datos.precio+'</h4>'+
+                                    '</li>'+
+                                    '<li class="">Existencias:'+
+                                        datos.existencias+
+                                    '</li>'+
+                                '</ul>'+
+                            '</div>'+
+                        '</div>'
+                    );
+                }
+                break;
+        }
+    });
+}
+
 /**
  * Función que verifica si faltan datos en la bd para poder comprar
  * 
@@ -448,7 +556,7 @@ function check_progress_compra() {
         }).done(function (result) {
             switch (result.status_code) {
                 case 200:
-                    $("#progress-compra").remove()
+                    $("#progress-compra").remove();
                     break;
                 case 201:
                     $("#progress-compra").removeClass("d-none");
@@ -522,6 +630,42 @@ function check_session() {
     return sess;
 }
 
+function comprarProducto(Id){
+    $.ajax({
+        url:dir + "php/comprarProducto.php",
+        dataType: "json",
+        type:"post",
+        data:{Id_prod:Id}
+    }).done(function (result){
+        switch(result.status_code){
+            case 200:
+                addAlert("comprado","Compra realizada correctamente","alert-success","","fa-check","",true);
+                break;
+            case 304:
+                addAlert("existencias","No hay existencias suficientes para procesar la compra de "+result.data.nombre_producto,"alert-warning","","fa-warning","",true);
+                break;
+        }
+        cargarCarrito();
+    });
+}
+
+function comprarCarrito(){
+    $.ajax({
+        url:dir + "php/comprar_carrito.php",
+        dataType: "json",
+        type:"post"
+    }).done(function (result){
+        switch(result.status_code){
+            case 200:
+                addAlert("comprado","Compra realizada correctamente","alert-success","","fa-check","",true);
+                break;
+            case 304:
+                addAlert("existencias","No hay existencias suficientes para procesar la compra de "+result.data.nombre_producto,"alert-warning","","fa-warning","",true);
+                break;
+        }
+        cargarCarrito();
+    });
+}
 /**
  * Función que define el directorio a seguir basandose en la url actual
  * 
@@ -564,7 +708,11 @@ function getGeolocation() {
                     language: "es"
                 }
             }).done(function (data) {
-                estado = data.results[6].address_components[0].long_name; //Guarda la entidad federativa del usuario
+                console.log(data);
+                estado = data.results[5].address_components[0].long_name; //Guarda la entidad federativa del usuario
+                if (window.location.pathname.indexOf("index.html") != -1 || window.location.pathname == '/') {
+                    cargarProductosDestacados(); 
+                }
             });
         },
         //Se ejecuta en caso de que ocurra un error al obtener las coordenadas.
@@ -784,6 +932,7 @@ $(document).ready(function (e) {
             switch (result.status_code) {
                 case 200:
                     check_progress_compra();
+                    cargarDatos();
                     break;
             }
         });
@@ -803,6 +952,7 @@ $(document).ready(function (e) {
             switch (result.status_code) {
                 case 200:
                     check_progress_compra();
+                    cargarDatos();
                     break;
             }
         });
@@ -919,13 +1069,14 @@ $(document).ready(function (e) {
     $(window).resize(function () {
         acomodarContenido();
     });
-    console.log(window.location.pathname);
     if (window.location.pathname.indexOf("mostrar-carrito.html") != -1) {
         cargarCarrito();
-    } else if (window.location.pathname.indexOf("index.html") != -1 || window.location.pathname == '/') {
-        cargarProductosDestacados(); 
     } else if (window.location.pathname.indexOf("mi-cuenta.html") != -1){
         cargarDatos();
+    } else if (window.location.pathname.indexOf("ventas.html") != -1){
+        cargarPublicaciones();
+    } else if (window.location.pathname.indexOf("compras.html") != -1){
+        cargarCompras();
     }
     $(".ver_carrito").click(function (e) {
         e.preventDefault();
@@ -954,12 +1105,10 @@ $(document).ready(function (e) {
                 language: "es"
             }
         }).done(function (data) {
-            console.log(data);
             datos = data.results[0].geometry.location;
             coords = datos.lat + "," + datos.lng; //Guarda la entidad federativa del usuario
             $("#coords_emp").val(coords);
             data_form = $("#form_reg_empresa").serialize();
-            console.log(data_form);
             $.ajax({
                 url:dir+"php/reg_empresa.php",
                 dataType:"json",
@@ -976,4 +1125,30 @@ $(document).ready(function (e) {
         });
         
     });
+    $("#comprar_carrito").click(function(e){
+        e.preventDefault();
+        comprarCarrito();
+        
+    });
+    $("#btn-comprar").click(function(e){
+        e.preventDefault();
+        comprarProducto($(this).attr("folio"));
+        
+    });
+
+    $("#mc-menu-empresa").click(function(e){
+        e.preventDefault();
+        $("#cont-empresa").removeClass("d-none");
+        $("#cont-mis-datos").addClass("d-none");
+        $("#cont-mis-datos").removeClass("d-flex");
+
+    });
+    $("#mc-mis-datos").click(function(e){
+        e.preventDefault();
+        $("#cont-empresa").addClass("d-none");
+        $("#cont-mis-datos").removeClass("d-none");
+        $("#cont-mis-datos").addClass("d-flex");
+
+    });
+   
 });

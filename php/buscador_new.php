@@ -32,7 +32,9 @@
                     <button class="btn navbar-toggler py-2 px-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                     <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item vender">Vender</a>
-                        <a class="dropdown-item ver_carrito"><i class="fa fa-shopping-cart"></i></a>
+                        <a class="dropdown-item carrito">
+                            <em class="fa fa-shopping-cart"></em>
+                        </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item mc-resumen">Resumen</a>
                         <a class="dropdown-item mc-compras">Compras</a>
@@ -62,11 +64,11 @@
 
                 <div class="collapse navbar-collapse col-md-3 justify-content-end text-center" id="menu">
                     <ul class="nav navbar-nav mr-0 my-0 d-flex flex-nowrap">
-                        <li class="nav-item">
-                        <div class="dropleft">
-							<em class="nav-link dropdown-toggle fa fa-shopping-cart" id="dropdownShopping-Cart" data-toggle="dropdown" aria-haspopup="true"
-							  aria-expanded="false"></em>
-							<div class="dropdown-menu" aria-labelledby="dropdownShopping-Cart" id="carrito-dropdown">
+                        <li class="nav-item pt-1">
+                            <div class="dropleft">
+                                <em class="nav-link fa fa-shopping-cart" id="dropdownShopping-Cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></em>
+                                <div class="dropdown-menu" aria-labelledby="dropdownShopping-Cart" id="carrito-dropdown">
+
 							</div>
 						</div>
                         </li>

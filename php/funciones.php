@@ -160,6 +160,7 @@
             "301" => "Los tipos y la cantidad de datos en la peticion no concuerdan.",
             "302" => "Campo nulo en la peticion.",
             "303" => "El producto ya se encuentra en el carrito",
+            "304" => "No hay existencias suficientes para procesar la compra"
         );
         $arr = array(
             "status_code" => $code,

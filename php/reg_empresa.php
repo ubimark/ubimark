@@ -4,6 +4,7 @@
     $table = "empresa";
     $params = $_POST;
     $params['Id_usuario'] = $_COOKIE['Id'];
+    $params['pais'] = "Mexico";
     $types = "";
     foreach($params as $key => $val){
         if($key!="numinterior"){

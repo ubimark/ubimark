@@ -129,34 +129,55 @@
 		<section class="pt-3">
 			<div class="col-2 pull-left d-none d-md-block">
 				<div class="list-group">
-					<a href="#" class="list-group-item list-group-item-action">Mis Datos</a>
+					<a href="#" class="list-group-item list-group-item-action" id="mc-mis-datos">Mis Datos</a>
 					<a href="#" class="list-group-item list-group-item-action">Seguridad</a>
 					<a href="" class="list-group-item list-group-item-action d-none" id="mc-menu-empresa">Empresas</a>
 				</div>
 			</div>
-			<div class="pull-left col-10 d-flex flex-column">
+			<div class="pull-left col-10 d-flex flex-column" id="cont-mis-datos">
 				<span id="registra_empresa">¿Tienes una empresa o negocio?
 					<a href="" class="" id="reg_empresa" data-toggle="modal" data-target="#ModalEmpresa"> Registralo!</a>
 				</span>
 				<div class="mb-3">
 					<strong>Datos Personales</strong>
 					<small class="font-blue" id="mc_act_datos_personales" data-toggle="modal" data-target="#infoPersonalAct">Modificar</small>
-					<p id="personal_nombre">Nombre(s):</p>
-					<p id="personal_apellido">Apellidos:</p>
-					<p id="personal_nacimiento">Nacimiento:</p>
-					<p id="personal_sexo">Sexo:</p>
+					<p>Nombre(s):<span id="personal_nombre"></span></p>
+					<p>Apellidos:<span id="personal_apellidos"></span></p>
+					<p>Nacimiento:<span id="personal_nacimiento"></span></p>
+					<p>Sexo:<span id="personal_sexo"></span></p>
 				</div>
 				<div class="">
 					<strong>Datos de contacto</strong>
 					<small class="font-blue" id="mc_act_datos_contacto" data-toggle="modal" data-target="#infoContactoAct">Modificar</small>
-					<p id="personal_calle">Calle:</p>
-					<p id="personal_numero">Numero:</p>
-					<p id="personal_colonia">Colonia o asentamiento:</p>
-					<p id="personal_ciudad">Ciudad o delegación:</p>
-					<p id="personal_estado">Estado:</p>
-					<p id="personal_cp">Código Postal:</p>
-					<p id="personal_telefono">Teléfono:</p>
-					<p id="personal_correo_back">Correo de respaldo:</p>
+					<p>Calle:<span id="personal_calle"></span></p>
+					<p>Numero:<span id="personal_numero"></span></p>
+					<p>Colonia o asentamiento:<span id="personal_colonia"></span></p>
+					<p>Ciudad o delegación:<span id="personal_delegacion"></span></p>
+					<p>Estado:<span id="personal_estado"></span></p>
+					<p>Código Postal:<span id="personal_cp"></span></p>
+					<p>Teléfono:<span id="personal_telefono"></span></p>
+					<p>Correo de respaldo:<span id="personal_correo_back"></span></p>
+				</div>
+				
+			</div>
+			<div class="pull-left d-none" id="cont-empresa">
+				<div >
+					<strong>Datos empresa o negocio</strong>
+					<small class="font-blue" id="mc_act_datos_empresa" data-toggle="modal" data-target="#act-datos-empresa">Modificar</small>
+					<p>Nombre: <span id="empresa_nombre"></span></p>
+					<p>RFC: <span id="empresa_RFC"></span></p>
+					<p>Correo electrónico <span id="empresa_email"></span></p>
+					<p>Teléfono: <span id="empresa_telefono"></span></p>
+					<p>País: <span id="empresa_pais"></span></p>
+					<p>Estado: <span id="empresa_estado"></span></p>
+					<p>Ciudad: <span id="empresa_ciudad"></span></p>
+					<p>Delegación: <span id="empresa_delegacion"></span></p>
+					<p>Colonia o Asentamiento: <span id="empresa_colonia"></span></p>
+					<p>Código Postal: <span id="empresa_cp"></span></p>
+					<p>Calle: <span id="empresa_calle"></span></p>
+					<p>Número Interior:<span id="empresa_num_int"></span></p>
+					<p>Número Exterior: <span id="empresa_num_ext"></span></p>
+					
 				</div>
 			</div>
 
@@ -247,7 +268,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="container">
-								<form action="" id="">
+								<form action="" id="form-info-personal">
 									<div class="form-group">
 										<label for="nombre-input">Nombre(s)</label>
 										<input type="text" class="form-control" name="nombre">
@@ -300,7 +321,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="container">
-								<form action="" id="">
+								<form action="" id="form-info-contacto">
 									<div class="form-group row">
 										<label for="example-text-input" class="col-3 col-form-label">Código Postal</label>
 										<div class="col-9">
@@ -367,6 +388,80 @@
 			</div>
 		</section>
 	</div>
+	
+	<!-- Modal Formulario Empresas modificarr-->
+			<div class="modal fade" id="act-datos-empresa" tabindex="-1" role="dialog" aria-labelledby="Modal-Empresas" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="form-act-empresas">Modificar datos empresa</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form action="" id="form_act_empresa">
+								<input type="text" hidden id="coords_emp-act" name="coordenadas">
+								<div class="form-group">
+									<label for="nombre-empresa">Nombre de la empresa o negocio</label>
+									<input type="text" class="form-control" placeholder="Nombre" name="nombre_empresa" id="nombre-inp-emp">
+								</div>
+								<div class="form-group">
+									<label for="correo-empresa">Correo Electrónico</label>
+									<input type="email" class="form-control" placeholder="tuemail@ejemplo.com" name="email" id="email-inp-emp">
+								</div>
+								<div class="form-group">
+									<label for="telefono-empresa">Teléfono</label>
+									<input type="tel" class="form-control" placeholder="(123) 456 7890" name="telefono" id="tel-inp-emp">
+								</div>
+								<div class="form-group">
+									<label for="rfc">RFC</label>
+									<input type="text" class="form-control" placeholder="Registro Federal de Contribuyentes" name="RFC" id="rfc-inp-emp">
+								</div>
+								<div class="form-group">
+									<label for="cp-empressa">Código Postal</label>
+									<input class="form-control" type="number" placeholder="1234 " id="cp-inp-emp" name="cp">
+								</div>
+								<div class="form-group">
+									<label for="calle-empresa">Calle</label>
+									<input class="form-control" type="text" placeholder="Calle" id="calle-inp-emp" name="calle">
+								</div>
+								<div class="form-group row">
+									<label for="example-text-input" class="col-2 col-form-label">Núm. Exterior</label>
+									<div class="col-4">
+										<input class="form-control" type="text" placeholder="Nº Ext." id="num-ext-inp-emp" name="numero">
+									</div>
+									<label for="example-text-input" class="col-1 col-form-label">Num. Int</label>
+									<div class="col-4">
+										<input class="form-control" type="text" placeholder="Nº Int." id="num-int-inp-emp" name="numinterior">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="colonia-empresa">Asentamiento</label>
+									<input class="form-control" type="text" placeholder="Colonia, fraccionamiento, etc." id="colonia-inp-emp" name="colonia">
+								</div>
+								<div class="form-group">
+									<label for="colonia-empresa">Ciudad</label>
+									<input class="form-control" type="text" placeholder="Ciudad" id="ciudad-inp-emp" name="ciudad">
+								</div>
+								<div class="form-group">
+									<label for="del-mun-empresa">Municipio o delegación</label>
+									<input class="form-control" type="text" placeholder="Municipio" id="dele-inp-emp" name="delegacion">
+								</div>
+								<div class="form-group">
+									<label for="estado-empresa">Estado</label>
+									<input class="form-control" type="text" placeholder="Estado" id="est-inp-emp" name="estado">
+								</div>
+							</form>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+								<button type="button" class="btn btn-primary" id="btn_act_empresa" data-dismiss="modal">Modificar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 
