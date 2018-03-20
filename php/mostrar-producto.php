@@ -230,7 +230,7 @@
 				<div class="px-3 col-12 mt-5">
 					<h5>Preguntas</h5>
 					<div class="background-grey col-12 rounded">
-						<p>Pregunta perrona: Lorem ipsum dolor sit amet, consectetur.</p>
+						<p>Pregunta perrona: Lorem ipsum dolor sit amet, consectetur..</p>
 					</div>
 					<textarea name="" id="" rows="3" class="col-12"></textarea>
 					<button type="button" class="btn btn-success float-right">Enviar</button>
