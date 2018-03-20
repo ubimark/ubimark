@@ -19,8 +19,8 @@
         return;
     }
 
-    if($count>=1){
-        echo json_encode(response(303, array("Id_producto"=>$params['Id_producto'],"Id_usuario"=>$params['Id_usuario'],"en_carrito"=>$count) ));
+    if($count >= 1){
+        echo json_encode(response(303, array("Id_producto" => $params['Id_producto'],"Id_usuario" => $params['Id_usuario'],"en_carrito" => $count) ));
         return;
     }
     $result = dbInsert($table,$types,$params);

@@ -4,13 +4,13 @@
     include("conectar.php");
     include_once("funciones.php");
 
-    $id_usuario=$_COOKIE['Id'];
-    $band1=$band2=false; //band1 info personal band2 info de contacto
+    $id_usuario = $_COOKIE['Id'];
+    $band1 = $band2 = false; //band1 info personal band2 info de contacto
     $datos = array();
     $sql = "SELECT * FROM usuario WHERE Id_usuario = ?";
     //Datos a checar
     $datosPersonales=array("nacimiento","sexo");
-    $datosContacto=array("correo_back","telefono","estado","delegacion","colonia","cp","calle","numero");
+    $datosContacto=array("telefono","estado","delegacion","colonia","cp","calle","numero");
     
 
     //Busca los datos del usuario
