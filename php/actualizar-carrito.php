@@ -5,8 +5,8 @@
     $folio = array("folio_carrito" => $_POST['folio_carrito']);
     $cantidad = array("cantidad" => $_POST['cantidad']);
     $table = "carrito";
-    $result=dbUpdate($table,"i",$cantidad,"i",$folio);
-    if($result["status_code"]!=200){
+    $result = dbUpdate($table,"i",$cantidad,"i",$folio);
+    if($result["status_code"] != 200){
         echo json_encode($result);
         return;
     }else{

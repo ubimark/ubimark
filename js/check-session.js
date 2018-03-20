@@ -1,43 +1,9 @@
-var dir; //Directorio a seguir
-var lat, lon, estado; //Latitud y Longitud , estado
-var sess = 2; //Guarda la sesion 0:inactiva 1:activa 2:sin comprobar
+
 var imgcont, images = Array(); //imgcont: define el contenedor de la imagen subida
 //images: guarda las imagenes a subir   
 
-/**
- * Función que acomoda el contenido para no tener conflictos con el menu fixed
- * 
- * @author Luis Sanchez
- * @param {boolean} [$reintento=false] 
- * @returns  
- */
-function acomodarContenido($reintento = false) {
-    var width = window.innerWidth;
-    if ($reintento) {
-        if (sess == 2) {
-            addAlert("fail2checksess", "Ocurrio un error al verificar la sesión, compruebe su conexión a internet.", "alert-warning", "", "", "");
-            return;
-        }
-    }
-    switch (sess) {
-        case 0:
-            $("#contenido").css("margin-top", "4.1rem");
-            break;
-        case 1:
-            if (width < 576) {
-                $("#contenido").css("margin-top", "3.5rem");
-            } else if (width < 767) {
-                $("#contenido").css("margin-top", "3.9rem");
-            } else {
-                $("#contenido").css("margin-top", "6.6rem");
-            }
-            break;
-        case 2:
-            check_session();
-            acomodarContenido(true);
-            break;
-    }
-}
+
+
 
 /**
  * Función que manda la petición para actualizar la cantidad en el carrito
@@ -61,9 +27,9 @@ function actualizarCarrito(folio, cantidad) {
         switch (result.status_code) {
             case 200:
                 datos = result.data;
-                if(datos[0].cantidad>datos[0].existencias){
+                if (datos[0].cantidad > datos[0].existencias) {
                     clase = "btn-outline-danger text-dark";
-                }else{
+                } else {
                     clase = "";
                 }
                 $("#fc_" + folio).html('<div class="ml-4 d-flex justify-content-end close-carrito" folio="' + datos[0].folio_carrito + '">' +
@@ -78,7 +44,7 @@ function actualizarCarrito(folio, cantidad) {
                     '</li>' +
                     '<li class="d-flex">' +
                     '<input class="form-control col-3 col-md-2 col-lg-1 in_cantidad ' + clase + '" type="number" value="' + datos[0].cantidad + '" folio="' + datos[0].folio_carrito + '" name="cantidad" id="cantidad">' +
-                    '<span class="p-2"> en existencia '+ datos[0].existencias +'</span>'+
+                    '<span class="p-2"> en existencia ' + datos[0].existencias + '</span>' +
                     '<h5 class="ml-auto p-2">Total: $<span id="t_' + datos[0].folio_carrito + '">' + (datos[0].precio * datos[0].cantidad) + '</span></h5>' +
                     '</li>' +
                     '</ul>');
@@ -112,26 +78,9 @@ function actualizarCarrito(folio, cantidad) {
  * @param {string} ico2 Icono mostrado despues del mensaje de la alerta 
  * @param {boolean} autoclose Cerrar en automatico
  */
-function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
-    $("#alertas").append(
-        "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0 ' role='alert' id=" + id + ">" +
-        "<i class='fa " + ico + " mr-2' ></i>" +
-        "<span>" + message + "</span>" +
-        "<i class='fa " + ico2 + " ml-2' ></i>" +
-        "<button type='button' class='close' data-dismiss='alert' aria-label='close'>" +
-        "<span aria_hidden='true'>&times;</span>" +
-        "</button>" +
-        "</div>"
-    );
-    if (autoclose) {
-        window.setTimeout(function () {
-            $("#" + id).fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 2000);
-    }
-}
 
+
+//Pendiente
 /**
  * Funcion para agregar un producto al carrito
  * 
@@ -139,7 +88,7 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
  * @param {int} id 
  */
 function add2cart(id, cantidad) {
-    if(sess != 1){
+    if (sess != 1) {
         href("paginas/login.html");
     }
     $.ajax({
@@ -167,6 +116,7 @@ function add2cart(id, cantidad) {
     });
 
 }
+//fin Pendiente
 
 /**
  * Función que elimina articulos de tu carrito
@@ -210,15 +160,15 @@ function cargarCarrito() {
                 datos = result.data;
                 var total = 0;
                 var cont = 0;
-                $("#carrito-dropdown").html("");
+                /*$("#carrito-dropdown").html("");*/
                 $("#carrito").html("");
                 for (var key in datos) {
 
                     if (window.location.pathname.indexOf("mostrar-carrito.html") != -1) {
                         total += (datos[key].precio * datos[key].cantidad);
-                        if(datos[key].cantidad>datos[key].existencias){
+                        if (datos[key].cantidad > datos[key].existencias) {
                             clase = "btn-outline-danger text-dark";
-                        }else{
+                        } else {
                             clase = "";
                         }
                         $("#carrito").append('<div class="d-flex flex-nowrap mb-3" id="cont_' + datos[key].folio_carrito + '">' +
@@ -238,34 +188,21 @@ function cargarCarrito() {
                             '</li>' +
                             '<li class="d-flex">' +
                             '<input class="form-control col-3 col-md-2 col-lg-1 in_cantidad ' + clase + '" type="number" value="' + datos[key].cantidad + '" folio="' + datos[key].folio_carrito + '" name="cantidad" id="cantidad">' +
-                            '<span class="p-2"> en existencia '+ datos[key].existencias +'</span>'+
+                            '<span class="p-2"> en existencia ' + datos[key].existencias + '</span>' +
                             '<h5 class="ml-auto p-2">Total: $<span id="t_' + datos[key].folio_carrito + '">' + (datos[key].precio * datos[key].cantidad) + '</span></h5>' +
                             '</li>' +
                             '</ul>' +
                             '</div>' +
                             '</div>');
                     }
-                    if (cont++ < 5) {
-                        $("#carrito-dropdown").append(
-                            '<span class="dropdown-item">' +
-                            '<strong>' + datos[key].nombre_producto + '</strong>' +
-                            '<p>x' + datos[key].cantidad + ' $' + (datos[key].precio * datos[key].cantidad) + '</p>' +
-                            '</span>'
-                        );
-                    }
+
                 }
-                $("#carrito-dropdown").append('<div class="dropdown-divider"></div>' +
-                    '<a class="dropdown-item ver_carrito"  >Ver más</a>');
                 $("#cart-total").html(total);
                 $(".close-carrito").click(function (e) {
 
                     e.preventDefault();
                     folio = $(this).attr("folio");
                     borrarCarrito(folio);
-                });
-                $(".ver_carrito").click(function (e) {
-                    e.preventDefault();
-                    href("paginas/mostrar-carrito.html");
                 });
                 $(".in_cantidad").change(function (e) {
                     if ($(this).val() == 0) {
@@ -281,39 +218,40 @@ function cargarCarrito() {
 
 }
 
-function cargarCompras(){
+//Pendiente
+function cargarCompras() {
     $.ajax({
-        url:dir+"php/getCompras.php",
-        type:"post",
-        dataType:"json"
-    }).done(function (result){
-        switch(result.status_code){
+        url: dir + "php/getCompras.php",
+        type: "post",
+        dataType: "json"
+    }).done(function (result) {
+        switch (result.status_code) {
             case 200:
-                for(var key in result.data){
+                for (var key in result.data) {
                     datos = result.data[key];
                     $("#compras").append(
-                        '<div class="d-flex flex-nowrap mb-2">'+
-                            '<div class="card col-4 col-md-2">'+
-                                '<img class="card-img" src="'+dir+"intranet/usuarios/"+datos.imagen.Id_usuario+"/uploads/"+datos.imagen.path+'" alt="Foto del producto">'+
-                            '</div>'+
-                            '<div class="card col-11">'+
-                                '<div class="ml-4 d-flex justify-content-end">'+
-                                    '<i class="fa fa-caret-down"></i>'+
-                                '</div>'+
-                                '<ul class="list-unstyled">'+
-                                    '<li class="">'+
-                                        '<h3>'+
-                                        datos.nombre_producto+
-                                        '</h3>'+
-                                    '</li>'+
-                                    '<li class="">'+
-                                        '<h4>$ '+datos.total+'</h4>'+
-                                    '</li>'+
-                                    '<li class="">Estado: '+
-                                        datos.estado+
-                                    '</li>'+
-                                '</ul>'+
-                            '</div>'+
+                        '<div class="d-flex flex-nowrap mb-2">' +
+                        '<div class="card col-4 col-md-2">' +
+                        '<img class="card-img" src="' + dir + "intranet/usuarios/" + datos.imagen.Id_usuario + "/uploads/" + datos.imagen.path + '" alt="Foto del producto">' +
+                        '</div>' +
+                        '<div class="card col-11">' +
+                        '<div class="ml-4 d-flex justify-content-end">' +
+                        '<i class="fa fa-caret-down"></i>' +
+                        '</div>' +
+                        '<ul class="list-unstyled">' +
+                        '<li class="">' +
+                        '<h3>' +
+                        datos.nombre_producto +
+                        '</h3>' +
+                        '</li>' +
+                        '<li class="">' +
+                        '<h4>$ ' + datos.total + '</h4>' +
+                        '</li>' +
+                        '<li class="">Estado: ' +
+                        datos.estado +
+                        '</li>' +
+                        '</ul>' +
+                        '</div>' +
                         '</div>'
                     );
                 }
@@ -322,77 +260,79 @@ function cargarCompras(){
     });
 }
 
+
 /**
  * Funcion que carga los datos del usuario y la empresa
  * 
  * @author Luis Sanchez
  */
-function cargarDatos(){
+function cargarDatos() {
     $.ajax({
-        url:dir+"php/datos_usuario.php",
-        type:"post",
-        dataType:"json"
-    }).done(function(result){
-        switch(result.status_code){
+        url: dir + "php/datos_usuario.php",
+        type: "post",
+        dataType: "json"
+    }).done(function (result) {
+        switch (result.status_code) {
             case 200:
                 datos = result.data[0];
-                for(var key in datos){
-                    if(datos[key] === null){
+                for (var key in datos) {
+                    if (datos[key] === null) {
                         datos[key] = "";
                     }
-                    if(key == 'sexo'){
-                        console.log( $("input[name='"+key+"'][value='"+datos[key]+"']"));
-                        $("input[name='"+key+"'][value='"+datos[key]+"']").prop("checked",true);
-                        console.log( $("input[name='"+key+"'][value='"+datos[key]+"']"));
-                    }else{
-                        $("input[name='"+key+"']").val(datos[key]);
+                    if (key == 'sexo') {
+                        console.log($("input[name='" + key + "'][value='" + datos[key] + "']"));
+                        $("input[name='" + key + "'][value='" + datos[key] + "']").prop("checked", true);
+                        console.log($("input[name='" + key + "'][value='" + datos[key] + "']"));
+                    } else {
+                        $("input[name='" + key + "']").val(datos[key]);
                     }
-                    $("#personal_"+key).html(" "+datos[key]);
+                    $("#personal_" + key).html(" " + datos[key]);
                 }
                 break;
         }
     });
     $.ajax({
-        url:dir+"php/datos_empresa.php",
-        type:"post",
-        dataType:"json"
-    }).done(function(result){
-        switch(result.status_code){
+        url: dir + "php/datos_empresa.php",
+        type: "post",
+        dataType: "json"
+    }).done(function (result) {
+        switch (result.status_code) {
             case 200:
                 datos = result.data[0];
                 $("#registra_empresa").remove();
                 $("#mc-menu-empresa").removeClass("d-none");
-                $("#empresa_nombre").html(" "+datos.nombre_empresa);
-                $("#empresa_RFC").html(" "+datos.RFC);
-                $("#empresa_email").html(" "+datos.email);
-                $("#empresa_telefono").html(" "+datos.telefono);
-                $("#empresa_calle").html(" "+datos.calle);
-				$("#empresa_num_ext").html(" "+datos.numero);
-				$("#empresa_num_int").html(" "+datos.numinterior);
-				$("#empresa_colonia").html(" "+datos.colonia);
-				$("#empresa_ciudad").html(" "+datos.delegacion);
-				$("#empresa_estado").html(" "+datos.estado);
-				$("#empresa_pais").html(" "+datos.pais);
-				$("#empresa_delegacion").html(" "+datos.delegacion);
-                $("#empresa_cp").html(" "+datos.cp);
+                $("#empresa_nombre").html(" " + datos.nombre_empresa);
+                $("#empresa_RFC").html(" " + datos.RFC);
+                $("#empresa_email").html(" " + datos.email);
+                $("#empresa_telefono").html(" " + datos.telefono);
+                $("#empresa_calle").html(" " + datos.calle);
+                $("#empresa_num_ext").html(" " + datos.numero);
+                $("#empresa_num_int").html(" " + datos.numinterior);
+                $("#empresa_colonia").html(" " + datos.colonia);
+                $("#empresa_ciudad").html(" " + datos.delegacion);
+                $("#empresa_estado").html(" " + datos.estado);
+                $("#empresa_pais").html(" " + datos.pais);
+                $("#empresa_delegacion").html(" " + datos.delegacion);
+                $("#empresa_cp").html(" " + datos.cp);
 
                 $("#nombre-inp-emp").val(datos.nombre_empresa);
                 $("#rfc-inp-emp").val(datos.RFC);
                 $("#email-inp-emp").val(datos.email);
                 $("#tel-inp-emp").val(datos.telefono);
                 $("#calle-inp-emp").val(datos.calle);
-				$("#num-ext-inp-emp").val(datos.numero);
-				$("#num-int-inp-emp").val(datos.numinterior);
-				$("#colonia-inp-emp").val(datos.colonia);
-				$("#ciudad-inp-emp").val(datos.delegacion);
-				$("#est-inp-emp").val(datos.estado);
-				$("#dele-inp-emp").val(datos.delegacion);
+                $("#num-ext-inp-emp").val(datos.numero);
+                $("#num-int-inp-emp").val(datos.numinterior);
+                $("#colonia-inp-emp").val(datos.colonia);
+                $("#ciudad-inp-emp").val(datos.delegacion);
+                $("#est-inp-emp").val(datos.estado);
+                $("#dele-inp-emp").val(datos.delegacion);
                 $("#cp-inp-emp").val(datos.cp);
 
                 break;
         }
     });
 }
+
 
 /**
  * Funcion que pide los productos mas buscados
@@ -401,52 +341,55 @@ function cargarDatos(){
  */
 function cargarProductosDestacados() {
     $.ajax({
-        url:dir+"php/getProductosDestacados.php",
-        dataType:"json",
-        type:"post",
-        data:{estado:estado}
+        url: dir + "php/getProductosDestacados.php",
+        dataType: "json",
+        type: "post",
+        data: {
+            estado: estado
+        }
     }).done(function (result) {
         switch (result.status_code) {
             case 200:
                 $("#PD_contenido").append('<button type="button" class="slick-prev slick-arrow"></button>');
                 for (var i = 0; i < 6; i++) {
                     datos = result.data[i];
-                    
-                    if(datos != undefined){
+
+                    if (datos != undefined) {
                         nombre_producto = datos.nombre_producto;
                         n = result.data.length;
-                        if(n > 6){
+                        if (n > 6) {
                             n = 6;
                         }
-                        switch(n){
+                        switch (n) {
                             case 4:
-                                if(nombre_producto.length > 10){
-                                    nombre_producto = nombre_producto.slice(0,10) + "...";
+                                if (nombre_producto.length > 10) {
+                                    nombre_producto = nombre_producto.slice(0, 10) + "...";
                                 }
-                                
+
                                 break;
-                            case 5:case 6:
-                                if(nombre_producto.length > 16){
-                                    nombre_producto = nombre_producto.slice(0,16) + "...";
+                            case 5:
+                            case 6:
+                                if (nombre_producto.length > 16) {
+                                    nombre_producto = nombre_producto.slice(0, 16) + "...";
                                 }
                                 break;
                             default:
                                 console.log(result.data.length);
                         }
-                        
+
                         $("#PD_contenido").append(
                             '<div class="card mr-2">' +
-                                '<img class="card-img-top" width="100px" src="'+dir+"intranet/usuarios/"+datos.author+"/uploads/"+datos.path+'" alt="Card image cap">' +
-                                '<div class="card-body">' +
-                                    '<a class="Producto_link" id="'+datos.Id_producto+'">' +
-                                        '<h6 class="card-title">'+nombre_producto+'</h6>' +
-                                    '</a>' +
-                                    
-                                '</div>' +
-                                '<div class="card-footer">'+
-                                '<p class="card-text">$'+datos.precio+'</p>' +
-                                '</div>'+
-                            '</div>' 
+                            '<img class="card-img-top" width="100px" src="' + dir + "intranet/usuarios/" + datos.author + "/uploads/" + datos.path + '" alt="Card image cap">' +
+                            '<div class="card-body">' +
+                            '<a class="Producto_link" id="' + datos.Id_producto + '">' +
+                            '<h6 class="card-title">' + nombre_producto + '</h6>' +
+                            '</a>' +
+
+                            '</div>' +
+                            '<div class="card-footer">' +
+                            '<p class="card-text">$' + datos.precio + '</p>' +
+                            '</div>' +
+                            '</div>'
                         );
                     }
                 }
@@ -498,40 +441,41 @@ function cargarProductosDestacados() {
 
 }
 
-function cargarPublicaciones(){
+
+function cargarPublicaciones() {
     $.ajax({
-        url:dir+"php/getProductos.php",
-        type:"post",
-        dataType:"json"
-    }).done(function (result){
-        switch(result.status_code){
+        url: dir + "php/getProductos.php",
+        type: "post",
+        dataType: "json"
+    }).done(function (result) {
+        switch (result.status_code) {
             case 200:
-            console.log(result.data);
-                for(var key in result.data){
+                console.log(result.data);
+                for (var key in result.data) {
                     datos = result.data[key];
                     $("#publicaciones").append(
-                        '<div class="d-flex flex-nowrap mb-2">'+
-                            '<div class="card col-4 col-md-2">'+
-                                '<img class="card-img" src="'+dir+"intranet/usuarios/"+datos.imagen.Id_usuario+"/uploads/"+datos.imagen.path+'" alt="Foto del producto">'+
-                            '</div>'+
-                            '<div class="card col-11">'+
-                                '<div class="ml-4 d-flex justify-content-end">'+
-                                    '<i class="fa fa-caret-down"></i>'+
-                                '</div>'+
-                                '<ul class="list-unstyled">'+
-                                    '<li class="">'+
-                                        '<h3>'+
-                                        datos.nombre_producto+
-                                        '</h3>'+
-                                    '</li>'+
-                                    '<li class="">'+
-                                        '<h4>$ '+datos.precio+'</h4>'+
-                                    '</li>'+
-                                    '<li class="">Existencias:'+
-                                        datos.existencias+
-                                    '</li>'+
-                                '</ul>'+
-                            '</div>'+
+                        '<div class="d-flex flex-nowrap mb-2">' +
+                        '<div class="card col-4 col-md-2">' +
+                        '<img class="card-img" src="' + dir + "intranet/usuarios/" + datos.imagen.Id_usuario + "/uploads/" + datos.imagen.path + '" alt="Foto del producto">' +
+                        '</div>' +
+                        '<div class="card col-11">' +
+                        '<div class="ml-4 d-flex justify-content-end">' +
+                        '<i class="fa fa-caret-down"></i>' +
+                        '</div>' +
+                        '<ul class="list-unstyled">' +
+                        '<li class="">' +
+                        '<h3>' +
+                        datos.nombre_producto +
+                        '</h3>' +
+                        '</li>' +
+                        '<li class="">' +
+                        '<h4>$ ' + datos.precio + '</h4>' +
+                        '</li>' +
+                        '<li class="">Existencias:' +
+                        datos.existencias +
+                        '</li>' +
+                        '</ul>' +
+                        '</div>' +
                         '</div>'
                     );
                 }
@@ -539,6 +483,7 @@ function cargarPublicaciones(){
         }
     });
 }
+
 
 /**
  * Función que verifica si faltan datos en la bd para poder comprar
@@ -570,253 +515,58 @@ function check_progress_compra() {
                     break;
                 case 300:
                     break;
-                    
+
             }
         });
     }
 
 }
+//fin Pendiente
 
-/**
- * Función que comprueba si hay una sesión activa
- * 
- * @author Luis Sanchez
- * @returns  int Estado de la sesion
- */
-function check_session() {
+
+//Pendiente
+function comprarProducto(Id) {
     $.ajax({
-        url: dir + "php/check-session.php",
-        dataType: 'json',
-        type: 'post',
-        async: false,
-        data: {}
+        url: dir + "php/comprarProducto.php",
+        dataType: "json",
+        type: "post",
+        data: {
+            Id_prod: Id
+        }
     }).done(function (result) {
-        //Si se encuentra la sesión activa.
         switch (result.status_code) {
-            case 100:
-                $("#mi-ingresar").removeClass("d-none"); //Muestra la opción de ingresar en el menú
-                $("#mi-ingresar2").removeClass("d-none"); //Muestra la opción de ingresar en el menú movil
-
-                sess = 0; //Cambia la sessión a inactiva
-                break;
-            case 101:
-                if (result.data.found == 1) {
-                    var nombre, apellidos, i;
-
-                    $("#menu-user").addClass("d-md-block"); //Muestra el menu del usuario
-                    $("#mi-cuenta").addClass("d-md-block"); //Muestra el dropdown del usuario
-                    $("#btn-cuenta").removeClass("d-none"); //Muestra el boton dropdown del usuario en dispositivos moviles
-                    $("#btn-cuenta").addClass("d-md-none"); //Oculta el boton dropdown del usuario en pantallas md
-
-                    apellidos = result.data.apellidos.charAt(0) + "."; //Obtiene la primer letra del apellido del usuario
-                    i = result.data.nombre.indexOf(" "); //Busca el espacio para solo tomar el primer nombre en caso de que el usuario cuente con un segundo nombre
-                    if (i === (-1)) {
-                        //Si el usuario solo tiene un nombre se toma este y se agrega la primer letra del apellido
-                        nombre = result.data.nombre + " " + apellidos;
-                    } else {
-                        //Si el usuario tiene más de un nombre se toma el primer nombre y se agrega la primer letra del apellido
-                        nombre = result.data.nombre.slice(0, i) + " " + apellidos;
-                    }
-
-                    $("#drop-mi-cuenta").html(nombre); //Muestra el nombre en el dropdown
-                    $("#dropdownMenuButton").html(nombre); //Muestra el nombre en el dropdown
-                    $(".u-name").html(nombre); //Muestra el nombre en los elementos que cuenten con la clase u-name                  
-                    sess = 1; //Cambia la sesión a activa
-                }
-                break;
-        }
-        acomodarContenido();
-    });
-    return sess;
-}
-
-function comprarProducto(Id){
-    $.ajax({
-        url:dir + "php/comprarProducto.php",
-        dataType: "json",
-        type:"post",
-        data:{Id_prod:Id}
-    }).done(function (result){
-        switch(result.status_code){
             case 200:
-                addAlert("comprado","Compra realizada correctamente","alert-success","","fa-check","",true);
+                addAlert("comprado", "Compra realizada correctamente", "alert-success", "", "fa-check", "", true);
                 break;
             case 304:
-                addAlert("existencias","No hay existencias suficientes para procesar la compra de "+result.data.nombre_producto,"alert-warning","","fa-warning","",true);
+                addAlert("existencias", "No hay existencias suficientes para procesar la compra de " + result.data.nombre_producto, "alert-warning", "", "fa-warning", "", true);
                 break;
         }
         cargarCarrito();
     });
 }
+//fin Pendiente
 
-function comprarCarrito(){
+function comprarCarrito() {
     $.ajax({
-        url:dir + "php/comprar_carrito.php",
-        dataType: "json",
-        type:"post"
-    }).done(function (result){
-        switch(result.status_code){
-            case 200:
-                addAlert("comprado","Compra realizada correctamente","alert-success","","fa-check","",true);
-                break;
-            case 304:
-                addAlert("existencias","No hay existencias suficientes para procesar la compra de "+result.data.nombre_producto,"alert-warning","","fa-warning","",true);
-                break;
-        }
-        cargarCarrito();
-    });
-}
-/**
- * Función que define el directorio a seguir basandose en la url actual
- * 
- * @author Luis Sanchez
- */
-function get_Dir() {
-    if (window.location.pathname.indexOf("paginas") != -1) {
-        dir = "../";
-    } else if (window.location.pathname.indexOf("php/") != -1) {
-        dir = "../";
-    } else {
-        dir = "";
-    }
-}
-
-/**
- * Función que obtiene las coordenadas actuales del navegador
- * 
- * @author Luis Sanchez
- */
-function getGeolocation() {
-    //Comprueba el soporte del navegador para utilizar geolocalización.
-    if (!navigator.geolocation) {
-        //Muestra mensaje despues de un header seguido de una sección 
-        addAlert("", "Su navegador no soporta algunas de nuestras funciones, para una mejor experiencia utilice otro navegador.", "alert-warning", "bg-danger", "fa-warning", "fa-warning", false);
-    }
-    //Obtiene la localización actual mediante el navegador
-    navigator.geolocation.getCurrentPosition(
-        function (geoloc) {
-            lat = geoloc.coords.latitude; //Obtiene la latitud.
-            lon = geoloc.coords.longitude; //Obtiene la longitud.
-            $.ajax({
-                url: "https://maps.googleapis.com/maps/api/geocode/json",
-                dataType: "json",
-                type: "GET",
-                async: false,
-                data: {
-                    latlng: lat + "," + lon,
-                    key: "AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0",
-                    language: "es"
-                }
-            }).done(function (data) {
-                console.log(data);
-                estado = data.results[5].address_components[0].long_name; //Guarda la entidad federativa del usuario
-                if (window.location.pathname.indexOf("index.html") != -1 || window.location.pathname == '/') {
-                    cargarProductosDestacados(); 
-                }
-            });
-        },
-        //Se ejecuta en caso de que ocurra un error al obtener las coordenadas.
-        function (error) {
-            //Si se detecta una conexion no segura muestra el mensaje y termina.
-            if (error.message.indexOf("Only secure origins are allowed") == 0) {
-                addAlert("", "Su conexion no es segura. Por favor utilice una conexion segura para disfrutar de una mejor experiencia.", "alert-danger", "bg-warning", "fa-warning", "fa-warning", false);
-                return;
-            }
-            //Busca si el error es uno de los errores comunes.
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    addAlert("", "Por favor asegurate de permitir el acceso a tu ubicación para disfrutar de una mejor experiencia.", "alert-danger", "bg-warning", "fa-warning", "fa-warning", false);
-                    break;
-
-                case error.POSITION_UNAVAILABLE:
-                    console.log("ERROR: Ubicación no disponible!");
-                    break;
-
-                case error.TIMEOUT:
-                    console.log("ERROR: Tiempo agotado sin respuesta!");
-                    break;
-
-                default:
-                    console.log("ERROR: Unknown problem!");
-                    break;
-            }
-
-        }, {
-            //Opciones avanzadas del geolocalizador pueden ser omitidas
-            enableHighAccuracy: true,
-            maximumAge: 5000,
-            timeout: 10000
-        });
-
-    //Si se encontro la latitud y longitud se utilza el geocodificador de google para obtener la entidad federativa del usuario
-    
-
-}
-
-/**
- * Función que redirige a otra página
- * 
- * @author Luis Sanchez
- * @param {string} url 
- */
-function href(url) {
-    window.location.assign(dir + url);
-}
-
-/**
- * Función para terminar la sesión activa
- * 
- * @author Luis Sanchez
- */
-function logout() {
-    $.ajax({
-        url: dir + "php/logout.php",
+        url: dir + "php/comprar_carrito.php",
         dataType: "json",
         type: "post"
     }).done(function (result) {
         switch (result.status_code) {
             case 200:
-                href("index.html");
+                addAlert("comprado", "Compra realizada correctamente", "alert-success", "", "fa-check", "", true);
+                break;
+            case 304:
+                addAlert("existencias", "No hay existencias suficientes para procesar la compra de " + result.data.nombre_producto, "alert-warning", "", "fa-warning", "", true);
                 break;
         }
+        cargarCarrito();
     });
 }
 
-/**
- * Función para mandar petición al servidor.
- * 
- * Registra los datos de la busqueda en la BD. 
- * 
- * @author Luis Sanchez
- * 
- * @param {string} token: Busqueda realizada por el usuario.
- * @param {string} coords: Coordenadas en el formato lat,lon. 
- * @param {string} estado: Nombre de la entidad federativa en que se realiza la busqueda. 
- */
-function reg_buscar(token, coords, estado) {
-    if(token.trim()!=""){
-        $.ajax({
-            url: dir + "php/reg_busqueda.php",
-            dataType: "Json",
-            type: "post",
-            data: {
-                busqueda: token,
-                coords: coords,
-                estado: estado
-            }
-        }).done(function (result) {
-            //Si se registró la busqueda redirige al usuario a una página con los resultados de la busqueda.
-            switch (result.status_code) {
-                case 200:
-                    href("php/buscador_new.php?search=" + token);
-                    break;
-            }
-        });
-    }else{
-        href("php/buscador_new.php?search=");
-    }
-}
 
+//Pendiente
 /**
  * Función que manda la petición al servidor para subir productos
  * 
@@ -843,78 +593,19 @@ function subir_Producto() {
         }
     });
 }
+//fin Pendiente
 
 //Función a ejecutar una vez que se encuentre cargada la página
 $(document).ready(function (e) {
-    getGeolocation();
-    get_Dir();
-    check_session();
+   
     check_progress_compra();
-
-    //Define la función a realizar al clickear el logo
-    $(".navbar-brand").click(function (e) {
-        href("index.html");
-    });
-    //Define la función a realizar al clickear ingresar
-    $(".login").click(function (e) {
-        href("paginas/login.html");
-    });
-    //Define la función a realizar al clickear resumen en el menú
-    $(".mc-resumen").click(function (e) {
-        href("paginas/resumen.html");
-    });
-    $(".mc-compras").click(function (e) {
-        href("paginas/compras.html");
-    });
-    $(".mc-ventas").click(function (e) {
-        href("paginas/ventas.html");
-    });
-    //Define la función a realizar al clickear vender en el menú
-    $(".vender").click(function (e) {
-        if (sess === 1) {
-            href("paginas/subir-producto.html");
-        } else {
-            href("paginas/login.html");
-        }
-    });
-    //Define la función a realizar al clickear cerrar sesión
-    $(".logout").click(function (e) {
-        e.preventDefault();
-        logout();
-    });
-
-    //Busqueda
-    $("#buscar").click(function (e) {
-        e.preventDefault();
-        var token = $("#token").val(); //Obtiene la busqueda del usuario
-        //Si no se encuentra las coordenadas del usuario se realiza la busqueda y termina
-        if (lat === undefined || lon === undefined) {
-            reg_buscar(token, null, null);
-        } else if (estado === undefined) {
-            reg_buscar(token, lat + "," + lon, null); 
-        } else {
-            reg_buscar(token, lat + "," + lon, estado); 
-        }
-
-    });
-
-    //Mostrar el producto de manera detallada 
-    $(".Producto_link").click(function (e) {
-        e.preventDefault();
-        href("php/mostrar-producto.php?key=" + this.id);
-    });
-
-    $("#add2cart-cont").mouseover(function () {
-        $("#cantidad").removeClass("d-none");
-    });
-    $("#add2cart-cont").mouseout(function () {
-        $("#cantidad").addClass("d-none");
-    });
-
+   
+    //Pendiente
     $(".add2cart").click(function (e) {
         e.preventDefault();
         add2cart(this.id, $("#cantidad").val());
     });
+
 
     //Funcion para actualizar informacion de usuario antes de poder comprar
     //Formulario de información personal
@@ -1065,33 +756,22 @@ $(document).ready(function (e) {
             $("#img_prod").attr("src", result);
         }
     });
+    //fin Pendiente
 
-    $(window).resize(function () {
-        acomodarContenido();
-    });
+    //Pendiente 
     if (window.location.pathname.indexOf("mostrar-carrito.html") != -1) {
         cargarCarrito();
-    } else if (window.location.pathname.indexOf("mi-cuenta.html") != -1){
+    } else if (window.location.pathname.indexOf("mi-cuenta.html") != -1) {
         cargarDatos();
-    } else if (window.location.pathname.indexOf("ventas.html") != -1){
+    } else if (window.location.pathname.indexOf("ventas.html") != -1) {
         cargarPublicaciones();
-    } else if (window.location.pathname.indexOf("compras.html") != -1){
+    } else if (window.location.pathname.indexOf("compras.html") != -1) {
         cargarCompras();
     }
-    $(".ver_carrito").click(function (e) {
-        e.preventDefault();
-        href("paginas/mostrar-carrito.html");
-    });
+    //fin Pendiente
 
-    $("#dropdownShopping-Cart").click(function (e) {
-        cargarCarrito();
-    });
-
-    $(".cuenta").click(function(e){
-        e.preventDefault();
-        href("paginas/mi-cuenta.html");
-    });
-    $("#btn_reg_empresa").click(function (e){
+    //Pendiente
+    $("#btn_reg_empresa").click(function (e) {
         e.preventDefault();
         address = $("#num-ext").val() + $("#calle-input").val() + "," + $("#ciudad-input").val() + "," + $("#est-input").val();
         $.ajax({
@@ -1110,45 +790,45 @@ $(document).ready(function (e) {
             $("#coords_emp").val(coords);
             data_form = $("#form_reg_empresa").serialize();
             $.ajax({
-                url:dir+"php/reg_empresa.php",
-                dataType:"json",
-                type:"post",
-                data:data_form
-            }).done(function(result){
-                switch(result.status_code){
+                url: dir + "php/reg_empresa.php",
+                dataType: "json",
+                type: "post",
+                data: data_form
+            }).done(function (result) {
+                switch (result.status_code) {
                     case 200:
-                        addAlert("reg_empresa_ok","Su empresa ha sido registrada exitosamente","alert-success","","fa fa-check","",true);
+                        addAlert("reg_empresa_ok", "Su empresa ha sido registrada exitosamente", "alert-success", "", "fa fa-check", "", true);
                         cargarDatos();
                         break;
                 }
             });
         });
-        
+
     });
-    $("#comprar_carrito").click(function(e){
+    $("#comprar_carrito").click(function (e) {
         e.preventDefault();
         comprarCarrito();
-        
+
     });
-    $("#btn-comprar").click(function(e){
+    $("#btn-comprar").click(function (e) {
         e.preventDefault();
         comprarProducto($(this).attr("folio"));
-        
+
     });
 
-    $("#mc-menu-empresa").click(function(e){
+    $("#mc-menu-empresa").click(function (e) {
         e.preventDefault();
         $("#cont-empresa").removeClass("d-none");
         $("#cont-mis-datos").addClass("d-none");
         $("#cont-mis-datos").removeClass("d-flex");
 
     });
-    $("#mc-mis-datos").click(function(e){
+    $("#mc-mis-datos").click(function (e) {
         e.preventDefault();
         $("#cont-empresa").addClass("d-none");
         $("#cont-mis-datos").removeClass("d-none");
         $("#cont-mis-datos").addClass("d-flex");
 
     });
-   
+    //fin Pendiente
 });

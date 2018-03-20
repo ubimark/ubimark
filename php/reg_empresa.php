@@ -7,7 +7,7 @@
     $params['pais'] = "Mexico";
     $types = "";
     foreach($params as $key => $val){
-        if($key!="numinterior"){
+        if($key != "numinterior"){
             if(!notNull($val)){
                 echo json_encode(response(302,$key));
             }
@@ -18,7 +18,25 @@
             $types .= "s";
         }
     }
-    $result=dbInsert($table,$types,$params);
+    $result = dbInsert($table,$types,$params);
+    if($result['status_code'] != 200){
+        echo json_encode($result);
+        return;
+    }
+    $sql = "SELECT Id_empresa FROM empresa WHERE RFC = ?";
+    if($query = $enlace->prepare($sql)){
+        $query->bind_params("s",$params['RFC']);
+        $query->execute();
+        $query->bind_result($Id_empresa);
+        $query->fetch();
+        $query->close();
+    }
+    if($Id_empresa >= 1){
+        $filename = "../intranet/empresas/" . $Id_empresa . "/uploads/";
+        if (!file_exists($filename)) {
+            mkdir($filename, 0777, true);
+        }
+    }
     echo json_encode($result);
 
 ?>

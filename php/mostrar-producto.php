@@ -203,10 +203,9 @@
 							<h4 id="nom-producto"><?PHP echo $row['nombre_producto']; ?></h4>
 							<h6 id="precio">$<?PHP echo $row['precio']; ?></h6>
 						<div class="mt-4 mb-3 d-flex">
+						    <input type="number" value="1" id="cantidad" class="form-control col-4 col-md-2 col-lg-1 mr-3"> 
 							<div class="d-flex" id="add2cart-cont">
 								<button type="button" class="btn btn-info add2cart" id="<?PHP echo $id; ?>"><i class="fa fa-shopping-cart"></i></button>
-								<input type="number" value="1" id="cantidad" class="d-none form-control "> 
-								
 							</div>
 							<button type="button" class="btn btn-info ml-3" id="btn-comprar" folio="<?PHP echo $id; ?>">Comprar</button>
 
@@ -224,6 +223,7 @@
     <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
     <script src="../js/popper.min.js" type="application/javascript"></script>
     <script src="../js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="../js/main.js" type="application/javascript"></script>
     <script src="../js/check-session.js" type="application/javascript"></script>
 </body>
 

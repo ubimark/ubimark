@@ -30,7 +30,7 @@
     $params['estado'] = "Envio";
     $params['fecha_entrega'] = "00-00-00";
     $result = dbInsert($table,$types,$params);
-    if($result['status_code']==200){
+    if($result['status_code'] == 200){
         $result = dbUpdate("productos","i",array("existencias" => $existencias-1),"i",array("Id_producto"=>$Id_prod));
         if($result['status_code'] != 200){
             echo json_encode($result);
