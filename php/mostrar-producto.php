@@ -33,7 +33,7 @@
 
 </head>
 
-<body>
+<body class="background-grey">
     <header class="container">
         <nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
             <a class="navbar-brand col-4 col-md-2 mr-auto">
@@ -129,19 +129,11 @@
 
         </nav>
     </header>
-    
-    <div id="contenido">
+    <div class="background-white container d-flex flex-column">
+    	<div id="contenido">
 		<div id="alertas"></div>
-		<?PHP if($band){ ?>
 			<section class="margen">
-				<div class="col-12">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119452.69716917786!2d-103.40545358012501!3d20.67377770932267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b18cb52fd39b%3A0xd63d9302bf865750!2sGuadalajara%2C+Jal.!5e0!3m2!1ses!2smx!4v1518049408177" width="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
-				</div>	
-			</section>
-		<?PHP } ?>
-		<div class="container pt-3">			
-			<div class="mt-3 d-flex">
-					<div class="col-12 col-md-4">
+					<div class="d-flex justify-content-center col-lg-8 offset-lg-2">
 						<div id="myCarousel" class="carousel slide" data-ride="carousel">
 							<div class="carousel-inner">
                                 <?PHP 
@@ -197,9 +189,21 @@
 								</ol>
 							
 						</div>	
+				</div>	
+			</section>
+			</div>
+			<div class="container pt-3">			
+			<div class="mt-3 d-flex d-inline position-relative">
+					<div class="col-12 col-md-6 order-2">
+						<h5>Información del vendedor</h5>
+						<strong>Apple</strong>
+						<p>Jalisco</p>
+						<p>Reputación:</p>
+						<i class="fa fa-star colorStar"></i><i class="fa fa-star colorStar"></i><i class="fa fa-star colorStar"></i><i class="fa fa-star colorStar"></i></i><i class="fa fa-star-half colorStar"></i>
+						<small> (4.5)</small>
 					</div>
 
-					<div class="col-12 col-md-8 ">
+					<div class="col-12 col-md-6 order-1">
 							<h4 id="nom-producto"><?PHP echo $row['nombre_producto']; ?></h4>
 							<h6 id="precio">$<?PHP echo $row['precio']; ?></h6>
 						<div class="mt-4 mb-3 d-flex">
@@ -214,13 +218,40 @@
 					</div>
 
 			</div>
-			<div class="px-3">
-				<h5>Descripción</h5>
-				<p><?PHP echo $row['descripcion']; ?></p>
+			<div class="mt-5">
+				<div class="px-3 col-12">
+					<h5>Descripción</h5>
+					<p><?PHP echo $row['descripcion']; ?></p>
+				</div>
+				<div class="px-3 col-12 mt-5">
+					<h5>Ubicación</h5>
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119452.69716917786!2d-103.40545358012501!3d20.67377770932267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b18cb52fd39b%3A0xd63d9302bf865750!2sGuadalajara%2C+Jal.!5e0!3m2!1ses!2smx!4v1518049408177" width="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+				</div>
+				<div class="px-3 col-12 mt-5">
+					<h5>Preguntas</h5>
+					<div class="background-grey col-12 rounded">
+						<p>Pregunta perrona: Lorem ipsum dolor sit amet, consectetur.</p>
+					</div>
+					<textarea name="" id="" rows="3" class="col-12"></textarea>
+					<button type="button" class="btn btn-success float-right">Enviar</button>
+				</div>
 			</div>
 		</div>			
 	</div>
-
+		<footer class="account mt-5 container-fluid">
+			<div class="col-12">
+				<ul class="list-inline d-flex justify-content-center">
+				  <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Trabaja con nosotros</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Politicas de uso</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Terminos y condiciones</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Preguntas frecuentes</small></li>
+				</ul>
+			</div>
+			<div class="col-12 d-flex justify-content-center">
+				<small class="text-white">Copyright © 2017-2018 Ubimark</small>
+			</div>
+		</footer>
     <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
     <script src="../js/popper.min.js" type="application/javascript"></script>
     <script src="../js/bootstrap.min.js" type="application/javascript"></script>
