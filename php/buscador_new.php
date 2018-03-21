@@ -178,19 +178,6 @@
 					<li class=" py-0 px-1 ml-3 mb-3 bg-light">
 						Descripción: <?PHP echo($row['descripcion']);?>
 					</li>
-					<li class="">
-						Etiquetas
-                        <span class="d-flex flex-nowrap ml-2">
-                        	<?PHP $tags=preg_split("/[,]+/",$row['tags']); //Separa a las etiquetas del producto para mostrarlas en recuadros
-                        	foreach($tags as &$val){
-                        	?>
-                           
-                       		<span class="bg-light list-group-item py-0 px-1 ml-1 tag">
-                        	<?PHP echo $val; ?>
-                        	</span>
-                        	<?PHP } ?>
-                        </span>
-					</li>
 				  </ul>
 				</div>
             </section>
@@ -199,7 +186,22 @@
                 }
             }
            ?>
+           
 		</div>
+        <footer class="account mt-5 container-fluid d-flex flex-column">
+			<div class="">
+				<ul class="list-inline d-flex justify-content-center">
+				  <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Trabaja con nosotros</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Politicas de uso</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Terminos y condiciones</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Preguntas frecuentes</small></li>
+				</ul>
+			</div>
+			<div class=" d-flex justify-content-center">
+				<small class="text-white">Copyright © 2017-2018 Ubimark</small>
+			</div>
+		</footer>
 
                 <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
                 <script src="../js/popper.min.js" type="application/javascript"></script>
