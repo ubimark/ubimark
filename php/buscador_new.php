@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="../css/estilos1.css">
     </head>
 
-    <body>
+    <body class="background-grey">
         <header class="container">
             <nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
                 <a class="navbar-brand col-4 col-md-2 mr-auto">
@@ -127,7 +127,11 @@
                 <?PHP echo $token."<br>";}?>
             </div>
         </section>
-
+        <div class="mt-3 d-flex float-left ">
+        	<h4>
+   
+        </div>
+		
         <?PHP
             //Toma los resultados almacenados y solicita informacion mas detallada mostrandolos en pantalla
             foreach($results as &$val){
@@ -151,7 +155,6 @@
             
                 while($row=$res->fetch_Assoc()){      
         ?>
-
             <section class="container-fluid d-flex flex-nowrap col-12 col-md-9 position-relative float-right mt-3 Producto_link" id="<?PHP echo($row['Id_producto']) ?>">
     
                 <div class="card col-4 col-md-3">
