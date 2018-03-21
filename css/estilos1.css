@@ -29,7 +29,9 @@ header+section{
 .colorTitle{
 	color: #9BD239;
 }
-
+.colorStar{
+	color:#E4D300;
+}
 /*Modificaciones de carrousel/
 #myCarousel .list-inline {
     white-space:nowrap;
@@ -68,7 +70,7 @@ header+section{
 }
 
 .background-grey{
-	background-color:gainsboro;
+	background-color:whitesmoke;
 }
 .background-white{
 	background-color: white;
@@ -76,4 +78,7 @@ header+section{
 
 .mr-6{
 	margin-right: 10%;
+}
+.text-white{
+	color:whitesmoke;
 }
