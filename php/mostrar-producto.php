@@ -193,7 +193,7 @@
 			</section>
 			</div>
 			<div class="container pt-3">			
-			<div class="mt-3 d-flex d-inline position-relative">
+			<div class="mt-3 d-flex position-relative flex-md-row flex-column">
 					<div class="col-12 col-md-6 order-2">
 						<h5>Información del vendedor</h5>
 						<strong>Apple</strong>
