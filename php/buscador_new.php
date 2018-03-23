@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="../css/estilos1.css">
     </head>
 
-    <body>
+    <body class="background-grey">
         <header class="container">
             <nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
                 <a class="navbar-brand col-4 col-md-2 mr-auto">
@@ -127,7 +127,11 @@
                 <?PHP echo $token."<br>";}?>
             </div>
         </section>
-
+        <div class="mt-3 d-flex float-left ">
+        	<h4>
+   
+        </div>
+		
         <?PHP
             //Toma los resultados almacenados y solicita informacion mas detallada mostrandolos en pantalla
             foreach($results as &$val){
@@ -151,7 +155,6 @@
             
                 while($row=$res->fetch_Assoc()){      
         ?>
-
             <section class="container-fluid d-flex flex-nowrap col-12 col-md-9 position-relative float-right mt-3 Producto_link" id="<?PHP echo($row['Id_producto']) ?>">
     
                 <div class="card col-4 col-md-3">
@@ -183,7 +186,22 @@
                 }
             }
            ?>
+           
 		</div>
+        <footer class="account mt-5 container-fluid d-flex flex-column">
+			<div class="">
+				<ul class="list-inline d-flex justify-content-center">
+				  <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Trabaja con nosotros</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Politicas de uso</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Terminos y condiciones</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Preguntas frecuentes</small></li>
+				</ul>
+			</div>
+			<div class=" d-flex justify-content-center">
+				<small class="text-white">Copyright © 2017-2018 Ubimark</small>
+			</div>
+		</footer>
 
                 <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
                 <script src="../js/popper.min.js" type="application/javascript"></script>
