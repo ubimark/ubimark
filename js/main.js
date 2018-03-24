@@ -17,6 +17,7 @@ function acomodarContenido($reintento = false) {
             return;
         }
     }
+    $("#contenido").css("min-height", "70vh");
     switch (sess) {
         case 0:
             $("#contenido").css("margin-top", "4.1rem");
@@ -50,22 +51,34 @@ function acomodarContenido($reintento = false) {
  * @param {boolean} autoclose Cerrar en automatico
  */
 function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
-    $("#alertas").append(
-        "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0 ' role='alert' id=" + id + ">" +
-        "<i class='fa " + ico + " mr-2' ></i>" +
-        "<span>" + message + "</span>" +
-        "<i class='fa " + ico2 + " ml-2' ></i>" +
-        "<button type='button' class='close' data-dismiss='alert' aria-label='close'>" +
-        "<span aria_hidden='true'>&times;</span>" +
-        "</button>" +
-        "</div>"
-    );
+    
+    
     if (autoclose) {
+        $("#alertas").append(
+            "<div style='height:80px !important; position:fixed;top:15%;z-index:300;right:30%;left:30%;border:1px solid rgba(0,0,0,0.2);' class='alert " + color + " " + bgcolor + " alert-dismissible fade show mb-0 d-flex align-items-center justify-content-center' style='' role='alert' id=" + id + ">" +
+            "<i class='fa " + ico + " mr-2' ></i>" +
+            "<span>" + message + "</span>" +
+            "<i class='fa " + ico2 + " ml-2' ></i>" +
+            "</div>"
+        );
+        
         window.setTimeout(function () {
             $("#" + id).fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
-        }, 2000);
+        }, 1500);
+        
+    }else{
+        $("#alertas").append(
+            "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
+            "<i class='fa " + ico + " mr-2' ></i>" +
+            "<span>" + message + "</span>" +
+            "<i class='fa " + ico2 + " ml-2' ></i>" +
+            "<button type='button' class='close' data-dismiss='alert' aria-label='close'>" +
+            "<span aria_hidden='true'>&times;</span>" +
+            "</button>" +
+            "</div>"
+        );
     }
 }
 
@@ -74,18 +87,22 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
  * 
  * @author Luis Sanchez
  */
-function cargarCarrito() {
+function cargarCarritoDrop() {
+    console.log("peticion...");
     $.ajax({
         url: dir + "php/obtenerCarrito.php",
         type: "post",
         dataType: "json"
     }).done(function (result) {
+        console.log(result);
         switch (result.status_code) {
+            
             case 200:
                 datos = result.data;
                 var cont = 0;
                 $("#carrito-dropdown").html("");
                 for (var key in datos) {
+                    
                     if (cont++ < 5) {
                         $("#carrito-dropdown").append(
                             '<span class="dropdown-item">' +
@@ -105,6 +122,7 @@ function cargarCarrito() {
         }
     });
 }
+
 
 /**
  * Función que comprueba si hay una sesión activa
@@ -381,12 +399,14 @@ $(document).ready(function (e) {
     });
 
     $("#dropdownShopping-Cart").click(function (e) {
-        cargarCarrito();
+        console.log("OK");
+        cargarCarritoDrop();
     });
     
     $(".cuenta").click(function(e){
         e.preventDefault();
         href("paginas/mi-cuenta.html");
     });
+    
 
 });

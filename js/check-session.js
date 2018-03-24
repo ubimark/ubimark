@@ -2,84 +2,6 @@
 var imgcont, images = Array(); //imgcont: define el contenedor de la imagen subida
 //images: guarda las imagenes a subir   
 
-
-
-
-/**
- * Función que manda la petición para actualizar la cantidad en el carrito
- * 
- * @author Luis Sanchez
- * @param {int} folio Folio del articulo en el carrito
- * @param {int} cantidad Cantidad del articulo en el carrito
- */
-function actualizarCarrito(folio, cantidad) {
-    var total = parseFloat($("#cart-total").html());
-    total -= parseFloat($("#t_" + folio).html());
-    $.ajax({
-        url: dir + "php/actualizar-carrito.php",
-        type: "post",
-        dataType: "json",
-        data: {
-            folio_carrito: folio,
-            cantidad: cantidad
-        }
-    }).done(function (result) {
-        switch (result.status_code) {
-            case 200:
-                datos = result.data;
-                if (datos[0].cantidad > datos[0].existencias) {
-                    clase = "btn-outline-danger text-dark";
-                } else {
-                    clase = "";
-                }
-                $("#fc_" + folio).html('<div class="ml-4 d-flex justify-content-end close-carrito" folio="' + datos[0].folio_carrito + '">' +
-                    ' <i class="fa fa-close " ></i>' +
-                    '</div>' +
-                    '<ul class="list-unstyled">' +
-                    '<li class="">' +
-                    '<h3> ' + datos[0].nombre_producto + '</h3>' +
-                    '</li>' +
-                    '<li class="">' +
-                    ' <h4>$ ' + datos[0].precio + '</h4>' +
-                    '</li>' +
-                    '<li class="d-flex">' +
-                    '<input class="form-control col-3 col-md-2 col-lg-1 in_cantidad ' + clase + '" type="number" value="' + datos[0].cantidad + '" folio="' + datos[0].folio_carrito + '" name="cantidad" id="cantidad">' +
-                    '<span class="p-2"> en existencia ' + datos[0].existencias + '</span>' +
-                    '<h5 class="ml-auto p-2">Total: $<span id="t_' + datos[0].folio_carrito + '">' + (datos[0].precio * datos[0].cantidad) + '</span></h5>' +
-                    '</li>' +
-                    '</ul>');
-                $("#cart-total").html(total + (datos[0].precio * datos[0].cantidad));
-                $(".in_cantidad").change(function (e) {
-                    if ($(this).val() == 0) {
-                        $(".close-carrito[folio=" + $(this).attr("folio") + "]").trigger('click');
-                        return;
-                    }
-                    actualizarCarrito($(this).attr("folio"), $(this).val());
-                });
-                $(".close-carrito").click(function (e) {
-                    e.preventDefault();
-                    folio = $(this).attr("folio");
-                    borrarCarrito(folio);
-                });
-                break;
-        }
-    });
-}
-
-/**
- * Función para crear alertas
- * 
- * @author Luis Sanchez
- * @param {string} id Id del DOM
- * @param {string} message Mensaje a mostrar en la alerta 
- * @param {string} color Color de la alerta ("alert-*")
- * @param {string} bgcolor Color de fondo ("bg-*") 
- * @param {string} ico Icono mostrado antes del mensaje de la alerta 
- * @param {string} ico2 Icono mostrado despues del mensaje de la alerta 
- * @param {boolean} autoclose Cerrar en automatico
- */
-
-
 //Pendiente
 /**
  * Funcion para agregar un producto al carrito
@@ -110,6 +32,7 @@ function add2cart(id, cantidad) {
                 if ($("#add2cart_303")) {
                     $("#add2cart_303").remove();
                 }
+              
                 addAlert("add2cart_303", "El producto ya se encuentra en tu carrito", "alert-warning", "", "", "", true);
                 break;
         }
@@ -117,106 +40,6 @@ function add2cart(id, cantidad) {
 
 }
 //fin Pendiente
-
-/**
- * Función que elimina articulos de tu carrito
- * 
- * @author Luis Sanchez
- * @param {int} folio folio del articulo del carrito
- */
-function borrarCarrito(folio) {
-    var total = parseFloat($("#cart-total").html());
-    total -= parseFloat($("#t_" + folio).html());
-    $.ajax({
-        url: dir + "php/quitar-carrito.php",
-        type: "post",
-        dataType: "json",
-        data: {
-            folio_carrito: folio
-        }
-    }).done(function (result) {
-        switch (result.status_code) {
-            case 200:
-                $("#cont_" + folio).remove();
-                $("#cart-total").html(total);
-                break;
-        }
-    });
-}
-
-/**
- * Funcion que carga el carrito de compras en el dropdown del menu (max 5 items) y en la pagina de mostrar-carrito
- * 
- * @author Luis Sanchez
- */
-function cargarCarrito() {
-    $.ajax({
-        url: dir + "php/obtenerCarrito.php",
-        type: "post",
-        dataType: "json"
-    }).done(function (result) {
-        switch (result.status_code) {
-            case 200:
-                datos = result.data;
-                var total = 0;
-                var cont = 0;
-                /*$("#carrito-dropdown").html("");*/
-                $("#carrito").html("");
-                for (var key in datos) {
-
-                    if (window.location.pathname.indexOf("mostrar-carrito.html") != -1) {
-                        total += (datos[key].precio * datos[key].cantidad);
-                        if (datos[key].cantidad > datos[key].existencias) {
-                            clase = "btn-outline-danger text-dark";
-                        } else {
-                            clase = "";
-                        }
-                        $("#carrito").append('<div class="d-flex flex-nowrap mb-3" id="cont_' + datos[key].folio_carrito + '">' +
-                            '<div class="card col-4 col-md-2">' +
-                            '<img class="card-img" src="' + dir + "intranet/usuarios/" + datos[key].vendedor + "/uploads/" + datos[key].path + '" alt="Foto del producto">' +
-                            '</div>' +
-                            '<div class="card container-fluid" id="fc_' + datos[key].folio_carrito + '">' +
-                            '<div class="ml-4 d-flex justify-content-end close-carrito" folio="' + datos[key].folio_carrito + '">' +
-                            ' <i class="fa fa-close " ></i>' +
-                            '</div>' +
-                            '<ul class="list-unstyled">' +
-                            '<li class="">' +
-                            '<h3> ' + datos[key].nombre_producto + '</h3>' +
-                            '</li>' +
-                            '<li class="">' +
-                            ' <h4>$ ' + datos[key].precio + '</h4>' +
-                            '</li>' +
-                            '<li class="d-flex">' +
-                            '<input class="form-control col-3 col-md-2 col-lg-1 in_cantidad ' + clase + '" type="number" value="' + datos[key].cantidad + '" folio="' + datos[key].folio_carrito + '" name="cantidad" id="cantidad">' +
-                            '<span class="p-2"> en existencia ' + datos[key].existencias + '</span>' +
-                            '<h5 class="ml-auto p-2">Total: $<span id="t_' + datos[key].folio_carrito + '">' + (datos[key].precio * datos[key].cantidad) + '</span></h5>' +
-                            '</li>' +
-                            '</ul>' +
-                            '</div>' +
-                            '</div>');
-                    }
-
-                }
-                $("#cart-total").html(total);
-                $(".close-carrito").click(function (e) {
-
-                    e.preventDefault();
-                    folio = $(this).attr("folio");
-                    borrarCarrito(folio);
-                });
-                $(".in_cantidad").change(function (e) {
-                    if ($(this).val() == 0) {
-                        $(".close-carrito[folio=" + $(this).attr("folio") + "]").trigger('click');
-                        return;
-                    }
-                    actualizarCarrito($(this).attr("folio"), $(this).val());
-                });
-                break;
-        }
-    });
-
-
-}
 
 //Pendiente
 function cargarCompras() {
@@ -398,45 +221,45 @@ function cargarProductosDestacados() {
                     e.preventDefault();
                     href("php/mostrar-producto.php?key=" + this.id);
                 });
-                $('.responsive').slick({
-                    prevArrow: '<i class="buttonCarousel fa fa-arrow-circle-left d-lg-none d-block" style="opacity: 0.5"></i>',
-                    nextArrow: '<i class="buttonCarousel fa fa-arrow-circle-right d-lg-none d-block" style="opacity: 0.5"></i>',
-                    dots: true,
-                    arrows: true,
-                    infinite: false,
-                    speed: 300,
-                    slidesToShow: 6,
-                    slidesToScroll: 4,
-                    responsive: [{
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 3,
-                                infinite: true,
-                                dots: true
-                            }
-                        },
-                        {
-                            breakpoint: 600,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 3
-                            }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 3
-                            }
-                        }
-                        // You can unslick at a given breakpoint now by adding:
-                        // settings: "unslick"
-                        // instead of a settings object
-                    ]
-                });
                 break;
         }
+        $('.responsive').slick({
+            prevArrow: '<i class="buttonCarousel fa fa-arrow-circle-left d-lg-none d-block" style="opacity: 0.5"></i>',
+            nextArrow: '<i class="buttonCarousel fa fa-arrow-circle-right d-lg-none d-block" style="opacity: 0.5"></i>',
+            dots: true,
+            arrows: true,
+            infinite: false,
+            speed: 300,
+            slidesToShow: 6,
+            slidesToScroll: 4,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                }
+                // You can unslick at a given breakpoint now by adding:
+                // settings: "unslick"
+                // instead of a settings object
+            ]
+        });
     });
 
 }
@@ -547,24 +370,6 @@ function comprarProducto(Id) {
 }
 //fin Pendiente
 
-function comprarCarrito() {
-    $.ajax({
-        url: dir + "php/comprar_carrito.php",
-        dataType: "json",
-        type: "post"
-    }).done(function (result) {
-        switch (result.status_code) {
-            case 200:
-                addAlert("comprado", "Compra realizada correctamente", "alert-success", "", "fa-check", "", true);
-                break;
-            case 304:
-                addAlert("existencias", "No hay existencias suficientes para procesar la compra de " + result.data.nombre_producto, "alert-warning", "", "fa-warning", "", true);
-                break;
-        }
-        cargarCarrito();
-    });
-}
-
 
 //Pendiente
 /**
@@ -572,7 +377,7 @@ function comprarCarrito() {
  * 
  * @author Luis Sanchez
  * @version json_api : 2.0
- */
+ *//*
 function subir_Producto() {
     form_data = new FormData($("#form2")[0]);
     $.ajax({
@@ -592,7 +397,7 @@ function subir_Producto() {
                 break;
         }
     });
-}
+}*/
 //fin Pendiente
 
 //Función a ejecutar una vez que se encuentre cargada la página
@@ -650,7 +455,7 @@ $(document).ready(function (e) {
     });
 
 
-
+/*
     //Funcion de subir producto
     //Formulario 1
     $("#form-sell-btn").click(function (e) {
@@ -737,7 +542,7 @@ $(document).ready(function (e) {
         function addImage(e) {
             //Carga el archivo de imagen y define las imagenes aceptadas
             var file = e.target.files[0],
-                imageType = /image.*/;
+                imageType = /image./;
 
             //Si el archivo no coincide con el formato de una imagen termina
             if (!file.type.match(imageType))
@@ -755,13 +560,11 @@ $(document).ready(function (e) {
             $(imgcont).attr("src", result);
             $("#img_prod").attr("src", result);
         }
-    });
+    });*/
     //fin Pendiente
 
     //Pendiente 
-    if (window.location.pathname.indexOf("mostrar-carrito.html") != -1) {
-        cargarCarrito();
-    } else if (window.location.pathname.indexOf("mi-cuenta.html") != -1) {
+    if (window.location.pathname.indexOf("mi-cuenta.html") != -1) {
         cargarDatos();
     } else if (window.location.pathname.indexOf("ventas.html") != -1) {
         cargarPublicaciones();
@@ -803,13 +606,8 @@ $(document).ready(function (e) {
                 }
             });
         });
-
     });
-    $("#comprar_carrito").click(function (e) {
-        e.preventDefault();
-        comprarCarrito();
 
-    });
     $("#btn-comprar").click(function (e) {
         e.preventDefault();
         comprarProducto($(this).attr("folio"));

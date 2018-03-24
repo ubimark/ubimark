@@ -207,7 +207,7 @@
 							<h4 id="nom-producto"><?PHP echo $row['nombre_producto']; ?></h4>
 							<h6 id="precio">$<?PHP echo $row['precio']; ?></h6>
 						<div class="mt-4 mb-3 d-flex">
-						    <input type="number" value="1" id="cantidad" class="form-control col-4 col-md-2 col-lg-1 mr-3"> 
+						    <input type="number" value="1" id="cantidad" class="form-control col-4 col-md-2 col-lg-2 mr-3"> 
 							<div class="d-flex" id="add2cart-cont">
 								<button type="button" class="btn btn-info add2cart" id="<?PHP echo $id; ?>"><i class="fa fa-shopping-cart"></i></button>
 							</div>
