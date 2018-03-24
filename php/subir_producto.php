@@ -9,6 +9,20 @@
     $params['Id_usuario'] = $_COOKIE['Id'];
     $types = "";
     $values=array();
+    if($params['tipo_cuenta'] == "EMPRESA"){
+        $sql = "SELECT trabaja_en FROM usuario WHERE Id_usuario = ?";
+        if($query = $enlace -> prepare($sql)){
+            $query -> bind_param("i",$params['Id_usuario']);
+            $query -> execute();
+            $query -> bind_result($Id_empresa);
+            $query -> fetch();
+            $query -> close();
+        }else{
+            echo json_encode(sqlError($sql,"i",$params['Id_usuario']));
+        }
+        $params['Id_empresa'] = $Id_empresa;
+    }
+
     foreach($params as $key => $val){
         if($key != "etiquetas"){
             if($key == 'precio'){
