@@ -188,7 +188,7 @@
            ?>
            
 		</div>
-        <footer class="account mt-5 container-fluid d-flex flex-column">
+		<footer class="account container-fluid d-flex flex-column mt-5">
 			<div class="">
 				<ul class="list-inline d-flex justify-content-center">
 				  <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>
