@@ -116,14 +116,14 @@
 						<div class="form-group">
 							<input type="text" class="form-control" name="nombre_producto" id="inputProduct" placeholder="Nombre del producto" required>
 						</div>
-						<div class="form-check">
+						<div class="form-check d-none" id="up_tipo_cuenta">
 							<p>¿En qué tipo de cuenta deseas hacer tu publicación?</p>
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="tipo-cuenta1" id="tipo-cuent1" value="option1" checked>
+								<input type="radio" class="form-check-input" name="tipo_cuenta" id="tipo-cuenta1" value="PERSONAL" checked>
 								Personal
 						 	</label>
 						 	<label class="form-check-label ml-5">
-								<input type="radio" class="form-check-input" name="tipo-cuenta2" id="tipo-cuenta2" value="option1">
+								<input type="radio" class="form-check-input" name="tipo_cuenta" id="tipo-cuenta2" value="EMPRESA">
 								Empresa
 						 	</label>
 						</div>
@@ -258,6 +258,8 @@
 	<script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
 	<script src="../js/popper.min.js" type="application/javascript"></script>
 	<script src="../js/bootstrap.min.js" type="application/javascript"></script>
+	<script src="../js/main.js" type="application/javascript"></script>
+	<script src="../js/upload_prod.js" type="application/javascript"></script>
 	<script src="../js/check-session.js" type="application/javascript"></script>
 </body>
 

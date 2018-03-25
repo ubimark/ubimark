@@ -2,7 +2,7 @@
 <?PHP
     include_once("conectar.php");
     include("busqueda.php");
-    $token=$_GET['search'];
+    $token = $_GET['search'];
     $results = buscar($token);
 
 ?>
@@ -135,7 +135,7 @@
         <?PHP
             //Toma los resultados almacenados y solicita informacion mas detallada mostrandolos en pantalla
             foreach($results as &$val){
-                if($query=$enlace->prepare("SELECT P.*, GROUP_CONCAT(T.tag) AS tags FROM productos P INNER JOIN map_tag M ON M.ID_producto=P.Id_producto INNER JOIN tags T ON T.ID_tag=M.ID_tag WHERE P.Id_producto=?")){
+                if($query=$enlace->prepare("SELECT P.* FROM productos P WHERE P.Id_producto=?")){
                     $query->bind_param("i",$val);
                     $query->execute();
                     $res=$query->get_result();
@@ -206,6 +206,7 @@
                 <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
                 <script src="../js/popper.min.js" type="application/javascript"></script>
                 <script src="../js/bootstrap.min.js" type="application/javascript"></script>
+                <script src="../js/main.js" type="application/javascript"></script>
                 <script src="../js/check-session.js" type="application/javascript"></script>
     </body>
 

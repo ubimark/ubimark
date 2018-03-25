@@ -15,8 +15,8 @@
     if($query = $enlace->prepare("SELECT count(*) as found, nombre, apellidos FROM usuario WHERE Id_usuario = ? AND contrasena = ?")){
         $query->bind_param("is",$id,$pass);
         $query->execute();
-        $res=$query->get_result();
-        while($row=$res->fetch_Assoc()){
+        $res = $query->get_result();
+        while($row = $res->fetch_Assoc()){
             echo json_encode(response(101, $row));
         }
         $query->close();

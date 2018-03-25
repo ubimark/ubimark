@@ -4,7 +4,7 @@
     include("funciones.php");
     //Funcion para comprobar si existe una etiqueta
     function tag_exist($tag,$tags,$enlace){
-        $c=0;
+        $c = 0;
         $tag="%".$tag."%";
         $params = "s";
         $sql="SELECT Id_tag FROM tags WHERE tag LIKE ?";
