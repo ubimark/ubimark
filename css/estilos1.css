@@ -1,17 +1,7 @@
 @charset "UTF-8";
 /* CSS Document */
 
-$principal:#002F3F;
-*{
-    margin:0;
-    padding:0;
-}
-nav{
-    background: $principal;
-}
-header+section{
-    margin-top:4.1;
-}
+
 
 .account{
 	background: #002F3F;
@@ -31,6 +21,16 @@ header+section{
 }
 .colorStar{
 	color:#E4D300;
+}
+html{
+	min-height: 100%;
+	position: relative;
+}
+
+footer{
+	background-position: center center;
+  	background-size: cover;
+	bottom: 0;
 }
 /*Modificaciones de carrousel/
 #myCarousel .list-inline {
