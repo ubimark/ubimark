@@ -2,6 +2,10 @@
     header("Content-Type:application/json");
     include("conectar.php");
     include("funciones.php");
+    if($res = check_session()['status_code'] != 101){
+        echo json_encode($res);
+        return;
+    }
     $folio = array("folio_carrito" => $_POST['folio_carrito']);
     $cantidad = array("cantidad" => $_POST['cantidad']);
     $table = "carrito";

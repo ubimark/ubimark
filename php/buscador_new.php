@@ -20,7 +20,13 @@
         <link rel="stylesheet" href="../css/estilos.min.css">
         <link rel="stylesheet" href="../css/estilos1.css">
     </head>
-
+    <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
+    <script src="../js/main.js" type="application/javascript"></script>
+    <script>
+        get_Dir();
+        check_session();
+        session_required(window.location.pathname);
+    </script>
     <body class="background-grey">
         <header class="container">
             <nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
@@ -203,11 +209,9 @@
 			</div>
 		</footer>
 
-                <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
                 <script src="../js/popper.min.js" type="application/javascript"></script>
                 <script src="../js/bootstrap.min.js" type="application/javascript"></script>
-                <script src="../js/main.js" type="application/javascript"></script>
-                <script src="../js/check-session.js" type="application/javascript"></script>
+                
     </body>
 
     </html>

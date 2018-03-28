@@ -25,7 +25,7 @@
     }
     $sql = "SELECT Id_empresa FROM empresa WHERE RFC = ?";
     if($query = $enlace->prepare($sql)){
-        $query->bind_params("s",$params['RFC']);
+        $query->bind_param("s",$params['RFC']);
         $query->execute();
         $query->bind_result($Id_empresa);
         $query->fetch();
