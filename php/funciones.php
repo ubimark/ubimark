@@ -1,5 +1,31 @@
 <?php
     include_once("conectar.php");
+
+    function check_session(){
+        $link = getDBConnection();
+        if(!isset($_COOKIE['Id']) || !isset($_COOKIE['token'])){
+            return response(100);
+        }
+        $id = $_COOKIE['Id'];
+        $token = $_COOKIE['token'];
+        $sql = "SELECT expira FROM sesiones_activas WHERE Id_usuario = ? AND token = ?";
+        if($query = $link->prepare($sql)){
+            $query->bind_param("is",$id,$token);
+            $query->execute();
+            $res = $query->get_result();
+            while($row = $res->fetch_Assoc()){
+                if(date("Y-m-d H:i:s")<$row['expira']){
+                    return response(101, $row);
+                    return;
+                }
+            }
+            $query->close();
+            return response(100);
+            
+        }else{
+            return response(300,sqlError($sql,"is",array("Id_usuario"=>$id,"token"=>$token)));
+        }
+    }
     /**
      * Funcion para eliminar de cualquier tabla de la bs
      *
@@ -154,6 +180,10 @@
             "102" => "El correo ya se encuentra registrado",
             "103" => "Usuario no encontrado",
             "104" => "Empresa no registrada",
+            "105" => "Empresa registrada",
+            "106" => "Acceso denegado",
+            "107" => "Acceso permitido",
+            "108" => "Pagina sin acceso definido",
             "200" => "Hecho.",
             "201" => "Hecho. Faltan datos en la bd.",
             "300" => "Error al mandar la consulta a la bd.",
@@ -166,7 +196,7 @@
             "status_code" => $code,
             "message" => $def_messages[$code],
             "data" => $data,
-            "version" => "2.0.1"
+            "version" => "2.1.0"
         );
         return $arr;
     }

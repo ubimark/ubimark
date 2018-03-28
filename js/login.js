@@ -1,3 +1,5 @@
+
+
 /**
  * Función para realizar petición de inicio de sesión
  *  
@@ -20,19 +22,20 @@ function login() {
                 addAlert("login_fail","Usuario o contraseña incorrecta","alert-danger","","fa fa-times","",true);
                 break;
             case 200:
-                //Redireccionar a la página anterior
-                if (document.referrer != 'undefined' && document.referrer.indexOf("login.html") == -1 && document.referrer.indexOf("sign-up.html") == -1) {
-                    console.log(document.referrer);
-                    window.location = document.referrer;
-                } else {
-                    window.location.replace("../index.html");
+                rdir = getParameterByName('rdir');
+                if(rdir.length > 0){
+                    href(rdir);
+                }else{
+                    href("index.html");
                 }
+
                 break;
         }
     });
 }
 
 $(document).ready(function (e) {
+
     //Petición a php para iniciar sesión
     $("form").submit(function (e) {
         e.preventDefault();
