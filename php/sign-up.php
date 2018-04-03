@@ -24,6 +24,7 @@
     }
     //Si no hay una cuenta registrada crea una nueva
     if($count < 1){
+        $params['contrasena'] = password_hash($params['contrasena'],PASSWORD_DEFAULT);
         $result = dbInsert($table,$types,$params);
         echo json_encode($result);
     }else{

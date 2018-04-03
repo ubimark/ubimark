@@ -30,7 +30,9 @@ function acomodarContenido($reintento = false) {
             } else {
                 $("#contenido").css("margin-top", "6.6rem");
             }
+
             break;
+
         case 2:
             check_session();
             acomodarContenido(true);
@@ -51,8 +53,8 @@ function acomodarContenido($reintento = false) {
  * @param {boolean} autoclose Cerrar en automatico
  */
 function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
-    
-    
+
+
     if (autoclose) {
         $("#alertas").append(
             "<div style='height:80px !important; position:fixed;top:15%;z-index:300;right:30%;left:30%;border:1px solid rgba(0,0,0,0.2);' class='alert " + color + " " + bgcolor + " alert-dismissible fade show mb-0 d-flex align-items-center justify-content-center' style='' role='alert' id=" + id + ">" +
@@ -61,14 +63,14 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
             "<i class='fa " + ico2 + " ml-2' ></i>" +
             "</div>"
         );
-        
+
         window.setTimeout(function () {
             $("#" + id).fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
         }, 1500);
-        
-    }else{
+
+    } else {
         $("#alertas").append(
             "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
             "<i class='fa " + ico + " mr-2' ></i>" +
@@ -96,16 +98,16 @@ function cargarCarritoDrop() {
     }).done(function (result) {
         console.log(result);
         switch (result.status_code) {
-            
+
             case 200:
                 datos = result.data;
                 var cont = 0;
                 $("#carrito-dropdown").html("");
                 for (var key in datos) {
-                    
+
                     if (cont++ < 5) {
                         $("#carrito-dropdown").append(
-                            '<span class="dropdown-item">' +
+                            '<span class="dropdown-item Producto_link" id="'+datos[key].Id_producto+'">' +
                             '<strong>' + datos[key].nombre_producto + '</strong>' +
                             '<p>x' + datos[key].cantidad + ' $' + (datos[key].precio * datos[key].cantidad) + '</p>' +
                             '</span>'
@@ -117,6 +119,10 @@ function cargarCarritoDrop() {
                 $(".ver_carrito").click(function (e) {
                     e.preventDefault();
                     href("paginas/mostrar-carrito.html");
+                });
+                $(".Producto_link").click(function (e) {
+                    e.preventDefault();
+                    href("php/mostrar-producto.php?key=" + this.id);
                 });
                 break;
         }
@@ -141,42 +147,57 @@ function check_session() {
         //Si se encuentra la sesión activa.
         switch (result.status_code) {
             case 100:
-                $("#mi-ingresar").removeClass("d-none"); //Muestra la opción de ingresar en el menú
-                $("#mi-ingresar2").removeClass("d-none"); //Muestra la opción de ingresar en el menú movil
-
                 sess = 0; //Cambia la sessión a inactiva
                 break;
             case 101:
-                if (result.data.found == 1) {
-                    var nombre, apellidos, i;
-
-                    $("#menu-user").addClass("d-md-block"); //Muestra el menu del usuario
-                    $("#mi-cuenta").addClass("d-md-block"); //Muestra el dropdown del usuario
-                    $("#btn-cuenta").removeClass("d-none"); //Muestra el boton dropdown del usuario en dispositivos moviles
-                    $("#btn-cuenta").addClass("d-md-none"); //Oculta el boton dropdown del usuario en pantallas md
-
-                    apellidos = result.data.apellidos.charAt(0) + "."; //Obtiene la primer letra del apellido del usuario
-                    i = result.data.nombre.indexOf(" "); //Busca el espacio para solo tomar el primer nombre en caso de que el usuario cuente con un segundo nombre
-                    if (i === (-1)) {
-                        //Si el usuario solo tiene un nombre se toma este y se agrega la primer letra del apellido
-                        nombre = result.data.nombre + " " + apellidos;
-                    } else {
-                        //Si el usuario tiene más de un nombre se toma el primer nombre y se agrega la primer letra del apellido
-                        nombre = result.data.nombre.slice(0, i) + " " + apellidos;
-                    }
-
-                    $("#drop-mi-cuenta").html(nombre); //Muestra el nombre en el dropdown
-                    $("#dropdownMenuButton").html(nombre); //Muestra el nombre en el dropdown
-                    $(".u-name").html(nombre); //Muestra el nombre en los elementos que cuenten con la clase u-name                  
-                    sess = 1; //Cambia la sesión a activa
-                }
+                sess = 1; //Cambia la sesión a activa
                 break;
         }
-        acomodarContenido();
     });
     return sess;
 }
 
+function session_data() {
+    switch (sess) {
+        case 0:
+            $("#mi-ingresar").removeClass("d-none"); //Muestra la opción de ingresar en el menú
+            $("#mi-ingresar2").removeClass("d-none"); //Muestra la opción de ingresar en el menú movil
+            break;
+        case 1:
+            $("#menu-user").addClass("d-md-block"); //Muestra el menu del usuario
+            $("#mi-cuenta").addClass("d-md-block"); //Muestra el dropdown del usuario
+            $("#btn-cuenta").removeClass("d-none"); //Muestra el boton dropdown del usuario en dispositivos moviles
+            $("#btn-cuenta").addClass("d-md-none"); //Oculta el boton dropdown del usuario en pantallas md
+            $.ajax({
+                url: dir + "php/datos_usuario.php",
+                type: "post",
+                dataType: "json",
+                data: {
+                    required: ["nombre", "apellidos"]
+                }
+            }).done(function (result) {
+                switch (result.status_code) {
+                    case 200:
+                        datos = result.data[0];
+                        var nombre, apellidos, i;
+                        apellidos = datos.apellidos.charAt(0) + "."; //Obtiene la primer letra del apellido del usuario
+                        i = datos.nombre.indexOf(" "); //Busca el espacio para solo tomar el primer nombre en caso de que el usuario cuente con un segundo nombre
+                        if (i === (-1)) {
+                            //Si el usuario solo tiene un nombre se toma este y se agrega la primer letra del apellido
+                            nombre = datos.nombre + " " + apellidos;
+                        } else {
+                            //Si el usuario tiene más de un nombre se toma el primer nombre y se agrega la primer letra del apellido
+                            nombre = datos.nombre.slice(0, i) + " " + apellidos;
+                        }
+                        $("#drop-mi-cuenta").html(nombre); //Muestra el nombre en el dropdown
+                        $("#dropdownMenuButton").html(nombre); //Muestra el nombre en el dropdown
+                        $(".u-name").html(nombre); //Muestra el nombre en los elementos que cuenten con la clase u-name
+                        break;
+                }
+            });
+            break;
+    }
+}
 /**
  * Función que define el directorio a seguir basandose en la url actual
  * 
@@ -221,9 +242,9 @@ function getGeolocation() {
                 }
             }).done(function (data) {
                 console.log(data);
-                estado = data.results[5].address_components[0].long_name; //Guarda la entidad federativa del usuario
+                estado = data.results[0].address_components[5].long_name; //Guarda la entidad federativa del usuario
                 if (window.location.pathname.indexOf("index.html") != -1 || window.location.pathname == '/') {
-                    cargarProductosDestacados(); 
+                    cargarProductosDestacados();
                 }
             });
         },
@@ -262,13 +283,25 @@ function getGeolocation() {
 }
 
 /**
+ * @param String name
+ * @return String
+ */
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+/**
  * Función que redirige a otra página
  * 
  * @author Luis Sanchez
  * @param {string} url 
  */
 function href(url) {
-    window.location.assign(dir + url);
+    check_session();
+    session_required(url, true);
 }
 
 /**
@@ -280,7 +313,8 @@ function logout() {
     $.ajax({
         url: dir + "php/logout.php",
         dataType: "json",
-        type: "post"
+        type: "post",
+        data: {}
     }).done(function (result) {
         switch (result.status_code) {
             case 200:
@@ -302,7 +336,7 @@ function logout() {
  * @param {string} estado: Nombre de la entidad federativa en que se realiza la busqueda. 
  */
 function reg_buscar(token, coords, estado) {
-    if(token.trim()!=""){
+    if (token.trim() != "") {
         $.ajax({
             url: dir + "php/reg_busqueda.php",
             dataType: "Json",
@@ -320,16 +354,54 @@ function reg_buscar(token, coords, estado) {
                     break;
             }
         });
-    }else{
+    } else {
         href("php/buscador_new.php?search=");
     }
 }
 
+function session_required(path, redirect = false) {
+    if (path.indexOf("/ubimark/") != -1) {
+        path = path.substr(9);
+    }
+    i = path.indexOf("?");
+    console.log(i);
+    params = "";
+    if (i != -1) {
+        params = path.substring(i, path.length);
+        path = path.substring(0, i);
+        console.log(path);
+    }
+    $.ajax({
+        url: dir + "php/session_required.php",
+        dataType: "json",
+        type: "post",
+        async: false,
+        data: {
+            path: path,
+            session: sess
+        }
+    }).done(function (result) {
+        switch (result.status_code) {
+            case 106:
+                href("paginas/login.html?rdir=" + path);
+                break;
+            case 107:
+                if (redirect) {
+                    window.location.assign(dir + path + params);
+                }
+                break;
+            case 108:
+                console.log("108");
+                window.location.assign(dir + "paginas/no-access-assigned.html");
+        }
+    });
+}
 //Función a ejecutar una vez que se encuentre cargada la página
 $(document).ready(function (e) {
+
     getGeolocation();
-    get_Dir();
-    check_session();
+    acomodarContenido();
+    session_data();
 
     //Define la función a realizar al clickear el logo
     $(".navbar-brand").click(function (e) {
@@ -353,13 +425,13 @@ $(document).ready(function (e) {
     $(".mc-ventas").click(function (e) {
         href("paginas/ventas.html");
     });
-    
+
     //Define la función a realizar al clickear vender en el menú
     $(".vender").click(function (e) {
         if (sess === 1) {
             href("paginas/subir-producto.html");
         } else {
-            href("paginas/login.html");
+            href("paginas/login.html?rdir=paginas/subir-producto.html");
         }
     });
 
@@ -377,9 +449,9 @@ $(document).ready(function (e) {
         if (lat === undefined || lon === undefined) {
             reg_buscar(token, null, null);
         } else if (estado === undefined) {
-            reg_buscar(token, lat + "," + lon, null); 
+            reg_buscar(token, lat + "," + lon, null);
         } else {
-            reg_buscar(token, lat + "," + lon, estado); 
+            reg_buscar(token, lat + "," + lon, estado);
         }
     });
 
@@ -402,11 +474,55 @@ $(document).ready(function (e) {
         console.log("OK");
         cargarCarritoDrop();
     });
-    
-    $(".cuenta").click(function(e){
+
+    $(".cuenta").click(function (e) {
         e.preventDefault();
         href("paginas/mi-cuenta.html");
     });
+
+
     
+    //Funcion para actualizar informacion de usuario antes de poder comprar
+    //Formulario de información personal
+    //@version json_api : 2.0
+    $("#btn-info-personal").click(function (e) {
+        e.preventDefault();
+        var data_form = $("#form-info-personal").serialize();
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: dir + "php/update_info_personal.php",
+            data: data_form
+
+        }).done(function (result) {
+            switch (result.status_code) {
+                case 200:
+                    check_progress_compra();
+                    cargarDatos();
+                    break;
+            }
+        });
+    });
+    //Formulario de información contacto 
+    //@version json_api : 2.0
+    $("#btn-info-contacto").click(function (e) {
+        e.preventDefault();
+        var data_form = $("#form-info-contacto").serialize();
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: dir + "php/update_info_contacto.php",
+            data: data_form
+
+        }).done(function (result) {
+            switch (result.status_code) {
+                case 200:
+                    check_progress_compra();
+                    cargarDatos();
+                    break;
+            }
+        });
+    });
+
 
 });

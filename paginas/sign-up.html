@@ -9,7 +9,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrate</title>
 </head>
-
+<script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
+<script src="../js/main.js" type="application/javascript"></script>
+<script>
+	get_Dir();
+	check_session();
+	if(sess==1){
+		href("index.html");
+	}
+	session_required(window.location.pathname);
+</script>
 <body>
 <div class="divFloat col-sm-7 col-md-5">
   <div class="container-fluid">
@@ -53,10 +62,8 @@
   </div>
   </div>
   
-<script src="../js/jquery-3.2.1.min.js"></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-<script src="../js/main.js" type="application/javascript"></script>
 <script type="text/javascript" src="../js/validate-sign.js"></script>
 </body>
 </html>
