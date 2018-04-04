@@ -198,8 +198,8 @@
 						</div>	
 				</div>	
 			</section>
-			<div class="container">			
-			<div class="d-flex position-relative flex-md-row flex-column m-0">
+			<div class="container pt-3">			
+			<div class="mt-3 d-flex position-relative flex-md-row flex-column">
 					<div class="col-12 col-md-6 order-2">
 						<h5>Información del vendedor</h5>
 						<strong>Apple</strong>
@@ -222,7 +222,7 @@
 						</div>
 					</div>
 
-			</div>
+</div>
 			<div class="mt-5">
 				<div class="px-3 col-12">
 					<h5>Descripción</h5>
