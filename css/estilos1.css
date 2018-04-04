@@ -33,20 +33,6 @@ footer{
 	bottom:0;
 }
 
-.carousel-item {
-  	height: 30vh;
-	width: 100vh;
-  	background: no-repeat center center scroll;
-  	-webkit-background-size: cover;
-  	-moz-background-size: cover;
-  	-o-background-size: cover;
-  	background-size: cover;
-	object-fit: scale-down;
-}
-
-.img-resize{
-	object-fit: scale-down;
-}
 
 .control-color{ 
 	background-color: #aaa;
@@ -97,4 +83,14 @@ footer{
 .logo-map{
 	width: 100%;
 	height: 30vh;
+}
+.img-resize{
+	object-fit: scale-down;
+	width: 100%;
+	height: 40vh;
+}
+.carousel-item {
+  	height: 40vh !important;
+	width: 80vw !important;
+
 }
