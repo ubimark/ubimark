@@ -23,6 +23,7 @@
         echo json_encode($result);
         return;
     }
+    
     $sql = "SELECT Id_empresa FROM empresa WHERE RFC = ?";
     if($query = $enlace->prepare($sql)){
         $query->bind_param("s",$params['RFC']);

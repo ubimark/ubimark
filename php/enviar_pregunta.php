@@ -24,4 +24,5 @@
     }
     $result = dbInsert("preguntas","siisi",$params);
     echo json_encode($result);
+    
 ?>

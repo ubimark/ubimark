@@ -310,22 +310,7 @@
                         <button type="button" id="send_pregunta" producto="<?PHP echo $id; ?>" class="btn btn-success float-right mt-1">Enviar</button>
                     </div>
                     <div id="seccion_preguntas">
-                        <div class="background-grey col-12 rounded px-0 mb-3 pb-2">
-                            <span class="d-block px-2 pt-2">¿Fierro?</span>
-                            <span class="ml-2 pl-3 respuesta">Fierro</span>
-                        </div>
-                        <div class="background-grey col-12 rounded px-0 mb-3 pb-2">
-                            <span class="d-block px-2 pt-2">¿Fierro?</span>
-                            <span class="ml-2 pl-3 respuesta">Fierro</span>
-                        </div>
-                        <div class="background-grey col-12 rounded px-0 mb-3 pb-2">
-                            <span class="d-block px-2 pt-2">¿Fierro?</span>
-                            <span class="ml-2 pl-3 respuesta">Fierro</span>
-                        </div>
-                        <div class="background-grey col-12 rounded px-0 mb-3 pb-2">
-                            <span class="d-block px-2 pt-2">¿Fierro?</span>
-                            <span class="ml-2 pl-3 respuesta">Fierro</span>
-                        </div>
+                        
                     </div>
                     
 					

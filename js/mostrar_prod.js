@@ -35,8 +35,27 @@ function add2cart(id, cantidad) {
     });
 
 }
-function cargarPreguntas(){
-    
+
+function cargarPreguntas() {
+    $.ajax({
+        url: dir + "php/cargar_preguntas.php",
+        dataType: "json",
+        type: "post",
+        data: {
+            "Id_producto": getParameterByName('key')
+        }
+    }).done(function (result) {
+        switch (result.status_code) {
+            case 200:
+                $("preguntas").append(
+                    '<div class="background-grey col-12 rounded px-0 mb-3 pb-2">' +
+                    '<span class="d-block px-2 pt-2">¿Fierro?</span>' +
+                    '<span class="ml-2 pl-3 respuesta">Fierro</span>' +
+                    '</div>'
+                );
+                break;
+        }
+    });
 }
 /**
  * Función que envia la petición de compra de un producto
@@ -98,14 +117,14 @@ function initMap(empresa = true) {
 
 function getCoords(location) {
     $.ajax({
-        url : "https://maps.googleapis.com/maps/api/geocode/json",
-        dataType : "json",
-        type : "GET",
-        async : false,
-        data : {
-            address : location,
-            key : "AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0",
-            language : "es"
+        url: "https://maps.googleapis.com/maps/api/geocode/json",
+        dataType: "json",
+        type: "GET",
+        async: false,
+        data: {
+            address: location,
+            key: "AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0",
+            language: "es"
         }
     }).done(function (data) {
         datos = data.results[0].geometry.location;
@@ -113,29 +132,30 @@ function getCoords(location) {
         $("#lon").val(datos.lng);
     });
 }
-function send_pregunta(producto){
+
+function send_pregunta(producto) {
     $.ajax({
-        url : dir + "php/enviar_pregunta.php",
-        dataType : "json",
-        type : "post",
-        data : {
-            "pregunta" : $("#pregunta").val(),
-            "Id_producto" : producto
+        url: dir + "php/enviar_pregunta.php",
+        dataType: "json",
+        type: "post",
+        data: {
+            "pregunta": $("#pregunta").val(),
+            "Id_producto": producto
         }
 
-    }).done(function(result){
-        switch(result.status_code){
+    }).done(function (result) {
+        switch (result.status_code) {
             case 200:
-                addAlert("alert_pregunta","Su pregunta ha sido enviada","alert-success","","fa fa-check","",true);
+                addAlert("alert_pregunta", "Su pregunta ha sido enviada", "alert-success", "", "fa fa-check", "", true);
                 $("#pregunta").val('');
                 cargarPreguntas();
                 break;
         }
-        
+
     });
 }
 
-function set_band_empresa(val){
+function set_band_empresa(val) {
     band_empresa = val;
 }
 
@@ -150,15 +170,15 @@ $(document).ready(function (e) {
         comprarProducto($(this).attr("folio"));
 
     });
-    $("#send_pregunta").click(function(e){
+    $("#send_pregunta").click(function (e) {
         e.preventDefault();
-        if(sess != 1){
-            href("paginas/login.html?rdir=" + window.location.pathname +"?key="+ getParameterByName('key'));
+        if (sess != 1) {
+            href("paginas/login.html?rdir=" + window.location.pathname + "?key=" + getParameterByName('key'));
         }
-        if($("#pregunta").val().length>0){
+        if ($("#pregunta").val().length > 0) {
             send_pregunta($(this).attr("producto"));
             $("#pregunta").removeClass("border-danger");
-        }else{
+        } else {
             $("#pregunta").addClass("border-danger");
         }
     });

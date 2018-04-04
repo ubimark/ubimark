@@ -26,6 +26,7 @@
         echo json_encode(response(304,array("nombre_producto"=>$nombre)));
         return;
     }
+    
     $params = array(); 
     $params['Id_usuario'] = $Id;
     $params['Id_producto'] = $Id_prod;

@@ -202,6 +202,7 @@
                     }
                 }
                 $n--;
+                
             }
             //Ultima busqueda por etiquetas en caso de que se encontrara por lo menos dos etiquetas validas busca coincidencia con al menos 1 etiqueta
             if($n===1){
