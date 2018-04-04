@@ -55,6 +55,7 @@
             echo json_encode(response(300,sqlError($sql,"i",$val)));
             return;
         }
+        
         while($row = $res->fetch_Assoc()){ 
             $row['path'] = $img;
             $row['author'] = $id_usuario;

@@ -28,6 +28,7 @@
             return response(300,sqlError($sql,"is",array("Id_usuario"=>$id,"token"=>$token)));
         }
     }
+    
     /**
      * Funcion para eliminar de cualquier tabla de la bs
      *

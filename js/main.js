@@ -85,7 +85,7 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
 }
 
 /**
- * Funcion que carga el carrito de compras en el dropdown del menu (max 5 items) y en la pagina de mostrar-carrito
+ * Función que carga el carrito de compras en el dropdown del menu (max 5 items) y en la pagina de mostrar-carrito
  * 
  * @author Luis Sanchez
  */

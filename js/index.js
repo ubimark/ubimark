@@ -1,5 +1,5 @@
 /**
- * Funcion que pide los productos mas buscados
+ * Función que pide los productos mas buscados
  * 
  * @author Luis Sanchez
  */
