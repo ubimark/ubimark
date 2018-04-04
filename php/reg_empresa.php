@@ -31,6 +31,12 @@
         $query->fetch();
         $query->close();
     }
+    $params2 = array("trabaja_en" => $Id_empresa);
+    $result = dbUpdate("usuario","i",array("trabaja_en" => $Id_empresa),"i",array("Id_usuario" => $params['Id_usuario']));
+    if($result != 200){
+        echo json_encode($result);
+        return;
+    }
     if($Id_empresa >= 1){
         $filename = "../intranet/empresas/" . $Id_empresa . "/uploads/";
         if (!file_exists($filename)) {

@@ -14,9 +14,31 @@
         return;
     }
 	$row = $res->fetch_Assoc(); 
-	if($band = notNull($row['trabaja_en'])){
-
-	}
+	if($row['tipo_cuenta']=="EMPRESA"){
+        $sql = "SELECT * FROM empresa WHERE Id_empresa = ?";
+        if($query = $enlace->prepare($sql)){
+            $query->bind_param("i",$row['Id_empresa']);
+            $query->execute();
+            $res = $query->get_result();
+            $query->close();
+        }else {
+            echo json_encode(response(300, array('sql' => $sql, "params" => $id, )));
+            return;
+        }
+        $empresa = $res -> fetch_Assoc();
+    }else{
+        $sql = "SELECT * FROM usuario WHERE Id_usuario = ?";
+        if($query = $enlace->prepare($sql)){
+            $query->bind_param("i",$row['Id_usuario']);
+            $query->execute();
+            $res = $query->get_result();
+            $query->close();
+        }else {
+            echo json_encode(response(300, array('sql' => $sql, "params" => $id, )));
+            return;
+        }
+        $vendedor = $res -> fetch_Assoc();
+    }
 
 ?>
 <html>
@@ -35,6 +57,7 @@
 </head>
 <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
 <script src="../js/main.js" type="application/javascript"></script>
+<script src="../js/mostrar_prod.js" type="application/javascript"></script>
 <script>
 	get_Dir();
 	check_session();
@@ -198,17 +221,65 @@
 						</div>	
 				</div>	
 			</section>
-			<div class="container">			
-			<div class="d-flex position-relative flex-md-row flex-column m-0">
+			<div class="container pt-3">			
+			<div class="mt-3 d-flex position-relative flex-md-row flex-column">
+                <?PHP if (isset($empresa)){?>
+                    
 					<div class="col-12 col-md-6 order-2">
-						<h5>Información del vendedor</h5>
-						<strong>Apple</strong>
-						<p>Jalisco</p>
-						<p>Reputación:</p>
-						<i class="fa fa-star colorStar"></i><i class="fa fa-star colorStar"></i><i class="fa fa-star colorStar"></i><i class="fa fa-star colorStar"></i></i><i class="fa fa-star-half colorStar"></i>
-						<small> (4.5)</small>
+                        <?PHP
+                            $coords = preg_split("/[,]+/",$empresa['coordenadas']);
+                        ?>
+                        <input type="text" value="<?PHP echo $coords[0];?>" id="lat" hidden>
+                        <input type="text" value="<?PHP echo $coords[1];?>" id="lon" hidden>
+                        <script>set_band_empresa(true);</script>
+                        <h5>Información del vendedor</h5>
+                        <span id="info_empresa">
+                            <strong id="empresa"><?PHP echo $empresa['nombre_empresa']?></strong>
+                            <p><span><?PHP echo $empresa['calle']." #".$empresa['numero'].$empresa['numinterior']?></span><br>
+                            <span><?PHP echo "Colonia ".$empresa['colonia']." C.P. ".$empresa['cp'];?></span><br>
+                            <span><?PHP echo $empresa['ciudad'].", ".$empresa['estado']?></span></p>
+                            <p>Reputación:
+                            
+                            <?PHP
+                                $i = $empresa['calificacion'];
+                                for(;$i>=1;$i--){
+                                    echo '<i class="fa fa-star colorStar"></i>';
+                                }
+                                if($i == 0.5){
+                                    echo '<i class="fa fa-star-half colorStar"></i>';
+                                }
+                            ?>
+                            
+                            <small> (<?PHP echo $empresa['calificacion'];?>)</small></p>
+                        </span>
 					</div>
+                <?PHP }else{ ?>
 
+                    <div class="col-12 col-md-6 order-2">
+                        
+                        <input type="text" value="" id="lat" hidden>
+                        <input type="text" value="" id="lon" hidden>
+                        <script>getCoords("<?PHP echo $vendedor['delegacion'];?>");set_band_empresa(false);</script>
+                        <h5>Información del vendedor</h5>
+                        <span id="info_empresa">
+                            <strong id="empresa"><?PHP echo $vendedor['nombre']." ".$vendedor['apellidos']?></strong>
+                            <p><span><?PHP echo $vendedor['delegacion'].", ".$vendedor['estado']?></span></p>
+                            <p>Reputación:
+                            
+                            <?PHP
+                                $i = $vendedor['calificacion'];
+                                for(;$i>=1;$i--){
+                                    echo '<i class="fa fa-star colorStar"></i>';
+                                }
+                                if($i == 0.5){
+                                    echo '<i class="fa fa-star-half colorStar"></i>';
+                                }
+                            ?>
+                            
+                            <small> (<?PHP echo $vendedor['calificacion'];?>)</small></p>
+                        </span>
+					</div>
+                <?PHP } ?>
 					<div class="col-12 col-md-6 order-1">
 							<h4 id="nom-producto"><?PHP echo $row['nombre_producto']; ?></h4>
 							<h6 id="precio">$<?PHP echo $row['precio']; ?></h6>
@@ -222,7 +293,7 @@
 						</div>
 					</div>
 
-			</div>
+</div>
 			<div class="mt-5">
 				<div class="px-3 col-12">
 					<h5>Descripción</h5>
@@ -230,15 +301,34 @@
 				</div>
 				<div class="px-3 col-12 mt-5">
 					<h5>Ubicación</h5>
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119452.69716917786!2d-103.40545358012501!3d20.67377770932267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b18cb52fd39b%3A0xd63d9302bf865750!2sGuadalajara%2C+Jal.!5e0!3m2!1ses!2smx!4v1518049408177" width="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+					<div id="map"></div>
 				</div>
 				<div class="px-3 col-12 mt-5">
-					<h5>Preguntas</h5>
-					<div class="background-grey col-12 rounded">
-						<p>Pregunta perrona: Lorem ipsum dolor sit amet, consectetur..</p>
-					</div>
-					<textarea name="" id="" rows="3" class="col-12"></textarea>
-					<button type="button" class="btn btn-success float-right">Enviar</button>
+                    <h5>Preguntas</h5>
+                    <div class="form-group clearfix">
+                        <textarea name="pregunta" id="pregunta" rows="1" class="col-12 form-control"></textarea>
+                        <button type="button" id="send_pregunta" producto="<?PHP echo $id; ?>" class="btn btn-success float-right mt-1">Enviar</button>
+                    </div>
+                    <div id="seccion_preguntas">
+                        <div class="background-grey col-12 rounded px-0 mb-3 pb-2">
+                            <span class="d-block px-2 pt-2">¿Fierro?</span>
+                            <span class="ml-2 pl-3 respuesta">Fierro</span>
+                        </div>
+                        <div class="background-grey col-12 rounded px-0 mb-3 pb-2">
+                            <span class="d-block px-2 pt-2">¿Fierro?</span>
+                            <span class="ml-2 pl-3 respuesta">Fierro</span>
+                        </div>
+                        <div class="background-grey col-12 rounded px-0 mb-3 pb-2">
+                            <span class="d-block px-2 pt-2">¿Fierro?</span>
+                            <span class="ml-2 pl-3 respuesta">Fierro</span>
+                        </div>
+                        <div class="background-grey col-12 rounded px-0 mb-3 pb-2">
+                            <span class="d-block px-2 pt-2">¿Fierro?</span>
+                            <span class="ml-2 pl-3 respuesta">Fierro</span>
+                        </div>
+                    </div>
+                    
+					
 				</div>
 			</div>
 		</div>			
@@ -260,7 +350,17 @@
 		</footer>
     <script src="../js/popper.min.js" type="application/javascript"></script>
     <script src="../js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="../js/mostrar_prod.js" type="application/javascript"></script>
+    <script>
+      
+    </script>
+    <script async="false" defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0">
+    </script>
+    
+    
+
+  
+
 </body>
 
 </html>

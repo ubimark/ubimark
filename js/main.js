@@ -243,9 +243,6 @@ function getGeolocation() {
             }).done(function (data) {
                 console.log(data);
                 estado = data.results[0].address_components[5].long_name; //Guarda la entidad federativa del usuario
-                if (window.location.pathname.indexOf("index.html") != -1 || window.location.pathname == '/') {
-                    cargarProductosDestacados();
-                }
             });
         },
         //Se ejecuta en caso de que ocurra un error al obtener las coordenadas.
@@ -280,6 +277,9 @@ function getGeolocation() {
             maximumAge: 5000,
             timeout: 10000
         });
+        if (window.location.pathname.indexOf("index.html") != -1 || window.location.pathname == '/') {
+            cargarProductosDestacados();
+        }
 }
 
 /**
@@ -360,11 +360,12 @@ function reg_buscar(token, coords, estado) {
 }
 
 function session_required(path, redirect = false) {
-    if (path.indexOf("/ubimark/") != -1) {
+    if (path.indexOf("/ubimark/") == 0) {
         path = path.substr(9);
+    }else if(path.charAt(0)=='/'){
+        path = path.substr(1);
     }
     i = path.indexOf("?");
-    console.log(i);
     params = "";
     if (i != -1) {
         params = path.substring(i, path.length);

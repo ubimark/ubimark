@@ -1,25 +1,27 @@
 <?php
     include_once("conectar.php");
-
     function check_session(){
         $link = getDBConnection();
         if(!isset($_COOKIE['Id']) || !isset($_COOKIE['token'])){
-            return response(100);
+            return response(100,"COOKIES FALTANTES");
         }
+        $date = new \DateTime('now', new \DateTimeZone('America/Mexico_City'));
         $id = $_COOKIE['Id'];
         $token = $_COOKIE['token'];
         $sql = "SELECT expira FROM sesiones_activas WHERE Id_usuario = ? AND token = ?";
+
         if($query = $link->prepare($sql)){
             $query->bind_param("is",$id,$token);
             $query->execute();
             $res = $query->get_result();
-            while($row = $res->fetch_Assoc()){
-                if(date("Y-m-d H:i:s")<$row['expira']){
-                    return response(101, $row);
-                    return;
-                }
-            }
             $query->close();
+            while($row = $res -> fetch_Assoc()){
+                $actual = time();
+                $actual = $date->format("Y-m-d H:i:s");
+                if($actual<$row['expira']){
+                    return response(101, $row);
+                }
+            } 
             return response(100);
             
         }else{
