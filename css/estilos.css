@@ -25,4 +25,12 @@ a:hover {
 .contenido {
   margin-bottom: 3rem; }
 
+#map {
+  min-height: 400px;
+  width: 100%; }
+
+.respuesta {
+  color: #999999;
+  font-size: 92%; }
+
 /*# sourceMappingURL=estilos.css.map */

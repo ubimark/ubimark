@@ -1,5 +1,5 @@
 /**
- * Funcion que pide los productos mas buscados
+ * Función que pide los productos mas buscados
  * 
  * @author Luis Sanchez
  */
@@ -12,6 +12,7 @@ function cargarProductosDestacados() {
             estado: estado
         }
     }).done(function (result) {
+        var n;
         switch (result.status_code) {
             case 200:
                 $("#PD_contenido").append('<button type="button" class="slick-prev slick-arrow"></button>');
@@ -25,7 +26,7 @@ function cargarProductosDestacados() {
                             n = 6;
                         }
                         switch (n) {
-                            case 4:
+                            case 2:case 3:case 4:
                                 if (nombre_producto.length > 10) {
                                     nombre_producto = nombre_producto.slice(0, 10) + "...";
                                 }

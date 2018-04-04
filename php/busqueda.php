@@ -188,7 +188,9 @@
                             $count[$i]++;
                             if(!$is[0]<$m-$n){
                                 foreach($is as &$temp){
-                                    array_push($tags2use, $tags[$temp]);
+                                    if(isset($tags[$temp])){
+                                        array_push($tags2use, $tags[$temp]);
+                                    }
                                 }               
                                 $r=multiTag2Product($tags2use,$results,$enlace);
                                 while($row=$r->fetch_Assoc()){
@@ -200,6 +202,7 @@
                     }
                 }
                 $n--;
+                
             }
             //Ultima busqueda por etiquetas en caso de que se encontrara por lo menos dos etiquetas validas busca coincidencia con al menos 1 etiqueta
             if($n===1){

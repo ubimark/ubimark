@@ -2,6 +2,11 @@
     header("Content-Type:application/json");
     include_once("conectar.php");
     include("funciones.php");
+    $sess = check_session();
+    if($sess['status_code'] != 101){
+        echo json_encode(response(100));
+        return;
+    }
     $Id = $_COOKIE['Id'];
     $Id_prod = $_POST['Id_prod'];
     $table = "pedido";
@@ -21,6 +26,7 @@
         echo json_encode(response(304,array("nombre_producto"=>$nombre)));
         return;
     }
+    
     $params = array(); 
     $params['Id_usuario'] = $Id;
     $params['Id_producto'] = $Id_prod;
