@@ -140,7 +140,7 @@
     	<div id="contenido">
 		<div id="alertas"></div>
 		
-			<section class="margen">
+			<section class="m-0">
 					<div class="d-flex justify-content-center col-lg-8 offset-lg-2">
 						<div id="myCarousel" class="carousel slide" data-ride="carousel">
 							<div class="carousel-inner">
@@ -198,9 +198,8 @@
 						</div>	
 				</div>	
 			</section>
-			</div>
-			<div class="container pt-3">			
-			<div class="mt-3 d-flex position-relative flex-md-row flex-column">
+			<div class="container">			
+			<div class="d-flex position-relative flex-md-row flex-column m-0">
 					<div class="col-12 col-md-6 order-2">
 						<h5>Información del vendedor</h5>
 						<strong>Apple</strong>
@@ -243,6 +242,7 @@
 				</div>
 			</div>
 		</div>			
+	</div>
 	</div>
 		<footer class="account mt-5 container-fluid">
 			<div class="col-12">
