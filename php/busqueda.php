@@ -188,7 +188,9 @@
                             $count[$i]++;
                             if(!$is[0]<$m-$n){
                                 foreach($is as &$temp){
-                                    array_push($tags2use, $tags[$temp]);
+                                    if(isset($tags[$temp])){
+                                        array_push($tags2use, $tags[$temp]);
+                                    }
                                 }               
                                 $r=multiTag2Product($tags2use,$results,$enlace);
                                 while($row=$r->fetch_Assoc()){
