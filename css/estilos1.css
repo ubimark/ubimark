@@ -30,30 +30,14 @@ html{
 footer{
 	background-position: center center;
   	background-size: cover;
-	bottom: 0;
-}
-/*Modificaciones de carrousel/
-#myCarousel .list-inline {
-    white-space:nowrap;
-    overflow-x:auto;
+	bottom:0;
 }
 
-#myCarousel .carousel-indicators {
-    position: static;
-    left: initial;
-    width: initial;
-    margin-left: initial;
+
+.control-color{ 
+	background-color: #aaa;
 }
 
-#myCarousel .carousel-indicators > li {
-    width: initial;
-    height: initial;
-    text-indent: initial;
-}
-
-#myCarousel .carousel-indicators > li.active img {
-    opacity: 0.7;
-}*/
 
 .border-right{
 	border-right:1px solid #e9ecef!important;
@@ -81,4 +65,32 @@ footer{
 }
 .text-white{
 	color:whitesmoke;
+}
+.card-img-top {
+  	width: 100%;
+  	height:20vh !important;
+	object-fit:scale-down;
+}
+.img-cover{
+	width: 100%;
+  	height:30vh !important;
+	object-fit:fill;
+}
+.img-logo{
+	width: 100%;
+	object-fit:scale-down;
+}
+.logo-map{
+	width: 100%;
+	height: 30vh;
+}
+.img-resize{
+	object-fit: scale-down;
+	width: 100%;
+	height: 40vh;
+}
+.carousel-item {
+  	height: 40vh !important;
+	width: 80vw !important;
+
 }

@@ -26,6 +26,7 @@
     <title>Subir Producto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
+    <meta name="theme-color" content="#002F3F">
     <link rel="stylesheet" href="../css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/estilos.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
@@ -138,7 +139,8 @@
     <div class="background-white container d-flex flex-column">
     	<div id="contenido">
 		<div id="alertas"></div>
-			<section class="margen">
+		
+			<section class="m-0">
 					<div class="d-flex justify-content-center col-lg-8 offset-lg-2">
 						<div id="myCarousel" class="carousel slide" data-ride="carousel">
 							<div class="carousel-inner">
@@ -146,7 +148,7 @@
                                 $i=0;
                                 $class_active = " active";
                                 $class_normal = "carousel-item";
-                                
+
                                 $paths=preg_split("/[,]+/",$row['paths']); //Separa a las rutas de imagen del producto para mostrarlas 
                                 
                                 foreach($paths as &$path){
@@ -154,18 +156,17 @@
                                     if($i==0){
                                         $class.=$class_active;
                                     }
-                                    
                                 ?>
-                                    <div <?PHP echo "class=\"".$class."\""; ?> data-slide-number=<?PHP echo $i; ?>>
-                                        <img src=<?PHP echo "../intranet/usuarios/".$row['Id_usuario']."/uploads/".$path; ?> class="img-fluid">
+                                    <div <?PHP echo "class=\"".$class."\""; ?> data-slide-number=<?PHP echo $i; ?> >
+                                        <img src=<?PHP echo "../intranet/usuarios/".$row['Id_usuario']."/uploads/".$path; ?> class="img-fluid img-resize">
                                     </div>
                                 <?PHP $i++; } ?>
 								<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<i class="fa fa-arrow-circle-o-left fa-2x" style="color: gray;" aria-hidden="true"></i>
 									<span class="sr-only">Previous</span>
 								</a>
 								<a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<i class="fa fa-arrow-circle-o-right fa-2x" style="color: gray;" aria-hidden="true"></i>
 									<span class="sr-only">Next</span>
 								</a> 
 
@@ -197,9 +198,8 @@
 						</div>	
 				</div>	
 			</section>
-			</div>
-			<div class="container pt-3">			
-			<div class="mt-3 d-flex position-relative flex-md-row flex-column">
+			<div class="container">			
+			<div class="d-flex position-relative flex-md-row flex-column m-0">
 					<div class="col-12 col-md-6 order-2">
 						<h5>Información del vendedor</h5>
 						<strong>Apple</strong>
@@ -242,6 +242,7 @@
 				</div>
 			</div>
 		</div>			
+	</div>
 	</div>
 		<footer class="account mt-5 container-fluid">
 			<div class="col-12">
