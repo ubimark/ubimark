@@ -2,15 +2,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>pagina-vendedor</title>
+<title>Pagina vendedor</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
+<meta name="theme-color" content="#002F3F">
 <link rel="shortcut icon" href="../images/shortcut-ubi.ico">
 <link rel="stylesheet" href="../css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/estilos.min.css">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/estilos1.css">
 </head>
+<script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
+<script src="../js/main.js" type="application/javascript"></script>
+<script>
+	get_Dir();
+	check_session();
+	session_required(window.location.pathname);
+</script>
 
 <body class="background-grey">
 	<header class="container">
@@ -229,10 +237,8 @@
 			<small class="text-white">Copyright © 2017-2018 Ubimark</small>
 		</div>
 	</footer>
-    <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
-	<script src="../js/popper.min.js" type="application/javascript"></script>
+    <script src="../js/popper.min.js" type="application/javascript"></script>
 	<script src="../js/bootstrap.min.js" type="application/javascript"></script>
-	<script src="../js/main.js" type="application/javascript"></script>
-	<script src="../js/check-session.js" type="application/javascript"></script>
+	<script src="../js/index.js" type="application/javascript"></script>
 </body>
 </html>
