@@ -5,6 +5,7 @@
     $params = $_POST;
     $params['Id_usuario'] = $_COOKIE['Id'];
     $params['pais'] = "Mexico";
+    $params['calificacion'] = 3;
     $types = "";
     foreach($params as $key => $val){
         if($key != "numinterior"){
@@ -24,26 +25,31 @@
         return;
     }
     
-    $sql = "SELECT Id_empresa FROM empresa WHERE RFC = ?";
+    $sql = "SELECT Id_empresa,nombre_empresa FROM empresa WHERE RFC = ?";
     if($query = $enlace->prepare($sql)){
         $query->bind_param("s",$params['RFC']);
         $query->execute();
-        $query->bind_result($Id_empresa);
+        $query->bind_result($Id_empresa,$nombre_empresa);
         $query->fetch();
         $query->close();
+    }else{
+        echo json_encode(response(300));
+        return;
     }
+    echo $nombre_empresa;
     $params2 = array("trabaja_en" => $Id_empresa);
     $result = dbUpdate("usuario","i",array("trabaja_en" => $Id_empresa),"i",array("Id_usuario" => $params['Id_usuario']));
-    if($result != 200){
+    if($result['status_code'] != 200){
         echo json_encode($result);
         return;
     }
-    if($Id_empresa >= 1){
-        $filename = "../intranet/empresas/" . $Id_empresa . "/uploads/";
-        if (!file_exists($filename)) {
-            mkdir($filename, 0777, true);
-        }
+
+    $filename = "../intranet/empresas/" . $nombre_empresa . "/uploads/";
+    if (!file_exists($filename)) {
+        mkdir($filename, 0777, true);
     }
-    echo json_encode($result);
+    copy("../paginas/pagina-vendedor.html","../intranet/empresas/" . $nombre_empresa ."/index.html");
+
+    echo json_encode(response(200,array("path"=>$filename)));
 
 ?>
