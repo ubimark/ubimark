@@ -37,6 +37,7 @@ function add2cart(id, cantidad) {
 }
 
 function cargarPreguntas() {
+    $("#seccion_preguntas").html("");
     $.ajax({
         url: dir + "php/cargar_preguntas.php",
         dataType: "json",
@@ -47,12 +48,23 @@ function cargarPreguntas() {
     }).done(function (result) {
         switch (result.status_code) {
             case 200:
-                $("preguntas").append(
-                    '<div class="background-grey col-12 rounded px-0 mb-3 pb-2">' +
-                    '<span class="d-block px-2 pt-2">¿Fierro?</span>' +
-                    '<span class="ml-2 pl-3 respuesta">Fierro</span>' +
-                    '</div>'
-                );
+                datos = result.data;
+                console.log(datos);
+                for(var pregunta of datos){
+                    $("#seccion_preguntas").append(
+                        '<div class="background-grey col-12 rounded p-2 mb-3 " id="pregunta_'+pregunta.Id_pregunta+'">' +
+                        '<span class="px-1">'+pregunta.cliente+'</span>'+
+                        '<span class="px-2 float-right fecha">'+pregunta.fecha+'</span>'+
+                        '<span class="d-block px-2 pregunta">'+pregunta.pregunta+'</span>' +
+                        '</div>'
+                    );
+                    for(var respuesta of pregunta.respuestas){
+                        $('#pregunta_'+pregunta.Id_pregunta).append(
+                            '<span class="ml-2 pl-3 respuesta">'+respuesta.respuesta+'</span>' 
+                        );
+                    }
+                }
+                
                 break;
         }
     });
@@ -161,6 +173,7 @@ function set_band_empresa(val) {
 
 $(document).ready(function (e) {
     initMap(band_empresa);
+    cargarPreguntas();
     $(".add2cart").click(function (e) {
         e.preventDefault();
         add2cart(this.id, $("#cantidad").val());
