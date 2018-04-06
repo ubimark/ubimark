@@ -170,7 +170,7 @@
                                 <?PHP 
                                 $i=0;
                                 $class_active = " active";
-                                $class_normal = "carousel-item";
+                                $class_normal = "carousel-item carousel-item-prod";
 
                                 $paths=preg_split("/[,]+/",$row['paths']); //Separa a las rutas de imagen del producto para mostrarlas 
                                 
@@ -184,16 +184,7 @@
                                         <img src=<?PHP echo "../intranet/usuarios/".$row['Id_usuario']."/uploads/".$path; ?> class="img-fluid img-resize">
                                     </div>
                                 <?PHP $i++; } ?>
-								<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-									<i class="fa fa-arrow-circle-o-left fa-2x" style="color: gray;" aria-hidden="true"></i>
-									<span class="sr-only">Previous</span>
-								</a>
-								<a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-									<i class="fa fa-arrow-circle-o-right fa-2x" style="color: gray;" aria-hidden="true"></i>
-									<span class="sr-only">Next</span>
-								</a> 
-
-							</div>
+                                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev"> <em class="fa fa-arrow-circle-o-left fa-2x" style="color: gray;" aria-hidden="true"></em> <span class="sr-only">Previous</span> </a> <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next"> <em class="fa fa-arrow-circle-o-right fa-2x" style="color: gray;" aria-hidden="true"></em> <span class="sr-only">Next</span> </a></div>
 									<!-- main slider carousel nav controls -->
 							
 								<ol class="carousel-indicators">

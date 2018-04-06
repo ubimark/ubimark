@@ -73,24 +73,22 @@ footer{
 }
 .img-cover{
 	width: 100%;
-  	height:30vh !important;
-	object-fit:fill;
+  	min-height:20vh !important;
+	object-fit:cover;
 }
 .img-logo{
 	width: 100%;
+	min-height: 20vh;
 	object-fit:scale-down;
 }
-.logo-map{
-	width: 100%;
-	height: 30vh;
-}
+
 .img-resize{
 	object-fit: scale-down;
 	width: 100%;
-	height: 40vh;
+	max-height: 40vh;
 }
-.carousel-item {
-  	height: 40vh !important;
+.carousel-item-prod {
+  	min-height: 40vh !important;
 	width: 80vw !important;
 
 }
