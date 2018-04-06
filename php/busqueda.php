@@ -82,11 +82,10 @@
     }
 
 
-    function buscar($token){
+    function buscar($token,$results = array()){
         $enlace = getDBConnection();
         $arr = preg_split("/[\s,]+/",$token);
 
-        $results=array();
         //Se realiza la primera busqueda en el nombre del producto y se almacenan los resultados
         $prod="%".$token."%";
         if($query=$enlace->prepare("SELECT Id_producto FROM productos WHERE nombre_producto LIKE ?")){
