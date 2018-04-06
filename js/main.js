@@ -208,9 +208,12 @@ function get_Dir() {
         dir = "../";
     } else if (window.location.pathname.indexOf("php/") != -1) {
         dir = "../";
+    } else if (window.location.pathname.indexOf("intranet/") != -1) {
+        dir = "../../../";
     } else {
         dir = "";
     }
+
 }
 
 /**
@@ -359,11 +362,13 @@ function reg_buscar(token, coords, estado) {
     }
 }
 
-function session_required(path, redirect = false) {
+function session_required(path = window.location.pathname, redirect = false) {
     if (path.indexOf("/ubimark/") == 0) {
         path = path.substr(9);
     }else if(path.charAt(0)=='/'){
         path = path.substr(1);
+    }else if(path.indexOf("/ubimark.git/") == 0){
+        path = path.substr(13);
     }
     i = path.indexOf("?");
     params = "";
