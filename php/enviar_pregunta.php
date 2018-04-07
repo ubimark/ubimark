@@ -4,6 +4,10 @@
     include_once("funciones.php");
     $params = $_POST;
     $params['Id_cliente'] = $_COOKIE['Id'];
+    $date = new \DateTime('now', new \DateTimeZone('America/Mexico_City'));
+    $actual = time();
+    $actual = $date->format("Y-m-d H:i:s");
+    $params['fecha'] = $actual;
     $sql = "SELECT * FROM productos WHERE Id_producto = ?";
     if ($query = $enlace -> prepare($sql)){
         $query -> bind_param("i",$params['Id_producto']);
@@ -22,7 +26,7 @@
         $params['tipo_vendedor'] = "EMPRESA";
         $params['Id_vendedor'] = $row['Id_empresa'];
     }
-    $result = dbInsert("preguntas","siisi",$params);
+    $result = dbInsert("preguntas","siisis",$params);
     echo json_encode($result);
     
 ?>
