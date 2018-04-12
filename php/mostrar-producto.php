@@ -326,9 +326,7 @@
 		</footer>
     <script src="../js/popper.min.js" type="application/javascript"></script>
     <script src="../js/bootstrap.min.js" type="application/javascript"></script>
-    <script>
-      
-    </script>
+    <script src="js/fancywebsocket.js" type="text/javascript"></script>
     <script async="false" defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0">
     </script>

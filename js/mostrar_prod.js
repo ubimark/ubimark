@@ -66,6 +66,13 @@ function cargarPreguntas() {
                 }
                 
                 break;
+            case 305:
+                $("#seccion_preguntas").append(
+                    '<div class="background-grey col-12 rounded p-2 mb-3 ">' +
+                    '<span class="d-block px-2 pregunta text-center">Aún no hay preguntas para este producto, se el primero en realizar una!</span>'+
+                    '</div>'
+                );
+                break;
         }
     });
 }
@@ -161,6 +168,7 @@ function send_pregunta(producto) {
                 addAlert("alert_pregunta", "Su pregunta ha sido enviada", "alert-success", "", "fa fa-check", "", true);
                 $("#pregunta").val('');
                 cargarPreguntas();
+                send_notificacion("PREGUNTA","Tiene una pregunta nueva de "+nombre,result.data.pregunta,result.data.fecha,result.data.user,result.data.destino);
                 break;
         }
 

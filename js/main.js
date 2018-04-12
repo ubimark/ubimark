@@ -51,10 +51,9 @@ function acomodarContenido($reintento = false) {
  * @param {string} ico Icono mostrado antes del mensaje de la alerta 
  * @param {string} ico2 Icono mostrado despues del mensaje de la alerta 
  * @param {boolean} autoclose Cerrar en automatico
+ * @param {boolean} closeable Icono para cerrar alerta
  */
-function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
-
-
+function addAlert(id, message, color, bgcolor, ico, ico2, autoclose=false , closeable=true) {
     if (autoclose) {
         $("#alertas").append(
             "<div style='height:80px !important; position:fixed;top:15%;z-index:300;right:30%;left:30%;border:1px solid rgba(0,0,0,0.2);' class='alert " + color + " " + bgcolor + " alert-dismissible fade show mb-0 d-flex align-items-center justify-content-center' style='' role='alert' id=" + id + ">" +
@@ -68,19 +67,29 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
             $("#" + id).fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
-        }, 1500);
+        }, 2000);
 
     } else {
-        $("#alertas").append(
-            "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
-            "<i class='fa " + ico + " mr-2' ></i>" +
-            "<span>" + message + "</span>" +
-            "<i class='fa " + ico2 + " ml-2' ></i>" +
-            "<button type='button' class='close' data-dismiss='alert' aria-label='close'>" +
-            "<span aria_hidden='true'>&times;</span>" +
-            "</button>" +
-            "</div>"
-        );
+        if(closeable){
+            $("#alertas").append(
+                "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
+                "<i class='fa " + ico + " mr-2' ></i>" +
+                "<span>" + message + "</span>" +
+                "<i class='fa " + ico2 + " ml-2' ></i>" +
+                "<button type='button' class='close' data-dismiss='alert' aria-label='close'>" +
+                "<span aria_hidden='true'>&times;</span>" +
+                "</button>" +
+                "</div>"
+            );
+        }else{
+            $("#alertas").append(
+                "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
+                "<i class='fa " + ico + " mr-2' ></i>" +
+                "<span>" + message + "</span>" +
+                "<i class='fa " + ico2 + " ml-2' ></i>" +
+                "</div>"
+            );
+        }
     }
 }
 
@@ -212,6 +221,9 @@ function get_Dir() {
         dir = "../../../";
     } else {
         dir = "";
+    }
+    if(window.location.pathname.charAt(window.location.pathname.length-1) == '/'){
+        window.location.pathname += "index.html";
     }
 
 }
@@ -362,6 +374,29 @@ function reg_buscar(token, coords, estado) {
     }
 }
 
+function send_notificacion(tipo,mensaje,origen,fecha,remitente,destino){
+    $.ajax({
+        url: dir+"php/send_notificacion.php",
+        dataType : "json",
+        type : "post",
+        data:{
+            tipo : tipo,
+            mensaje : mensaje,
+            origen : origen,
+            fecha : fecha,
+            remitente : remitente,
+            destino : destino
+        }
+    }).done(function(result){
+        switch(result.status_code){
+            case 200:
+                result.data.target = 1;
+                send(result.data);
+                break;
+        }
+    });
+}
+
 function session_required(path = window.location.pathname, redirect = false) {
     if (path.indexOf("/ubimark/") == 0) {
         path = path.substr(9);
@@ -404,7 +439,23 @@ function session_required(path = window.location.pathname, redirect = false) {
 }
 //Función a ejecutar una vez que se encuentre cargada la página
 $(document).ready(function (e) {
-
+    if(location.protocol == "http:"){   
+        addAlert("conexion_segura","Tu conexion no es segura. Da click aqui para usar una conexion segura","alert-white","bg-info","fa-warning","fa-warning",false,false);
+        $("#conexion_segura").click(function(e){
+            url = window.location.host + window.location.pathname;
+            if(getParameterByName('key')!= ""){
+                url+='?key='+(getParameterByName('key'));
+            }else if(getParameterByName('search')!= ""){
+                url+='?search='+(getParameterByName('search'));
+            }else if(getParameterByName('rdir')!= ""){
+                url+='?rdir='+(getParameterByName('rdir'));
+            }
+            window.location.assign("https://"+url);
+        });
+        $("#conexion_segura").hover(function(e){
+            $("#conexion_segura").css("cursor","pointer");
+        });
+    }
     getGeolocation();
     acomodarContenido();
     session_data();
@@ -477,7 +528,6 @@ $(document).ready(function (e) {
     });
 
     $("#dropdownShopping-Cart").click(function (e) {
-        console.log("OK");
         cargarCarritoDrop();
     });
 

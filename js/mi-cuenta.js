@@ -1,3 +1,35 @@
+function actualizarEmpresa(){
+    address = $("#num-ext-inp-emp").val() + $("#calle-inp-emp").val() + "," + $("#ciudad-inp-emp").val() + "," + $("#est-inp-emp").val();
+    $.ajax({
+        url: "https://maps.googleapis.com/maps/api/geocode/json",
+        dataType: "json",
+        type: "GET",
+        async: false,
+        data: {
+            address: address,
+            key: "AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0",
+            language: "es"
+        }
+    }).done(function (data) {
+        datos = data.results[0].geometry.location;
+        coords = datos.lat + "," + datos.lng; //Guarda la entidad federativa del usuario
+        $("#coords_emp_act").val(coords);
+        var form_data = $("#form_act_empresa").serialize();
+        $.ajax({
+            url : dir+"php/updateEmpresa.php",
+            type : "post",
+            dataType : "json",
+            data : form_data
+        }).done(function(result){
+            switch(result.status_code){
+                case 200:
+                    cargarDatos();
+                    addAlert("empresa_actualizada","Se actualizo correctamente la empresa","alert-success","","fa-check","",true);
+            }
+        });
+    });
+}
+
 /**
  * Funcion que carga los datos del usuario y la empresa
  * 
@@ -52,6 +84,7 @@ function cargarDatos() {
                 $("#empresa_delegacion").html(" " + datos.delegacion);
                 $("#empresa_cp").html(" " + datos.cp);
 
+                $("#coords_emp_act").val(datos.coordenadas);
                 $("#nombre-inp-emp").val(datos.nombre_empresa);
                 $("#rfc-inp-emp").val(datos.RFC);
                 $("#email-inp-emp").val(datos.email);
@@ -110,6 +143,10 @@ $(document).ready(function (e) {
         registra_empresa();
     });
 
+    $("#btn_act_empresa").click(function(e){
+        actualizarEmpresa();
+    });
+
     $("#mc-menu-empresa").click(function (e) {
         e.preventDefault();
         $("#cont-empresa").removeClass("d-none");
@@ -124,4 +161,6 @@ $(document).ready(function (e) {
         $("#cont-mis-datos").addClass("d-flex");
 
     });
+
+
 });
