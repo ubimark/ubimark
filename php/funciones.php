@@ -166,6 +166,22 @@
         return $value != null;
     }
 
+    function paramsRequired($params,$required){
+        foreach($required as $null => $arr){
+            foreach ($arr as $key ) {
+                if(!isset($params[$key])){
+                    return response(306,$key);
+                }
+                $temp = $params[$key];
+                if(!notNull($temp) && strcmp($null,"NotNull") == 0){
+                    return response(302,$key);
+                }
+            }
+        }
+        return response(200);
+
+    }
+
     /**
      * Función para dar respuestas en json.
      * 
@@ -193,7 +209,9 @@
             "301" => "Los tipos y la cantidad de datos en la peticion no concuerdan.",
             "302" => "Campo nulo en la peticion.",
             "303" => "El producto ya se encuentra en el carrito",
-            "304" => "No hay existencias suficientes para procesar la compra"
+            "304" => "No hay existencias suficientes para procesar la compra",
+            "305" => "No se encontraron datos",
+            "306" => "Faltan campos en la peticion"
         );
         $arr = array(
             "status_code" => $code,
