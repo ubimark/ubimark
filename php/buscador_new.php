@@ -14,7 +14,7 @@
         <title>Ubimark</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-
+		<meta name="theme-color" content="#002F3F">
         <link rel="stylesheet" href="../css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/estilos.min.css">
@@ -97,29 +97,40 @@
                     </ul>
                 </div>
                 <div class="container-fluid account d-none" id="menu-user">
-                    <div class="container ">
-                        <ul class="nav  nav-fill">
-                            <li class="nav-item">
-                                <a class="nav-link mc-resumen">Resumen</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mc-compras">Compras</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mc-ventas">Ventas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mc-stats">Estadisticas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mc-alerts"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mc-mail"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="container ">
+                    <ul class="nav  nav-fill">
+                        <li class="nav-item">
+                            <a class="nav-link mc-resumen text-white">Resumen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mc-compras text-white">Compras</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mc-ventas text-white">Ventas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mc-stats text-white">Estadisticas</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="mc-alerts nav-link dropdown">
+							  <i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <span class="badge badge-danger">1</span>
+							  </i>
+							  <div class="dropdown-menu" aria-labelledby="dropdownNoti">
+								<strong>Notificaciones</strong>
+								<div class="dropdown-divider"></div>
+								
+							  </div>
+							</div>                            
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mc-mail">
+                                <i class="fa fa-envelope-o text-white" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
 
             </nav>
         </header>
@@ -194,7 +205,7 @@
            ?>
            
 		</div>
-		<footer class="account container-fluid d-flex flex-column mt-5">
+		<footer class="account container-fluid d-flex flex-column">
 			<div class="">
 				<ul class="list-inline d-flex justify-content-center">
 				  <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>

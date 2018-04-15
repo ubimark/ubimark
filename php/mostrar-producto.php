@@ -136,22 +136,33 @@
                 <div class="container ">
                     <ul class="nav  nav-fill">
                         <li class="nav-item">
-                            <a class="nav-link mc-resumen">Resumen</a>
+                            <a class="nav-link mc-resumen text-white">Resumen</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mc-compras">Compras</a>
+                            <a class="nav-link mc-compras text-white">Compras</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mc-ventas">Ventas</a>
+                            <a class="nav-link mc-ventas text-white">Ventas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mc-stats">Estadisticas</a>
+                            <a class="nav-link mc-stats text-white">Estadisticas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mc-alerts"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+                            <div class="mc-alerts nav-link dropdown">
+							  <i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <span class="badge badge-danger">1</span>
+							  </i>
+							  <div class="dropdown-menu" aria-labelledby="dropdownNoti">
+								<strong>Notificaciones</strong>
+								
+								</div>
+							  </div>
+							</div>                            
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mc-mail"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                            <a class="nav-link mc-mail">
+                                <i class="fa fa-envelope-o text-white" aria-hidden="true"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>

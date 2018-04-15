@@ -27,10 +27,13 @@ html{
 	position: relative;
 }
 
+body{
+	margin: 0;
+  	margin-bottom: 20vh;
+}
 footer{
-	background-position: center center;
-  	background-size: cover;
-	bottom:0;
+	position: absolute;
+ 	bottom: 0;
 }
 
 
@@ -91,4 +94,15 @@ footer{
   	min-height: 40vh !important;
 	width: 80vw !important;
 
+}
+.border-bottom{
+	border-bottom: 1px solid lightgray;
+}
+.qst-st{
+	max-height: 80vh;
+	overflow: scroll;
+}
+.dropdown-menu {
+    width: 50vh !important;
+    height: auto !important;
 }
