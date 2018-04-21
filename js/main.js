@@ -1,6 +1,9 @@
 var dir; //Directorio a seguir
 var lat, lon, estado; //Latitud y Longitud , estado
 var sess = 2; //Guarda la sesion 0:inactiva 1:activa 2:sin comprobar
+var user = 0;
+var socket;
+var unread_noti;
 
 /**
  * Función que acomoda el contenido para no tener conflictos con el menu fixed
@@ -51,10 +54,9 @@ function acomodarContenido($reintento = false) {
  * @param {string} ico Icono mostrado antes del mensaje de la alerta 
  * @param {string} ico2 Icono mostrado despues del mensaje de la alerta 
  * @param {boolean} autoclose Cerrar en automatico
+ * @param {boolean} closeable Icono para cerrar alerta
  */
-function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
-
-
+function addAlert(id, message, color, bgcolor, ico, ico2, autoclose=false , closeable=true) {
     if (autoclose) {
         $("#alertas").append(
             "<div style='height:80px !important; position:fixed;top:15%;z-index:300;right:30%;left:30%;border:1px solid rgba(0,0,0,0.2);' class='alert " + color + " " + bgcolor + " alert-dismissible fade show mb-0 d-flex align-items-center justify-content-center' style='' role='alert' id=" + id + ">" +
@@ -68,19 +70,29 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose) {
             $("#" + id).fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
-        }, 1500);
+        }, 2000);
 
     } else {
-        $("#alertas").append(
-            "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
-            "<i class='fa " + ico + " mr-2' ></i>" +
-            "<span>" + message + "</span>" +
-            "<i class='fa " + ico2 + " ml-2' ></i>" +
-            "<button type='button' class='close' data-dismiss='alert' aria-label='close'>" +
-            "<span aria_hidden='true'>&times;</span>" +
-            "</button>" +
-            "</div>"
-        );
+        if(closeable){
+            $("#alertas").append(
+                "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
+                "<i class='fa " + ico + " mr-2' ></i>" +
+                "<span>" + message + "</span>" +
+                "<i class='fa " + ico2 + " ml-2' ></i>" +
+                "<button type='button' class='close' data-dismiss='alert' aria-label='close'>" +
+                "<span aria_hidden='true'>&times;</span>" +
+                "</button>" +
+                "</div>"
+            );
+        }else{
+            $("#alertas").append(
+                "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
+                "<i class='fa " + ico + " mr-2' ></i>" +
+                "<span>" + message + "</span>" +
+                "<i class='fa " + ico2 + " ml-2' ></i>" +
+                "</div>"
+            );
+        }
     }
 }
 
@@ -128,7 +140,62 @@ function cargarCarritoDrop() {
         }
     });
 }
+function cargarNotificacion(title,data,estado){
+    if(estado == "unread"){
+        unread_noti.push(data.Id_notificacion); 
+    }
+    $("#drpdwn_noti_body").prepend('<div class="d-flex border-bottom notificacion '+estado+'">' +
+            '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
+            '<img class="card-img p-2" src="intranet/usuarios/'+data.autor_img+'/uploads/'+data.ruta_img+'" alt="Foto del producto">' +
+            '</div>' +
+            '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
+            '<p><span class="d-block">'+title+':</span> ' +
+            '<small>'+data.mensaje+'</small>' +
+            '</p>' +
+            '</div>' +
+            '</div>');
+}
 
+function cargarNotificaciones(){
+    unread_noti = [];
+    $.ajax({
+        url : dir + "php/cargar_notificaciones.php",
+        type : "post"
+    }).done(function(res){
+        switch(res.status_code){
+            case 200:
+                let cont = 0;
+                for(let notificacion of res.data){
+                    console.log(notificacion);
+                    let title ="";
+                    let estado ="";
+                    switch(notificacion.tipo){
+                        case "PREGUNTA":
+                            title = "Nueva pregunta sobre tu producto";
+                            break;
+                        case "RESPUESTA":
+                            title = "Se ha respondido tu pregunta";
+                            break;
+                    }
+                    switch(notificacion.estado){
+                        case "LEIDO":
+                            estado="read";
+                            break;
+                        case "NO_LEIDO":
+                            estado="unread";
+                            break;
+                    }
+                    if(notificacion.estado == "NO_LEIDO")cont++;
+                    cargarNotificacion(title,notificacion,estado);
+                }
+                if(cont>0){
+                    $("#noti_cont").removeClass("d-none");
+                    $("#noti_cont").html(cont);
+                }
+                break;
+        }
+    });
+}
 
 /**
  * Función que comprueba si hay una sesión activa
@@ -151,53 +218,23 @@ function check_session() {
                 break;
             case 101:
                 sess = 1; //Cambia la sesión a activa
+                user = result.data.user;
                 break;
         }
     });
     return sess;
 }
 
-function session_data() {
-    switch (sess) {
-        case 0:
-            $("#mi-ingresar").removeClass("d-none"); //Muestra la opción de ingresar en el menú
-            $("#mi-ingresar2").removeClass("d-none"); //Muestra la opción de ingresar en el menú movil
-            break;
-        case 1:
-            $("#menu-user").addClass("d-md-block"); //Muestra el menu del usuario
-            $("#mi-cuenta").addClass("d-md-block"); //Muestra el dropdown del usuario
-            $("#btn-cuenta").removeClass("d-none"); //Muestra el boton dropdown del usuario en dispositivos moviles
-            $("#btn-cuenta").addClass("d-md-none"); //Oculta el boton dropdown del usuario en pantallas md
-            $.ajax({
-                url: dir + "php/datos_usuario.php",
-                type: "post",
-                dataType: "json",
-                data: {
-                    required: ["nombre", "apellidos"]
-                }
-            }).done(function (result) {
-                switch (result.status_code) {
-                    case 200:
-                        datos = result.data[0];
-                        var nombre, apellidos, i;
-                        apellidos = datos.apellidos.charAt(0) + "."; //Obtiene la primer letra del apellido del usuario
-                        i = datos.nombre.indexOf(" "); //Busca el espacio para solo tomar el primer nombre en caso de que el usuario cuente con un segundo nombre
-                        if (i === (-1)) {
-                            //Si el usuario solo tiene un nombre se toma este y se agrega la primer letra del apellido
-                            nombre = datos.nombre + " " + apellidos;
-                        } else {
-                            //Si el usuario tiene más de un nombre se toma el primer nombre y se agrega la primer letra del apellido
-                            nombre = datos.nombre.slice(0, i) + " " + apellidos;
-                        }
-                        $("#drop-mi-cuenta").html(nombre); //Muestra el nombre en el dropdown
-                        $("#dropdownMenuButton").html(nombre); //Muestra el nombre en el dropdown
-                        $(".u-name").html(nombre); //Muestra el nombre en los elementos que cuenten con la clase u-name
-                        break;
-                }
-            });
-            break;
-    }
+function emit_ws(datos){
+    $.ajax({
+        url:dir+"/socket/socket_command.php",
+        type:"post",
+        dataType:"json",
+        data:datos
+    }).done(function(res){
+    });
 }
+
 /**
  * Función que define el directorio a seguir basandose en la url actual
  * 
@@ -212,6 +249,9 @@ function get_Dir() {
         dir = "../../../";
     } else {
         dir = "";
+    }
+    if(window.location.pathname.charAt(window.location.pathname.length-1) == '/'){
+        window.location.pathname += "index.html";
     }
 
 }
@@ -327,6 +367,22 @@ function logout() {
     });
 }
 
+function read_notifications(){
+    $.ajax({
+        url:dir+"php/cambiar_estado_notificacion.php",
+        type:"post",
+        dataType:"json",
+        data:{estado:"LEIDO",notificaciones:unread_noti}
+    }).done(function(res){
+        switch(res.status_code){
+            case 200:
+                $(".unread").addClass("read");
+                $(".read").removeClass("unread")    
+                break;
+        }
+    });
+}
+
 /**
  * Función para mandar petición al servidor.
  * 
@@ -359,6 +415,71 @@ function reg_buscar(token, coords, estado) {
         });
     } else {
         href("php/buscador_new.php?search=");
+    }
+}
+
+function send_notificacion(tipo,remitente,origen,destino,fecha){
+    $.ajax({
+        url: dir+"php/send_notificacion.php",
+        dataType : "json",
+        type : "post",
+        data:{
+            tipo : tipo,
+            remitente : remitente,
+            origen : origen,
+            destino : destino,
+            fecha : fecha
+        }
+    }).done(function(result){
+        switch(result.status_code){
+            case 200:
+                result.data.key="notificacion";
+                emit_ws(result.data);
+                break;
+        }
+    });
+}
+
+
+function session_data() {
+    switch (sess) {
+        case 0:
+            $("#mi-ingresar").removeClass("d-none"); //Muestra la opción de ingresar en el menú
+            $("#mi-ingresar2").removeClass("d-none"); //Muestra la opción de ingresar en el menú movil
+            break;
+        case 1:
+            $("#menu-user").addClass("d-md-block"); //Muestra el menu del usuario
+            $("#mi-cuenta").addClass("d-md-block"); //Muestra el dropdown del usuario
+            $("#btn-cuenta").removeClass("d-none"); //Muestra el boton dropdown del usuario en dispositivos moviles
+            $("#btn-cuenta").addClass("d-md-none"); //Oculta el boton dropdown del usuario en pantallas md
+            $.ajax({
+                url: dir + "php/datos_usuario.php",
+                type: "post",
+                dataType: "json",
+                data: {
+                    required: ["nombre", "apellidos"]
+                }
+            }).done(function (result) {
+                switch (result.status_code) {
+                    case 200:
+                        datos = result.data[0];
+                        var nombre, apellidos, i;
+                        apellidos = datos.apellidos.charAt(0) + "."; //Obtiene la primer letra del apellido del usuario
+                        i = datos.nombre.indexOf(" "); //Busca el espacio para solo tomar el primer nombre en caso de que el usuario cuente con un segundo nombre
+                        if (i === (-1)) {
+                            //Si el usuario solo tiene un nombre se toma este y se agrega la primer letra del apellido
+                            nombre = datos.nombre + " " + apellidos;
+                        } else {
+                            //Si el usuario tiene más de un nombre se toma el primer nombre y se agrega la primer letra del apellido
+                            nombre = datos.nombre.slice(0, i) + " " + apellidos;
+                        }
+                        $("#drop-mi-cuenta").html(nombre); //Muestra el nombre en el dropdown
+                        $("#dropdownMenuButton").html(nombre); //Muestra el nombre en el dropdown
+                        $(".u-name").html(nombre); //Muestra el nombre en los elementos que cuenten con la clase u-name
+                        break;
+                }
+            });
+            break;
     }
 }
 
@@ -402,8 +523,94 @@ function session_required(path = window.location.pathname, redirect = false) {
         }
     });
 }
+
+function show_noti(id,titulo, message, color){
+    $("#alertas").append(
+        "<div style='height:120px !important;padding: 0; position:fixed;bottom:1%;z-index:300;right:70%;left:1%;border:1px solid rgba(0,0,0,0.2);' class='alert alert-" + color + " alert-dismissible fade show mb-0  align-items-center justify-content-center' style='' role='alert' id=" + id + ">" +
+        "<div class='card bg-transparent border-0'>"+
+        "<div class='card-header bg-"+color+"'>" + titulo + "</div>"+
+        "<ul class='list-group list-group-flush bg-transparent'>"+
+            "<li class='list-group-item bg-transparent'>" + message + "</li>"+
+        "</ul>"+
+        "</div>"+
+        "<button type='button' class='close' style='width: 5px;height: 5px;font-size: 18px;top: -10px !important;' data-dismiss='alert' aria-label='close'>" +
+            "<span aria_hidden='true'>&times;</span>" +
+        "</button>" +
+        "</div>"
+    );
+
+    window.setTimeout(function () {
+        $("#" + id).fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 4000);
+}
+
+function solicitar_noti(notificacion){
+    $.ajax({
+        url:dir+"php/cargar_notificacion.php",
+        type:"post",
+        dataType:"json",
+        data:{notificacion:notificacion}
+    }).done(function(res){
+        switch(res.status_code){
+            case 200:
+                let title;
+                $("#noti_cont").removeClass("d-none");
+                $("#noti_cont").html(parseInt($("#noti_cont").html())+1);
+                switch(res.data.tipo){
+                    case "PREGUNTA":
+                        title = "Nueva pregunta sobre tu producto";
+                        break;
+                    case "RESPUESTA":
+                        title = "Se ha respondido tu pregunta";
+                        break;
+                }
+                cargarNotificacion(title,res.data,"unread");
+                show_noti("notificacion",title,res.data.mensaje,"info");
+                break;
+        }
+    });
+}
+
 //Función a ejecutar una vez que se encuentre cargada la página
 $(document).ready(function (e) {
+
+    if(location.protocol == "http:"){   
+        socket = io.connect("ws://localhost:3001");
+        addAlert("conexion_segura","Tu conexion no es segura. Da click aqui para usar una conexion segura","alert-white","bg-info","fa-warning","fa-warning",false,false);
+        $("#conexion_segura").click(function(e){
+            url = window.location.host + window.location.pathname;
+            if(getParameterByName('key')!= ""){
+                url+='?key='+(getParameterByName('key'));
+            }else if(getParameterByName('search')!= ""){
+                url+='?search='+(getParameterByName('search'));
+            }else if(getParameterByName('rdir')!= ""){
+                url+='?rdir='+(getParameterByName('rdir'));
+            }
+            window.location.assign("https://"+url);
+        });
+        $("#conexion_segura").hover(function(e){
+            $("#conexion_segura").css("cursor","pointer");
+        });
+    }else{
+        socket = io.connect("wss://localhost:3002",{rejectUnauthorized:false});
+    }
+
+    if(sess==1){
+        $("#drpdwn_noti_body").attr("user",user);
+        cargarNotificaciones();
+    }
+
+    socket.on("notificacion",function(data){
+        check_session();
+        console.log(data);
+        destino = parseInt(data.destino);
+        if(sess == 1 && destino == user && $("#drpdwn_noti_body").attr('user') == destino){
+            solicitar_noti(data.notificacion);
+        }
+    });
+
 
     getGeolocation();
     acomodarContenido();
@@ -444,6 +651,7 @@ $(document).ready(function (e) {
     //Define la función a realizar al clickear cerrar sesión
     $(".logout").click(function (e) {
         e.preventDefault();
+        socket.emit('logout');
         logout();
     });
 
@@ -477,7 +685,6 @@ $(document).ready(function (e) {
     });
 
     $("#dropdownShopping-Cart").click(function (e) {
-        console.log("OK");
         cargarCarritoDrop();
     });
 
@@ -530,5 +737,13 @@ $(document).ready(function (e) {
         });
     });
 
+    $("#dropdownNoti").click(function(e){
+        $("#noti_cont").addClass("d-none");
+        $("#noti_cont").html("0");
+        if($("#drpdwn_noti").hasClass("show") && unread_noti.length > 0){
+            read_notifications();
+        }
+        
+    });
 
 });

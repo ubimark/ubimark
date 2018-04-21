@@ -19,14 +19,30 @@
         return;
     }
     $row = $res -> fetch_Assoc();
-    if($row['tipo_cuenta'] == "PERSONAL"){
-        $params['tipo_vendedor'] = "PERSONAL";
+    if(strcmp($row['tipo_cuenta'], "PERSONAL") == 0){
+        $params['tipo_vendedor'] = $row['tipo_cuenta'];
         $params['Id_vendedor'] = $row['Id_usuario'];
-    }else if($row['tipo_cuenta'] == "EMPRESA"){
-        $params['tipo_vendedor'] = "EMPRESA";
+    }else if(strcmp($row['tipo_cuenta'], "EMPRESA") == 0){
+        $params['tipo_vendedor'] = $row['tipo_cuenta'];
         $params['Id_vendedor'] = $row['Id_empresa'];
     }
-    $result = dbInsert("preguntas","siisis",$params);
-    echo json_encode($result);
+    $result = dbInsert("preguntas","siissi",$params);
+    if($result['status_code']!=200){
+        echo json_encode($result);
+        return;
+    }
+    $sql = "SELECT Id_pregunta FROM preguntas WHERE Id_cliente = ? AND fecha = ?";
+    if($query = $enlace -> prepare($sql)){
+        $query -> bind_param("is",$params['Id_cliente'],$params['fecha']);
+        $query -> execute();
+        $query -> bind_result($Id_pregunta);
+        $query -> fetch();
+        $query -> close();
+    }else{
+        echo json_encode(response(300,sqlError($sql,"is",array("Id_cliente"=>$params['Id_cliente'],"fecha"=>$params['fecha']))));
+        return;
+    }
+    $respuesta = array("user"=> $params['Id_cliente'], "pregunta" =>$params['pregunta'],"target"=> $Id_pregunta, "fecha" =>$params['fecha'],"destino"=>$params['Id_vendedor']);
+    echo json_encode(response(200,$respuesta));
     
 ?>

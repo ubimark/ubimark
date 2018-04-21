@@ -46,4 +46,52 @@ a:hover{
     font-size: 80%;
 }
 
+.alert-white{
+    color:white !important;
+}
 
+#drpdwn_noti{
+    min-width: 400px;
+    left: -6rem;
+}
+
+#noti_cont{
+    width: 15px;
+    height: 15px;
+    font-size: 8px;
+    border-radius: 50%;
+    position: relative;
+    left: -11px;
+    top: 3px;
+    line-height: 11px;
+}
+
+#drpdwn_noti_body{
+    max-height:50vh;
+    overflow-y:scroll;
+    border-radius: 4px;
+    ::-webkit-scrollbar {
+        width: 1px;
+    } 
+    img{
+        border-radius: 50%;
+        max-width: 70px;
+        max-height: 70px;
+        width: 100%;
+        height: 100%;
+    }
+    .notificacion{   
+        min-height: 70px;
+        background: rgba(245, 245, 245, 0.4);
+    }
+    .notificacion:hover{
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.9);
+    }
+    .unread{
+        background:rgba(0, 249, 223, 0.22);
+    }
+    .unread:hover{
+        background: rgba(76,250,232,0.22);
+    }
+}

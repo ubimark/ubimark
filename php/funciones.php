@@ -19,6 +19,7 @@
                 $actual = time();
                 $actual = $date->format("Y-m-d H:i:s");
                 if($actual<$row['expira']){
+                    $row['user']=$id;
                     return response(101, $row);
                 }
             } 
@@ -99,11 +100,12 @@
         if($query = $link->prepare($sql)){
             call_user_func_array(array($query,'bind_param'),$a_params);
             $query->execute();
+            $new_id = $query->insert_id;
             $query->close();
         }else{
             return response(300,sqlError($sql,$types,$values));
         }
-        return response(200,sqlError($sql,"",$a_params));
+        return response(200,array("ID" => $new_id));
     }
 
     /**
@@ -166,6 +168,22 @@
         return $value != null;
     }
 
+    function paramsRequired($params,$required){
+        foreach($required as $null => $arr){
+            foreach ($arr as $key ) {
+                if(!isset($params[$key])){
+                    return response(306,$key);
+                }
+                $temp = $params[$key];
+                if(!notNull($temp) && strcmp($null,"NotNull") == 0){
+                    return response(302,$key);
+                }
+            }
+        }
+        return response(200);
+
+    }
+
     /**
      * Función para dar respuestas en json.
      * 
@@ -193,7 +211,10 @@
             "301" => "Los tipos y la cantidad de datos en la peticion no concuerdan.",
             "302" => "Campo nulo en la peticion.",
             "303" => "El producto ya se encuentra en el carrito",
-            "304" => "No hay existencias suficientes para procesar la compra"
+            "304" => "No hay existencias suficientes para procesar la compra",
+            "305" => "No se encontraron datos",
+            "306" => "Faltan campos en la peticion",
+            "400" => "Petición al socket no valida"
         );
         $arr = array(
             "status_code" => $code,
