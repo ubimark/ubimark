@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Compras</title>
+    <title>Preguntas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="theme-color" content="#002F3F">
@@ -19,7 +19,7 @@
 <script>
 	get_Dir();
 	check_session();
-	session_required(window.location.pathname);
+	session_required();
 </script>
 <body>
     <header class="container">
@@ -56,7 +56,7 @@
             <button class="btn d-none navbar-toggler col-1 px-0 py-2 mr-2" data-toggle="collapse" href="#menu" id="mi-ingresar2">
                 <em class="fa fa-bars"></em>
             </button>
-            <button class="btn navbar-toggler col-1 px-0 py-2 mr-2" data-toggle="collapse" href=#buscador>
+            <button class="btn navbar-toggler col-1 px-0 py-2 mr-2" data-toggle="collapse" href="#buscador">
                 <i class="fa fa-search"></i>
             </button>
 
@@ -138,28 +138,82 @@
 
         </nav>
     </header>
+
     <div id="contenido">
         <div id="alertas"></div>
-        <section class="margen">
-            <div class="col-2 pull-left d-none d-md-block">
+        <section class="">
+            <div class="col-12 col-md-2 pull-left d-none d-md-block position-static">
                 <div class="list-group">
-                    <a href="#Compras" class="list-group-item list-group-item-action">Compras</a>
-                    <a href="#" class="list-group-item list-group-item-action">Favoritos</a>
-                    <a href="#" class="list-group-item list-group-item-action">Preguntas</a>
+                    <a href="ventas.html" class="list-group-item">Publicaciones</a>
+                    <a href="#" class="list-group-item">Ventas</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#preguntas-collapse" role="button" aria-expanded="true" aria-controls="preguntas-collapse">Preguntas</a>
+                    <div class="collapse show" id="preguntas-collapse">
+                        <div class="list-group list-group-flush">
+                            <a href="preguntas-personal.html" class="list-group-item active">Cuenta personal</a>
+                            <a href="preguntas-empresa.html" class="list-group-item">Cuenta empresa</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <span class="" id="publicaciones">
-                <div class="col-9 pull-left container" id="compras">
-
-                </div>
-
-            </span>
+            <!-- Dejar este div que muestra las las opciones de como filtrar las preguntas con junto con la foto del producto y el producto -->
+			<div class="col-12">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+				  <li class="nav-item">
+					<a class="nav-link active" id="todas-tab" data-toggle="tab" href="#todas" role="tab" aria-controls="todas" aria-selected="true">Todas</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" id="pendientes-tab" data-toggle="tab" href="#pendientes" role="tab" aria-controls="pendientes" aria-selected="false">Pendientes</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" id="contestadas-tab" data-toggle="tab" href="#contestadas" role="tab" aria-controls="contestadas" aria-selected="false">Contestadas</a>
+				  </li>
+				</ul>
+			</div>
+			
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="todas" role="tabpanel" aria-labelledby="todas-tab">
+					<div class="m-2 float-left col-12 col-md-3 col-lg-2 position-static">
+						<div class="d-flex border-bottom pb-2 mt-2">
+							<div class="card col-md-4 border-0 d-none d-md-block">
+								<img class="card-img" src="../intranet/usuarios/1/uploads/7121331318135926110.jpg" alt="Foto del producto">
+							</div>
+							<div class="card col-12 col-md-7 border-0">
+								<strong>Producto</strong>
+							</div>
+						</div>
+					</div>
+					
+					<div class="qst-st col-12 col-md-7">
+						<div class="rounded bg-light mb-3 d-flex flex-column">
+							<strong>
+							Jonathan
+							<small class="mr-3 float-right">Historial</small>
+							</strong>
+							<p>Tienes Color negro?</p>
+							<div class="">
+								<textarea name="" id="" class="form-control" rows="1" ></textarea>
+								<button type="button" class="btn btn-info pull-right">Responder</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				 
+				 
+				 
+			  	<div class="tab-pane fade" id="pendientes" role="tabpanel" aria-labelledby="pendientes-tab">
+			  		<!--Generar contenido de preguntas pendientes aqui-->
+			  	</div>
+			  	
+			  	
+			  	
+			 	<div class="tab-pane fade" id="contestadas" role="tabpanel" aria-labelledby="contestadas-tab">
+			 	 	<!--Generar contenido de preguntas contestadas aqui-->
+			 	</div>
+			</div>
         </section>
-        
     </div>
 
-        <footer class="account container-fluid d-flex flex-column position-absolute">
-			<div class="">
+		<footer class="account container-fluid d-flex flex-column mt-5">
 				<ul class="list-inline d-flex justify-content-center">
 				  <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>
 				  <li class="list-inline-item text-white col-3 col-md-2"><small>Trabaja con nosotros</small></li>
@@ -167,16 +221,18 @@
 				  <li class="list-inline-item text-white col-3 col-md-2"><small>Terminos y condiciones</small></li>
 				  <li class="list-inline-item text-white col-3 col-md-2"><small>Preguntas frecuentes</small></li>
 				</ul>
-			</div>
 			<div class=" d-flex justify-content-center">
 				<small class="text-white">Copyright © 2017-2018 Ubimark</small>
 			</div>
 		</footer>
-   
+
+
+
+
+
     <script src="../js/popper.min.js" type="application/javascript"></script>
     <script src="../js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="../js/compras.js" type="application/javascript"></script>
-    
+    <script src="../js/ventas.js" type="application/javascript"></script>
 </body>
 
 </html>
