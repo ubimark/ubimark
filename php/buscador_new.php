@@ -222,6 +222,7 @@
 
                 <script src="../js/popper.min.js" type="application/javascript"></script>
                 <script src="../js/bootstrap.min.js" type="application/javascript"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
                 
     </body>
 
