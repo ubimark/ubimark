@@ -341,6 +341,7 @@
     <script async="false" defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
     
     
 

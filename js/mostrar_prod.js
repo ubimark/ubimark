@@ -168,7 +168,8 @@ function send_pregunta(producto) {
                 addAlert("alert_pregunta", "Su pregunta ha sido enviada", "alert-success", "", "fa fa-check", "", true);
                 $("#pregunta").val('');
                 cargarPreguntas();
-                send_notificacion("PREGUNTA","Tiene una pregunta nueva de "+nombre,result.data.pregunta,result.data.fecha,result.data.user,result.data.destino);
+                datos = result.data;
+                send_notificacion("PREGUNTA",datos.user,datos.target,datos.destino,datos.fecha);
                 break;
         }
 
