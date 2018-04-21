@@ -31,9 +31,9 @@
         echo json_encode($result);
         return;
     }
-    $sql = "SELECT Id_pregunta from preguntas WHERE Id_cliente = ? AND fecha = ?";
+    $sql = "SELECT Id_pregunta FROM preguntas WHERE Id_cliente = ? AND fecha = ?";
     if($query = $enlace -> prepare($sql)){
-        $query -> bind_params("is",$params['Id_cliente'],$params['fecha']);
+        $query -> bind_param("is",$params['Id_cliente'],$params['fecha']);
         $query -> execute();
         $query -> bind_result($Id_pregunta);
         $query -> fetch();
@@ -42,7 +42,7 @@
         echo json_encode(response(300,sqlError($sql,"is",array("Id_cliente"=>$params['Id_cliente'],"fecha"=>$params['fecha']))));
         return;
     }
-    $respuesta = array("user"=> $params['Id_cliente'], "pregunta" => $Id_pregunta, "fecha" =>$params['fecha'],"destino"=>$params['Id_vendedor']);
+    $respuesta = array("user"=> $params['Id_cliente'], "pregunta" =>$params['pregunta'],"target"=> $Id_pregunta, "fecha" =>$params['fecha'],"destino"=>$params['Id_vendedor']);
     echo json_encode(response(200,$respuesta));
     
 ?>
