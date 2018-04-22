@@ -84,9 +84,6 @@ footer {
   max-height: 80vh;
   overflow: scroll; }
 
-.dropdown-menu {
-  width: 50vh !important;
-  height: auto !important; }
 
 .font-blue {
   color: blue !important; }
