@@ -139,7 +139,7 @@
 	</header>
 	<div id="contenido">
 		<div id="alertas"></div>
-		<section class="pt-3">
+		<section class="mt-6">
 			<div class="col-2 pull-left d-none d-md-block">
 				<div class="list-group">
 					<a href="#" class="list-group-item list-group-item-action" id="mc-mis-datos">Mis Datos</a>
@@ -259,6 +259,16 @@
 									<input class="form-control" type="text" placeholder="Estado" id="est-input" name="estado">
 								</div>
 							</form>
+							<div class="form-group">
+								<label for="file-logo" id="popoverHelpLogo" data-content="<img src='../images/demo-logo.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen del Logotipo" data-trigger="hover">Imagen de logotipo</label>
+								<input type="file" class="form-control-file" id="file-logo" aria-describedby="fileHelp">
+								<small id="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 400 x 400 px</small>
+							</div>
+							<div class="form-group">
+									<label for="file-logo" id="popoverHelpCover" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
+									<input type="file" class="form-control-file" id="file-cover" aria-describedby="fileHelp">
+									<small id="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1020 x 300 px</small>
+							</div>
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -465,6 +475,16 @@
 									<label for="estado-empresa">Estado</label>
 									<input class="form-control" type="text" placeholder="Estado" id="est-inp-emp" name="estado">
 								</div>
+								<div class="form-group">
+										<label for="file-logo" id="popoverHelpLogoMod" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
+										<input type="file" class="form-control-file" id="file-logo-emp" aria-describedby="fileHelp">
+										<small id="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 400 x 400 px</small>
+									</div>
+									<div class="form-group">
+											<label for="file-logo" id="popoverHelpCoverMod" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
+											<input type="file" class="form-control-file" id="file-cover-emp" aria-describedby="fileHelp">
+											<small id="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1500 x 500 px</small>
+									</div>
 							</form>
 
 							<div class="modal-footer">
@@ -475,6 +495,9 @@
 					</div>
 				</div>
 			</div>
+
+
+
 		<footer class="account container-fluid d-flex flex-column mt-5 position-absolute">
 			<div class="">
 				<ul class="list-inline d-flex justify-content-center">
@@ -490,7 +513,26 @@
 			</div>
 		</footer>
 
-
+	<script>
+		$(document).ready(function(){
+			$('#popoverHelpLogo').popover({
+				html: true,
+				trigger: "hover"
+			});
+			$('#popoverHelpCover').popover({
+				html: true,
+				trigger: "hover"
+			});
+			$('#popoverHelpCoverMod').popover({
+				html: true,
+				trigger: "hover"
+			});
+			$('#popoverHelpLogoMod').popover({
+				html: true,
+				trigger: "hover"
+			});
+		})
+	</script>
 
 	<script src="../js/popper.min.js" type="application/javascript"></script>
 	<script src="../js/bootstrap.min.js" type="application/javascript"></script>

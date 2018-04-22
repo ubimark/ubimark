@@ -1,108 +1,97 @@
-@charset "UTF-8";
-/* CSS Document */
+.account {
+  background: #002F3F; }
 
+.margen {
+  margin-top: 1rem; }
 
+.confirm {
+  margin: 10% auto; }
 
-.account{
-	background: #002F3F;
-	
-}
-.margen{
-	margin-top:1rem;
-}
+.colorTitle {
+  color: #9BD239; }
 
-.confirm{
-	
-	margin: 10% auto;
+.colorStar {
+  color: #E4D300; }
 
-}
-.colorTitle{
-	color: #9BD239;
-}
-.colorStar{
-	color:#E4D300;
-}
-html{
-	min-height: 100%;
-	position: relative;
-}
+html {
+  min-height: 100%;
+  position: relative; }
 
-body{
-	margin: 0;
-  	margin-bottom: 20vh;
-}
-footer{
-	position: absolute;
- 	bottom: 0;
-}
+body {
+  margin: 0;
+  margin-bottom: 20vh; }
 
+footer {
+  position: absolute;
+  bottom: 0; }
 
-.control-color{ 
-	background-color: #aaa;
-}
+.control-color {
+  background-color: #aaa; }
 
+.border-right {
+  border-right: 1px solid #e9ecef !important; }
 
-.border-right{
-	border-right:1px solid #e9ecef!important;
-}
 .carousel-caption {
-		bottom:20% !important;
-		height: 20%;
-        right: 80%;
-        text-align: center;
-        max-width: 300px;
-        left: auto;
-        padding:5px;
-		text-shadow: 2px 2px 0 #AAA;
-}
+  bottom: 20% !important;
+  height: 20%;
+  right: 80%;
+  text-align: center;
+  max-width: 300px;
+  left: auto;
+  padding: 5px;
+  text-shadow: 2px 2px 0 #AAA; }
 
-.background-grey{
-	background-color:whitesmoke;
-}
-.background-white{
-	background-color: white;
-}
+.background-grey {
+  background-color: whitesmoke; }
 
-.mr-6{
-	margin-right: 10%;
-}
-.text-white{
-	color:whitesmoke;
-}
+.background-white {
+  background-color: white; }
+
+.mr-6 {
+  margin-right: 10%; }
+
+.text-white {
+  color: whitesmoke; }
+
 .card-img-top {
-  	width: 100%;
-  	height:20vh !important;
-	object-fit:scale-down;
-}
-.img-cover{
-	width: 100%;
-  	min-height:20vh !important;
-	object-fit:cover;
-}
-.img-logo{
-	width: 100%;
-	min-height: 20vh;
-	object-fit:scale-down;
-}
+  width: 100%;
+  height: 20vh !important;
+  object-fit: scale-down; }
 
-.img-resize{
-	object-fit: scale-down;
-	width: 100%;
-	max-height: 40vh;
-}
+.img-cover {
+  width: 100%;
+  min-height: 20vh !important;
+  object-fit: cover; }
+
+.img-logo {
+  width: 100%;
+  min-height: 20vh;
+  object-fit: scale-down; }
+
+.img-resize {
+  object-fit: scale-down;
+  width: 100%;
+  max-height: 40vh; }
+
 .carousel-item-prod {
-  	min-height: 40vh !important;
-	width: 80vw !important;
+  min-height: 40vh !important;
+  width: 80vw !important; }
 
-}
-.border-bottom{
-	border-bottom: 1px solid lightgray;
-}
-.qst-st{
-	max-height: 80vh;
-	overflow: scroll;
-}
+.border-bottom {
+  border-bottom: 1px solid lightgray; }
+
+.qst-st {
+  max-height: 80vh;
+  overflow: scroll; }
+
 .dropdown-menu {
-    width: 50vh !important;
-    height: auto !important;
-}
+  width: 50vh !important;
+  height: auto !important; }
+
+.font-blue {
+  color: blue !important; }
+
+.mt-6 {
+  margin-top: 5rem !important; }
+
+/*# sourceMappingURL=estilos1.css.map */
