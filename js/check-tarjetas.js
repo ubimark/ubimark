@@ -1,4 +1,8 @@
 // JavaScript Document
+/**
+ * Función que revisa si el formulario de tarjetas esta lleno y agrega el boton de confirmar
+ * @author Jonathan Aguilar
+ */
 function formTarjetasCompleto(){
 	if(visaOrMaster()&&checkNombre()&&checkFecha()&&checkCVV()){
 		if($("#boton-confirmar").length==0){
@@ -8,10 +12,15 @@ function formTarjetasCompleto(){
 				$("#info-compra").removeClass("d-none d-md-block")
 			}
 		}else{
-			//agregar alerta para presionar el boton de confirmar
+			addAlert("existe_boton", "Presiona el botón confirmar para realizar tu compra", "alert-success","","fa fa-check-circle","",true);
 		}
 	}
 }
+
+/**
+ * Función que regresa a la pantalla anterior en la versión movil
+ * @author Jonathan Aguilar
+ */
 
 function regresar(){
 	$("#info-compra").addClass("d-none d-md-block");
@@ -19,6 +28,10 @@ function regresar(){
 	$("#boton-confirmar").remove();
 }
 
+/**
+ * Función que revisa los campos de metodo de pago
+ * @author Jonathan Aguilar
+ */
 function visaOrMaster(){
 	var aviso = $("#aviso-tarjeta");
 	var numTarjeta = $("#numero-tarjeta").val();
