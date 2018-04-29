@@ -19,8 +19,10 @@ html {
 
 body {
   margin: 0;
-  margin-bottom: 20vh; }
-
+  margin-bottom: 20vh; 
+  font-family: 'Montserrat', 'Roboto',sans-serif;
+  font-style: normal;}
+  
 footer {
   position: absolute;
   bottom: 0; }
@@ -84,11 +86,22 @@ footer {
   max-height: 80vh;
   overflow: scroll; }
 
+.dropdown-menu {
+  width: 50vh !important;
+  height: auto !important; }
 
 .font-blue {
   color: blue !important; }
 
 .mt-6 {
   margin-top: 5rem !important; }
+
+.font-white {
+  color: white; }
+.pay-product{
+  width: 100%;
+  height: 40vh;
+  overflow: scroll;
+}
 
 /*# sourceMappingURL=estilos1.css.map */
