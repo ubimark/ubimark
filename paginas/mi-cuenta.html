@@ -117,15 +117,18 @@
                         </li>
                         <li class="nav-item">
                             <div class="mc-alerts nav-link dropdown">
-							  <i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  <span class="badge badge-danger">1</span>
-							  </i>
-							  <div class="dropdown-menu" aria-labelledby="dropdownNoti">
-								<strong>Notificaciones</strong>
-								<div class="dropdown-divider"></div>
-								
-							  </div>
-							</div>                            
+								<i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="badge badge-danger d-none" id="noti_cont">0</span>
+								</i>
+								<div class="dropdown-menu pb-1 px-1" id="drpdwn_noti" aria-labelledby="dropdownNoti">
+									<strong class="text-center d-block	">Notificaciones</strong>
+									<div class="dropdown-divider mb-0"></div>
+									<div id="drpdwn_noti_body" user = "0">
+										
+									</div>
+
+								</div>
+							</div>                             
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mc-mail">
@@ -137,6 +140,8 @@
             </div>
 		</nav>
 	</header>
+	
+	
 	<div id="contenido">
 		<div id="alertas"></div>
 		<section class="mt-6">
@@ -262,12 +267,12 @@
 							<div class="form-group">
 								<label for="file-logo" id="popoverHelpLogo" data-content="<img src='../images/demo-logo.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen del Logotipo" data-trigger="hover">Imagen de logotipo</label>
 								<input type="file" class="form-control-file" id="file-logo" aria-describedby="fileHelp">
-								<small id="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 400 x 400 px</small>
+								<small name="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 400 x 400 px</small>
 							</div>
 							<div class="form-group">
 									<label for="file-logo" id="popoverHelpCover" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
 									<input type="file" class="form-control-file" id="file-cover" aria-describedby="fileHelp">
-									<small id="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1020 x 300 px</small>
+									<small name="fileHelp1" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1020 x 300 px</small>
 							</div>
 
 							<div class="modal-footer">
@@ -478,12 +483,12 @@
 								<div class="form-group">
 										<label for="file-logo" id="popoverHelpLogoMod" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
 										<input type="file" class="form-control-file" id="file-logo-emp" aria-describedby="fileHelp">
-										<small id="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 400 x 400 px</small>
+										<small name="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 400 x 400 px</small>
 									</div>
 									<div class="form-group">
 											<label for="file-logo" id="popoverHelpCoverMod" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
 											<input type="file" class="form-control-file" id="file-cover-emp" aria-describedby="fileHelp">
-											<small id="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1500 x 500 px</small>
+											<small name="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1500 x 500 px</small>
 									</div>
 							</form>
 
