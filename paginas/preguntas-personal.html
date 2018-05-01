@@ -117,15 +117,18 @@
                         </li>
                         <li class="nav-item">
                             <div class="mc-alerts nav-link dropdown">
-							  <i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  <span class="badge badge-danger">1</span>
-							  </i>
-							  <div class="dropdown-menu" aria-labelledby="dropdownNoti">
-								<strong>Notificaciones</strong>
-								<div class="dropdown-divider"></div>
-								
-							  </div>
-							</div>                            
+								<i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="badge badge-danger d-none" id="noti_cont">0</span>
+								</i>
+								<div class="dropdown-menu pb-1 px-1" id="drpdwn_noti" aria-labelledby="dropdownNoti">
+									<strong class="text-center d-block	">Notificaciones</strong>
+									<div class="dropdown-divider mb-0"></div>
+									<div id="drpdwn_noti_body" user = "0">
+										
+									</div>
+
+								</div>
+							</div>                           
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mc-mail">
@@ -141,7 +144,7 @@
 
     <div id="contenido">
         <div id="alertas"></div>
-        <section class="">
+        <section class="mt-6">
             <div class="col-12 col-md-2 pull-left d-none d-md-block position-static">
                 <div class="list-group">
                     <a href="ventas.html" class="list-group-item">Publicaciones</a>
@@ -202,12 +205,14 @@
 				 
 			  	<div class="tab-pane fade" id="pendientes" role="tabpanel" aria-labelledby="pendientes-tab">
 			  		<!--Generar contenido de preguntas pendientes aqui-->
+			  		Pendientes
 			  	</div>
 			  	
 			  	
 			  	
 			 	<div class="tab-pane fade" id="contestadas" role="tabpanel" aria-labelledby="contestadas-tab">
 			 	 	<!--Generar contenido de preguntas contestadas aqui-->
+			 	 	Contestadas
 			 	</div>
 			</div>
         </section>
