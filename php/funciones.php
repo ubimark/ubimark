@@ -20,6 +20,7 @@
                 $actual = $date->format("Y-m-d H:i:s");
                 if($actual<$row['expira']){
                     $row['user']=$id;
+                    $row['empresa']=isset($_COOKIE['empresa'])?$_COOKIE['empresa']:0;
                     return response(101, $row);
                 }
             } 

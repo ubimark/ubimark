@@ -4,6 +4,7 @@ var sess = 2; //Guarda la sesion 0:inactiva 1:activa 2:sin comprobar
 var user = 0;
 var socket;
 var unread_noti;
+var empresa = 0;
 
 /**
  * Función que acomoda el contenido para no tener conflictos con el menu fixed
@@ -56,7 +57,7 @@ function acomodarContenido($reintento = false) {
  * @param {boolean} autoclose Cerrar en automatico
  * @param {boolean} closeable Icono para cerrar alerta
  */
-function addAlert(id, message, color, bgcolor, ico, ico2, autoclose=false , closeable=true) {
+function addAlert(id, message, color, bgcolor, ico, ico2, autoclose = false, closeable = true) {
     if (autoclose) {
         $("#alertas").append(
             "<div style='height:80px !important; position:fixed;top:15%;z-index:300;right:30%;left:30%;border:1px solid rgba(0,0,0,0.2);' class='alert " + color + " " + bgcolor + " alert-dismissible fade show mb-0 d-flex align-items-center justify-content-center' style='' role='alert' id=" + id + ">" +
@@ -73,7 +74,7 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose=false , clos
         }, 2000);
 
     } else {
-        if(closeable){
+        if (closeable) {
             $("#alertas").append(
                 "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
                 "<i class='fa " + ico + " mr-2' ></i>" +
@@ -84,7 +85,7 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose=false , clos
                 "</button>" +
                 "</div>"
             );
-        }else{
+        } else {
             $("#alertas").append(
                 "<div class='alert " + color + " " + bgcolor + " alert-dismissible fade show text-center mb-0' style='' role='alert' id=" + id + ">" +
                 "<i class='fa " + ico + " mr-2' ></i>" +
@@ -119,7 +120,7 @@ function cargarCarritoDrop() {
 
                     if (cont++ < 5) {
                         $("#carrito-dropdown").append(
-                            '<span class="dropdown-item Producto_link" id="'+datos[key].Id_producto+'">' +
+                            '<span class="dropdown-item Producto_link" id="' + datos[key].Id_producto + '">' +
                             '<strong>' + datos[key].nombre_producto + '</strong>' +
                             '<p>x' + datos[key].cantidad + ' $' + (datos[key].precio * datos[key].cantidad) + '</p>' +
                             '</span>'
@@ -140,36 +141,56 @@ function cargarCarritoDrop() {
         }
     });
 }
-function cargarNotificacion(title,data,estado){
-    if(estado == "unread"){
-        unread_noti.push(data.Id_notificacion); 
+
+function cargarNotificacion(title, data, estado) {
+
+    if (estado == "unread") {
+        unread_noti.push(data.Id_notificacion);
     }
-    $("#drpdwn_noti_body").prepend('<div class="d-flex border-bottom notificacion '+estado+'">' +
-            '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
-            '<img class="card-img p-2" src="intranet/usuarios/'+data.autor_img+'/uploads/'+data.ruta_img+'" alt="Foto del producto">' +
-            '</div>' +
-            '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
-            '<p><span class="d-block">'+title+':</span> ' +
-            '<small>'+data.mensaje+'</small>' +
-            '</p>' +
-            '</div>' +
-            '</div>');
+    $("#personal_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
+        '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
+        '<img class="card-img p-2" src="intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
+        '</div>' +
+        '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
+        '<p><span class="d-block">' + title + ':</span> ' +
+        '<small>' + data.mensaje + '</small>' +
+        '</p>' +
+        '</div>' +
+        '</div>');
 }
 
-function cargarNotificaciones(){
+function cargarNotificacionEmpresa(title, data, estado) {
+    if (estado == "unread") {
+        unread_noti.push(data.Id_notificacion);
+    }
+    $("#company_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
+        '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
+        '<img class="card-img p-2" src="intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
+        '</div>' +
+        '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
+        '<p><span class="d-block">' + title + ':</span> ' +
+        '<small>' + data.mensaje + '</small>' +
+        '</p>' +
+        '</div>' +
+        '</div>');
+}
+
+function cargarNotificaciones() {
     unread_noti = [];
     $.ajax({
-        url : dir + "php/cargar_notificaciones.php",
-        type : "post"
-    }).done(function(res){
-        switch(res.status_code){
+        url: dir + "php/cargar_notificaciones.php",
+        type: "post"
+    }).done(function (res) {
+        switch (res.status_code) {
             case 200:
                 let cont = 0;
-                for(let notificacion of res.data){
+                let not_empresa = false;
+                let not_personal = false;
+                for (let notificacion of res.data) {
                     console.log(notificacion);
-                    let title ="";
-                    let estado ="";
-                    switch(notificacion.tipo){
+                    let title = "";
+                    let estado = "";
+                    switch (notificacion.tipo) {
                         case "PREGUNTA":
                             title = "Nueva pregunta sobre tu producto";
                             break;
@@ -177,18 +198,48 @@ function cargarNotificaciones(){
                             title = "Se ha respondido tu pregunta";
                             break;
                     }
-                    switch(notificacion.estado){
+                    switch (notificacion.estado) {
                         case "LEIDO":
-                            estado="read";
+                            estado = "read";
                             break;
                         case "NO_LEIDO":
-                            estado="unread";
+                            estado = "unread";
                             break;
                     }
-                    if(notificacion.estado == "NO_LEIDO")cont++;
-                    cargarNotificacion(title,notificacion,estado);
+                    if (notificacion.estado == "NO_LEIDO") cont++;
+                    switch (notificacion.tipo_destino) {
+                        case "PERSONAL":
+                            not_personal = true;
+                            cargarNotificacion(title, notificacion, estado);
+                            break;
+                        case "EMPRESA":
+                            not_empresa = true;
+                            cargarNotificacionEmpresa(title, notificacion, estado);
+                            break;
+                    }
                 }
-                if(cont>0){
+                if (not_empresa && not_personal) {
+                    $("#company_tab").removeClass("disabled");
+                    $("#personal_tab").removeClass("disabled");
+                    $("#company_noti").addClass("show");
+                    $("#company_noti").addClass("active");
+                    $("#company_tab").addClass("active");
+                    $("#company_tab").addClass("text-info");
+                    $("#personal_tab").addClass("text-info");
+                } else if (not_empresa) {
+                    $("#company_tab").removeClass("disabled");
+                    $("#company_noti").addClass("show");
+                    $("#company_noti").addClass("active");
+                    $("#company_tab").addClass("active");
+                    $("#company_tab").addClass("text-info");
+                } else {
+                    $("#personal_tab").removeClass("disabled");
+                    $("#personal_noti").addClass("show");
+                    $("#personal_noti").addClass("active");
+                    $("#personal_tab").addClass("active");
+                    $("#personal_tab").addClass("text-info");
+                }
+                if (cont > 0) {
                     $("#noti_cont").removeClass("d-none");
                     $("#noti_cont").html(cont);
                 }
@@ -219,20 +270,20 @@ function check_session() {
             case 101:
                 sess = 1; //Cambia la sesión a activa
                 user = result.data.user;
+                empresa = result.data.empresa;
                 break;
         }
     });
     return sess;
 }
 
-function emit_ws(datos){
+function emit_ws(datos) {
     $.ajax({
-        url:dir+"/socket/socket_command.php",
-        type:"post",
-        dataType:"json",
-        data:datos
-    }).done(function(res){
-    });
+        url: dir + "/socket/socket_command.php",
+        type: "post",
+        dataType: "json",
+        data: datos
+    }).done(function (res) {});
 }
 
 /**
@@ -250,7 +301,7 @@ function get_Dir() {
     } else {
         dir = "";
     }
-    if(window.location.pathname.charAt(window.location.pathname.length-1) == '/'){
+    if (window.location.pathname.charAt(window.location.pathname.length - 1) == '/') {
         window.location.pathname += "index.html";
     }
 
@@ -320,9 +371,9 @@ function getGeolocation() {
             maximumAge: 5000,
             timeout: 10000
         });
-        if (window.location.pathname.indexOf("index.html") != -1 || window.location.pathname == '/') {
-            cargarProductosDestacados();
-        }
+    if (window.location.pathname.indexOf("index.html") != -1 || window.location.pathname == '/') {
+        cargarProductosDestacados();
+    }
 }
 
 /**
@@ -367,17 +418,20 @@ function logout() {
     });
 }
 
-function read_notifications(){
+function read_notifications() {
     $.ajax({
-        url:dir+"php/cambiar_estado_notificacion.php",
-        type:"post",
-        dataType:"json",
-        data:{estado:"LEIDO",notificaciones:unread_noti}
-    }).done(function(res){
-        switch(res.status_code){
+        url: dir + "php/cambiar_estado_notificacion.php",
+        type: "post",
+        dataType: "json",
+        data: {
+            estado: "LEIDO",
+            notificaciones: unread_noti
+        }
+    }).done(function (res) {
+        switch (res.status_code) {
             case 200:
                 $(".unread").addClass("read");
-                $(".read").removeClass("unread")    
+                $(".read").removeClass("unread")
                 break;
         }
     });
@@ -418,22 +472,23 @@ function reg_buscar(token, coords, estado) {
     }
 }
 
-function send_notificacion(tipo,remitente,origen,destino,fecha){
+function send_notificacion(tipo, remitente, origen, destino, fecha, tipo_destino) {
     $.ajax({
-        url: dir+"php/send_notificacion.php",
-        dataType : "json",
-        type : "post",
-        data:{
-            tipo : tipo,
-            remitente : remitente,
-            origen : origen,
-            destino : destino,
-            fecha : fecha
+        url: dir + "php/send_notificacion.php",
+        dataType: "json",
+        type: "post",
+        data: {
+            tipo: tipo,
+            remitente: remitente,
+            origen: origen,
+            destino: destino,
+            fecha: fecha,
+            tipo_destino: tipo_destino
         }
-    }).done(function(result){
-        switch(result.status_code){
+    }).done(function (result) {
+        switch (result.status_code) {
             case 200:
-                result.data.key="notificacion";
+                result.data.key = "notificacion";
                 emit_ws(result.data);
                 break;
         }
@@ -484,11 +539,13 @@ function session_data() {
 }
 
 function session_required(path = window.location.pathname, redirect = false) {
+    console.log(path);
     if (path.indexOf("/ubimark/") == 0) {
         path = path.substr(9);
-    }else if(path.charAt(0)=='/'){
+
+    } else if (path.charAt(0) == '/') {
         path = path.substr(1);
-    }else if(path.indexOf("/ubimark.git/") == 0){
+    } else if (path.indexOf("/ubimark.git/") == 0) {
         path = path.substr(13);
     }
     i = path.indexOf("?");
@@ -524,17 +581,17 @@ function session_required(path = window.location.pathname, redirect = false) {
     });
 }
 
-function show_noti(id,titulo, message, color){
+function show_noti(id, titulo, message, color) {
     $("#alertas").append(
         "<div style='height:120px !important;padding: 0; position:fixed;bottom:1%;z-index:300;right:70%;left:1%;border:1px solid rgba(0,0,0,0.2);' class='alert alert-" + color + " alert-dismissible fade show mb-0  align-items-center justify-content-center' style='' role='alert' id=" + id + ">" +
-        "<div class='card bg-transparent border-0'>"+
-        "<div class='card-header bg-"+color+"'>" + titulo + "</div>"+
-        "<ul class='list-group list-group-flush bg-transparent'>"+
-            "<li class='list-group-item bg-transparent'>" + message + "</li>"+
-        "</ul>"+
-        "</div>"+
+        "<div class='card bg-transparent border-0'>" +
+        "<div class='card-header bg-" + color + "'>" + titulo + "</div>" +
+        "<ul class='list-group list-group-flush bg-transparent'>" +
+        "<li class='list-group-item bg-transparent'>" + message + "</li>" +
+        "</ul>" +
+        "</div>" +
         "<button type='button' class='close' style='width: 5px;height: 5px;font-size: 18px;top: -10px !important;' data-dismiss='alert' aria-label='close'>" +
-            "<span aria_hidden='true'>&times;</span>" +
+        "<span aria_hidden='true'>&times;</span>" +
         "</button>" +
         "</div>"
     );
@@ -546,19 +603,21 @@ function show_noti(id,titulo, message, color){
     }, 4000);
 }
 
-function solicitar_noti(notificacion){
+function solicitar_noti(notificacion, empresa = false) {
     $.ajax({
-        url:dir+"php/cargar_notificacion.php",
-        type:"post",
-        dataType:"json",
-        data:{notificacion:notificacion}
-    }).done(function(res){
-        switch(res.status_code){
+        url: dir + "php/cargar_notificacion.php",
+        type: "post",
+        dataType: "json",
+        data: {
+            notificacion: notificacion
+        }
+    }).done(function (res) {
+        switch (res.status_code) {
             case 200:
                 let title;
                 $("#noti_cont").removeClass("d-none");
-                $("#noti_cont").html(parseInt($("#noti_cont").html())+1);
-                switch(res.data.tipo){
+                $("#noti_cont").html(parseInt($("#noti_cont").html()) + 1);
+                switch (res.data.tipo) {
                     case "PREGUNTA":
                         title = "Nueva pregunta sobre tu producto";
                         break;
@@ -566,8 +625,15 @@ function solicitar_noti(notificacion){
                         title = "Se ha respondido tu pregunta";
                         break;
                 }
-                cargarNotificacion(title,res.data,"unread");
-                show_noti("notificacion",title,res.data.mensaje,"info");
+                switch(res.data.tipo_destino){
+                    case "PERSONAL":
+                    cargarNotificacion(title, res.data, "unread");
+                    break;
+                    case "EMPRESA":
+                    cargarNotificacionEmpresa(title, res.data, "unread");
+                    break;
+                }
+                show_noti("notificacion", title, res.data.mensaje, "info");
                 break;
         }
     });
@@ -576,38 +642,42 @@ function solicitar_noti(notificacion){
 //Función a ejecutar una vez que se encuentre cargada la página
 $(document).ready(function (e) {
 
-    if(location.protocol == "http:"){   
+    if (location.protocol == "http:") {
         socket = io.connect("ws://localhost:3001");
-        addAlert("conexion_segura","Tu conexion no es segura. Da click aqui para usar una conexion segura","alert-white","bg-info","fa-warning","fa-warning",false,false);
-        $("#conexion_segura").click(function(e){
+        addAlert("conexion_segura", "Tu conexion no es segura. Da click aqui para usar una conexion segura", "alert-white", "bg-info", "fa-warning", "fa-warning", false, false);
+        $("#conexion_segura").click(function (e) {
             url = window.location.host + window.location.pathname;
-            if(getParameterByName('key')!= ""){
-                url+='?key='+(getParameterByName('key'));
-            }else if(getParameterByName('search')!= ""){
-                url+='?search='+(getParameterByName('search'));
-            }else if(getParameterByName('rdir')!= ""){
-                url+='?rdir='+(getParameterByName('rdir'));
+            if (getParameterByName('key') != "") {
+                url += '?key=' + (getParameterByName('key'));
+            } else if (getParameterByName('search') != "") {
+                url += '?search=' + (getParameterByName('search'));
+            } else if (getParameterByName('rdir') != "") {
+                url += '?rdir=' + (getParameterByName('rdir'));
             }
-            window.location.assign("https://"+url);
+            window.location.assign("https://" + url);
         });
-        $("#conexion_segura").hover(function(e){
-            $("#conexion_segura").css("cursor","pointer");
+        $("#conexion_segura").hover(function (e) {
+            $("#conexion_segura").css("cursor", "pointer");
         });
-    }else{
-        socket = io.connect("wss://localhost:3002",{rejectUnauthorized:false});
+    } else {
+        socket = io.connect("wss://localhost:3002", {
+            rejectUnauthorized: false
+        });
     }
 
-    if(sess==1){
-        $("#drpdwn_noti_body").attr("user",user);
+    if (sess == 1) {
+        $("#drpdwn_noti_body").attr("user", user);
         cargarNotificaciones();
     }
 
-    socket.on("notificacion",function(data){
+    socket.on("notificacion", function (data) {
         check_session();
         console.log(data);
         destino = parseInt(data.destino);
-        if(sess == 1 && destino == user && $("#drpdwn_noti_body").attr('user') == destino){
+        if (sess == 1 && (destino == user && $("#drpdwn_noti_body").attr('user') == destino)) {
             solicitar_noti(data.notificacion);
+        } else if (sess == 1 && (destino == empresa)) {
+            solicitar_noti(data.notificacion, true);
         }
     });
 
@@ -694,7 +764,7 @@ $(document).ready(function (e) {
     });
 
 
-    
+
     //Funcion para actualizar informacion de usuario antes de poder comprar
     //Formulario de información personal
     //@version json_api : 2.0
@@ -737,13 +807,46 @@ $(document).ready(function (e) {
         });
     });
 
-    $("#dropdownNoti").click(function(e){
+    $("#dropdownNoti").click(function (e) {
         $("#noti_cont").addClass("d-none");
         $("#noti_cont").html("0");
-        if($("#drpdwn_noti").hasClass("show") && unread_noti.length > 0){
+        if ($("#drpdwn_noti").hasClass("show") && unread_noti.length > 0) {
             read_notifications();
         }
-        
+
     });
+
+    $("#company_tab").click(function (e) {
+        e.preventDefault();
+        return;
+    });
+    $("#personal_tab").click(function (e) {
+        e.preventDefault();
+        return;
+    });
+
+    $("#company_tab").mouseover(function (e) {
+        if ($("#company_tab").hasClass("disabled")) {
+            return;
+        }
+        $("#personal_noti").removeClass("show");
+        $("#personal_noti").removeClass("active");
+        $("#personal_tab").removeClass("active");
+        $("#company_noti").addClass("show");
+        $("#company_noti").addClass("active");
+        $("#company_tab").addClass("active");
+    });
+    $("#personal_tab").mouseover(function (e) {
+        if ($("#personal_tab").hasClass("disabled")) {
+            return;
+        }
+        $("#company_noti").removeClass("show");
+        $("#company_noti").removeClass("active");
+        $("#company_tab").removeClass("active");
+        $("#personal_noti").addClass("show");
+        $("#personal_noti").addClass("active");
+        $("#personal_tab").addClass("active");
+    });
+
 
 });
