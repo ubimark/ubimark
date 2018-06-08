@@ -14,7 +14,7 @@ $req = $_POST;
 
 if(strcmp($key,"notificacion")==0){
     $title = "notificacion";
-    $data = ["destino"=>$req['destino'],"notificacion"=>$req['Id_notificacion']];
+    $data = ["destino"=>$req['destino'],"notificacion"=>$req['Id_notificacion'],"tipo" => $req['tipo']];
     try{
     send($title,$data);
     }catch(Exception $e){echo json_encode($e);return;}

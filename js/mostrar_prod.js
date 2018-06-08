@@ -169,7 +169,7 @@ function send_pregunta(producto) {
                 $("#pregunta").val('');
                 cargarPreguntas();
                 datos = result.data;
-                send_notificacion("PREGUNTA",datos.user,datos.target,datos.destino,datos.fecha);
+                send_notificacion("PREGUNTA",datos.user,datos.target,datos.destino,datos.fecha,datos.tipo);
                 break;
         }
 
@@ -179,6 +179,7 @@ function send_pregunta(producto) {
 function set_band_empresa(val) {
     band_empresa = val;
 }
+
 
 $(document).ready(function (e) {
     initMap(band_empresa);

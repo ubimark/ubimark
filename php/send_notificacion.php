@@ -6,7 +6,7 @@
     $params = $_POST;
     $params['estado'] = "NO_LEIDO";
 
-    $types = "siiiss";
+    $types = "siiisss";
 
     $result = dbInsert("notificaciones",$types,$params);
     if($result['status_code']!=200){
