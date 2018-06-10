@@ -191,44 +191,28 @@
 			
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="todas" role="tabpanel" aria-labelledby="todas-tab">
-					<div class="m-2 float-left col-12 col-md-3 col-lg-2 position-static">
-						<div class="d-flex border-bottom pb-2 mt-2">
-							<div class="card col-md-4 border-0 d-none d-md-block">
-								<img class="card-img" src="../intranet/usuarios/1/uploads/7121331318135926110.jpg" alt="Foto del producto">
-							</div>
-							<div class="card col-12 col-md-7 border-0">
-								<strong>Producto</strong>
-							</div>
-						</div>
+					<div class="m-2 float-left col-12 col-md-3 col-lg-2 position-static" id = "productos_todas">
 					</div>
-					
-					<div class="qst-st col-12 col-md-7">
-						<div class="rounded bg-light mb-3 d-flex flex-column">
-							<strong>
-							Jonathan
-							<small class="mr-3 float-right">Historial</small>
-							</strong>
-							<p>Tienes Color negro?</p>
-							<div class="">
-								<textarea name="" id="" class="form-control" rows="1" ></textarea>
-								<button type="button" class="btn btn-info pull-right">Responder</button>
-							</div>
-						</div>
+					<div class="qst-st col-12 col-md-7" id="preguntas_todas">	
 					</div>
 				</div>
 				 
 				 
 				 
 			  	<div class="tab-pane fade" id="pendientes" role="tabpanel" aria-labelledby="pendientes-tab">
-			  		<!--Generar contenido de preguntas pendientes aqui-->
-			  		Pendientes
+                    <div class="m-2 float-left col-12 col-md-3 col-lg-2 position-static" id = "productos_pend">
+					</div>
+					<div class="qst-st col-12 col-md-7" id="preguntas_pend">	
+					</div>
 			  	</div>
 			  	
 			  	
 			  	
 			 	<div class="tab-pane fade" id="contestadas" role="tabpanel" aria-labelledby="contestadas-tab">
-			 	 	<!--Generar contenido de preguntas contestadas aqui-->
-			 	 	Contestadas
+                    <div class="m-2 float-left col-12 col-md-3 col-lg-2 position-static" id = "productos_comp">
+					</div>
+					<div class="qst-st col-12 col-md-7" id="preguntas_comp">	
+					</div>
 			 	</div>
 			</div>
         </section>
@@ -253,7 +237,7 @@
 
     <script src="../js/popper.min.js" type="application/javascript"></script>
     <script src="../js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="../js/ventas.js" type="application/javascript"></script>
+    <script src="../js/preguntas_personal.js" type="application/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
 </body>
 

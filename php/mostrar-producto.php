@@ -149,15 +149,34 @@
                         </li>
                         <li class="nav-item">
                             <div class="mc-alerts nav-link dropdown">
-							  <i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  <span class="badge badge-danger">1</span>
-							  </i>
-							  <div class="dropdown-menu" aria-labelledby="dropdownNoti">
-								<strong>Notificaciones</strong>
-								
+								<i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="badge badge-danger d-none" id="noti_cont">0</span>
+								</i>
+								<div class="dropdown-menu pb-1 px-1" id="drpdwn_noti" aria-labelledby="dropdownNoti">
+									<strong class="text-center d-block	">Notificaciones</strong>
+									<div class="dropdown-divider mb-0"></div>
+									<ul class="nav nav-tabs" id="noti_body_tabs" role="tablist">
+										<li class="nav-item">
+											<span class="nav-link disabled" id="company_tab" data-toggle="tab" href="#company_noti" role="tab" aria-controls="company_noti" aria-selected="true">Empresa</span>
+										</li>
+										<li class="nav-item">
+											<span class="nav-link disabled" id="personal_tab" data-toggle="tab" href="#personal_noti" role="tab" aria-controls="personal_noti" aria-selected="false">Personal</span>
+										</li>
+									</ul>
+									<div id="drpdwn_noti_body" user="0">
+										
+										<div class="tab-content" id="noti_content">
+											<div class="tab-pane fade" id="company_noti" role="tabpanel" aria-labelledby="company_tab">
+												
+											</div>
+											<div class="tab-pane fade" id="personal_noti" role="tabpanel" aria-labelledby="personal_tab">
+
+											</div>
+										</div>
+									</div>
+
 								</div>
-							  </div>
-							</div>                            
+							</div>                                 
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mc-mail">
