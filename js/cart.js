@@ -9,7 +9,7 @@ function actualizarCarrito(folio, cantidad) {
     var total = parseFloat($("#cart-total").html());
     total -= parseFloat($("#t_" + folio).html());
     $.ajax({
-        url: dir + "php/actualizar-carrito.php",
+        url: dir + "php/actualizarCarrito.php",
         type: "post",
         dataType: "json",
         data: {

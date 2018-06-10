@@ -49,21 +49,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="theme-color" content="#002F3F">
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../lib/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/estilos.min.css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/estilos1.css">
 
 </head>
-<script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
-<script src="../js/main.js" type="application/javascript"></script>
-<script src="../js/mostrar_prod.js" type="application/javascript"></script>
-<script>
-	get_Dir();
-	check_session();
-	session_required(window.location.pathname);
-</script>
+
 <body class="background-grey">
+    <script src="../lib/js/jquery-3.2.1.min.js" type="application/javascript"></script>
+    <script src="../js/main.js" type="application/javascript"></script>
+    <script src="../js/mostrar_prod.js" type="application/javascript"></script>
+    <script>
+        get_Dir();
+        check_session();
+        session_required(window.location.pathname);
+    </script>
     <header class="container">
         <nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
             <a class="navbar-brand col-4 col-md-2 mr-auto">
@@ -340,32 +341,24 @@
 		</div>			
 	</div>
 	</div>
-		<footer class="account mt-5 container-fluid">
-			<div class="col-12">
-				<ul class="list-inline d-flex justify-content-center">
-				  <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>
-				  <li class="list-inline-item text-white col-3 col-md-2"><small>Trabaja con nosotros</small></li>
-				  <li class="list-inline-item text-white col-3 col-md-2"><small>Politicas de uso</small></li>
-				  <li class="list-inline-item text-white col-3 col-md-2"><small>Terminos y condiciones</small></li>
-				  <li class="list-inline-item text-white col-3 col-md-2"><small>Preguntas frecuentes</small></li>
-				</ul>
-			</div>
-			<div class="col-12 d-flex justify-content-center">
-				<small class="text-white">Copyright © 2017-2018 Ubimark</small>
-			</div>
-		</footer>
-    <script src="../js/popper.min.js" type="application/javascript"></script>
-    <script src="../js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="js/fancywebsocket.js" type="text/javascript"></script>
-    <script async="false" defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0">
-    </script>
+    <footer class="account mt-5 container-fluid">
+        <div class="col-12">
+            <ul class="list-inline d-flex justify-content-center">
+                <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>
+                <li class="list-inline-item text-white col-3 col-md-2"><small>Trabaja con nosotros</small></li>
+                <li class="list-inline-item text-white col-3 col-md-2"><small>Politicas de uso</small></li>
+                <li class="list-inline-item text-white col-3 col-md-2"><small>Terminos y condiciones</small></li>
+                <li class="list-inline-item text-white col-3 col-md-2"><small>Preguntas frecuentes</small></li>
+            </ul>
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+            <small class="text-white">Copyright © 2017-2018 Ubimark</small>
+        </div>
+    </footer>
+    <script async="true" defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
-    
-    
-
-  
-
+    <script src="../lib/js/popper.min.js" type="application/javascript"></script>
+    <script src="../lib/js/bootstrap.min.js" type="application/javascript"></script>  
 </body>
 
 </html>

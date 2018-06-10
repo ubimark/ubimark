@@ -1,106 +1,122 @@
 <!doctype html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Pagina vendedor</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="theme-color" content="#002F3F">
-<link rel="shortcut icon" href="../../../images/shortcut-ubi.ico">
-<link rel="stylesheet" href="../../../css/font-awesome.min.css">
-<link rel="stylesheet" href="../../../css/estilos.min.css">
-<link rel="stylesheet" href="../../../css/bootstrap.min.css">
-<link rel="stylesheet" href="../../../css/estilos1.css">
+	<meta charset="UTF-8">
+	<title>Pagina vendedor</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="theme-color" content="#002F3F">
+	<link rel="shortcut icon" href="../../../images/shortcut-ubi.ico">
+	<link rel="stylesheet" href="../../../lib/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../../../lib/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../../css/estilos.min.css">
+	<link rel="stylesheet" href="../../../css/estilos1.css">
 </head>
-<script src="../../../js/jquery-3.2.1.min.js" type="application/javascript"></script>
-<script src="../../../js/main.js" type="application/javascript"></script>
-<script>
-	get_Dir();
-	check_session();
-	session_required();
-</script>
+
 
 <body class="background-grey">
+	<script src="../../../lib/js/jquery-3.2.1.min.js" type="application/javascript"></script>
+	<script src="../../../js/main.js" type="application/javascript"></script>
+	<script>
+		get_Dir();
+		check_session();
+		session_required();
+	</script>
 	<header class="container">
-        <nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
-            <a  class="navbar-brand col-4 col-md-2 mr-auto">
-                <img src="../../../images/ubimark_bco.svg" alt="">
-            </a>
-            
-            <div class="btn-group dropdown d-none mr-2" id="btn-cuenta">
-                <button class="btn navbar-toggler py-2 px-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                <div class="dropdown-menu " aria-labelledby="dropdownMenuButton"><a class="dropdown-item vender">Vender</a> <a class="dropdown-item carrito"><em class="fa fa-shopping-cart"></em></a>
-                  <div class="dropdown-divider"></div>
-                    <a class="dropdown-item mc-resumen" >Resumen</a>
-                    <a class="dropdown-item mc-compras" >Compras</a>
-                    <a class="dropdown-item mc-ventas" >Ventas</a>
-                    <a class="dropdown-item mc-stats" >Estadisticas</a>
-                    <a class="dropdown-item mc-alerts" ><i class="fa fa-bell-o" aria-hidden="true"></i></a>
-                    <a class="dropdown-item mc-mail" ><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item cuenta" >Mi cuenta</a>
-                    <a class="dropdown-item logout" >Cerrar sesion</a>
-                </div>
+		<nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
+			<a class="navbar-brand col-4 col-md-2 mr-auto">
+				<img src="../../../images/ubimark_bco.svg" alt="">
+			</a>
 
-            </div>
-            <button class="btn d-none navbar-toggler col-1 px-0 py-2 mr-2" data-toggle="collapse" href="#menu" id="mi-ingresar2"><em class="fa fa-bars"></em></button>
-            <button class="btn navbar-toggler col-1 px-0 py-2 mr-2" data-toggle="collapse" href=#buscador>
-                    <i class="fa fa-search"></i>
-            </button>
+			<div class="btn-group dropdown d-none mr-2" id="btn-cuenta">
+				<button class="btn navbar-toggler py-2 px-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+				    aria-haspopup="true" aria-expanded="false"></button>
+				<div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item vender">Vender</a>
+					<a class="dropdown-item carrito">
+						<em class="fa fa-shopping-cart"></em>
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item mc-resumen">Resumen</a>
+					<a class="dropdown-item mc-compras">Compras</a>
+					<a class="dropdown-item mc-ventas">Ventas</a>
+					<a class="dropdown-item mc-stats">Estadisticas</a>
+					<a class="dropdown-item mc-alerts">
+						<i class="fa fa-bell-o" aria-hidden="true"></i>
+					</a>
+					<a class="dropdown-item mc-mail">
+						<i class="fa fa-envelope-o" aria-hidden="true"></i>
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item cuenta">Mi cuenta</a>
+					<a class="dropdown-item logout">Cerrar sesion</a>
+				</div>
 
-            <div class="collapse navbar-collapse col-md-7 mx-0 px-0 pt-2 pt-md-0 justify-content-center" id="buscador">
-                <form class="form-inline col-lg-10 col-md-9 col-sm-auto" action="">
-                    <div class="input-group col rounded-0 px-0">
-                        <input type="search" class="form-control mr-md-0 " id="token">
-                        <button class="btn btn-secondary input-group-addon" id="buscar"><i class="fa fa-search"></i></button>
-                    </div>
-                </form>
-            </div>
-            
-            <div class="collapse navbar-collapse col-md-3 justify-content-end text-center" id="menu">
-                <ul class="nav navbar-nav mr-0 my-0 d-flex flex-nowrap">
-                    <li class="nav-item">
-                        <div class="dropleft"><em class="nav-link fa fa-shopping-cart" id="dropdownShopping-Cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></em>
-                          <div class="dropdown-menu" aria-labelledby="dropdownShopping-Cart" id="carrito-dropdown">
-                          	
-                          </div>
+			</div>
+			<button class="btn d-none navbar-toggler col-1 px-0 py-2 mr-2" data-toggle="collapse" href="#menu" id="mi-ingresar2">
+				<em class="fa fa-bars"></em>
+			</button>
+			<button class="btn navbar-toggler col-1 px-0 py-2 mr-2" data-toggle="collapse" href=#buscador>
+				<i class="fa fa-search"></i>
+			</button>
+
+			<div class="collapse navbar-collapse col-md-7 mx-0 px-0 pt-2 pt-md-0 justify-content-center" id="buscador">
+				<form class="form-inline col-lg-10 col-md-9 col-sm-auto" action="">
+					<div class="input-group col rounded-0 px-0">
+						<input type="search" class="form-control mr-md-0 " id="token">
+						<button class="btn btn-secondary input-group-addon" id="buscar">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="collapse navbar-collapse col-md-3 justify-content-end text-center" id="menu">
+				<ul class="nav navbar-nav mr-0 my-0 d-flex flex-nowrap">
+					<li class="nav-item">
+						<div class="dropleft">
+							<em class="nav-link fa fa-shopping-cart" id="dropdownShopping-Cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></em>
+							<div class="dropdown-menu" aria-labelledby="dropdownShopping-Cart" id="carrito-dropdown">
+
+							</div>
 						</div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link vender">Vender</a>
-                    </li>
-                    <li class="nav-item d-none" id="mi-ingresar">
-                        <a class="nav-link login" >Ingresar</a>
-                    </li>
-                    <li class="nav-item dropdown d-none" id="mi-cuenta">
-                        <a  class="nav-link dropdown-toggle" id="drop-mi-cuenta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Luis S.
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" area-labelledby="drop-mi-cuenta">
-                            <a  class="dropdown-item cuenta">Mi Cuenta</a>
-                            <a  class="dropdown-item logout">Cerrar Sesión</a>
-                        </div>
-                    </li>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link vender">Vender</a>
+					</li>
+					<li class="nav-item d-none" id="mi-ingresar">
+						<a class="nav-link login">Ingresar</a>
+					</li>
+					<li class="nav-item dropdown d-none" id="mi-cuenta">
+						<a class="nav-link dropdown-toggle" id="drop-mi-cuenta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Luis S.
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" area-labelledby="drop-mi-cuenta">
+							<a class="dropdown-item cuenta">Mi Cuenta</a>
+							<a class="dropdown-item logout">Cerrar Sesión</a>
+						</div>
+					</li>
 
-                </ul>
-            </div>
-            <div class="container-fluid account d-none" id="menu-user">
-                <div class="container ">
-                    <ul class="nav  nav-fill">
-                        <li class="nav-item">
-                            <a class="nav-link mc-resumen text-white">Resumen</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mc-compras text-white">Compras</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mc-ventas text-white">Ventas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mc-stats text-white">Estadisticas</a>
-                        </li>
-                        <li class="nav-item">
-                            <div class="mc-alerts nav-link dropdown">
+				</ul>
+			</div>
+			<div class="container-fluid account d-none" id="menu-user">
+				<div class="container ">
+					<ul class="nav  nav-fill">
+						<li class="nav-item">
+							<a class="nav-link mc-resumen text-white">Resumen</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link mc-compras text-white">Compras</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link mc-ventas text-white">Ventas</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link mc-stats text-white">Estadisticas</a>
+						</li>
+						<li class="nav-item">
+							<div class="mc-alerts nav-link dropdown">
 								<i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<span class="badge badge-danger d-none" id="noti_cont">0</span>
 								</i>
@@ -109,17 +125,19 @@
 									<div class="dropdown-divider mb-0"></div>
 									<ul class="nav nav-tabs" id="noti_body_tabs" role="tablist">
 										<li class="nav-item">
-											<span class="nav-link disabled" id="company_tab" data-toggle="tab" href="#company_noti" role="tab" aria-controls="company_noti" aria-selected="true">Empresa</span>
+											<span class="nav-link disabled" id="company_tab" data-toggle="tab" href="#company_noti" role="tab" aria-controls="company_noti"
+											    aria-selected="true">Empresa</span>
 										</li>
 										<li class="nav-item">
-											<span class="nav-link disabled" id="personal_tab" data-toggle="tab" href="#personal_noti" role="tab" aria-controls="personal_noti" aria-selected="false">Personal</span>
+											<span class="nav-link disabled" id="personal_tab" data-toggle="tab" href="#personal_noti" role="tab" aria-controls="personal_noti"
+											    aria-selected="false">Personal</span>
 										</li>
 									</ul>
 									<div id="drpdwn_noti_body" user="0">
-										
+
 										<div class="tab-content" id="noti_content">
 											<div class="tab-pane fade" id="company_noti" role="tabpanel" aria-labelledby="company_tab">
-												
+
 											</div>
 											<div class="tab-pane fade" id="personal_noti" role="tabpanel" aria-labelledby="personal_tab">
 
@@ -128,21 +146,21 @@
 									</div>
 
 								</div>
-							</div>                           
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mc-mail">
-                                <i class="fa fa-envelope-o text-white" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link mc-mail">
+								<i class="fa fa-envelope-o text-white" aria-hidden="true"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 
-        </nav>
-    </header>
-    
-    <div id="contenido" class="background-white container d-flex flex-column">
+		</nav>
+	</header>
+
+	<div id="contenido" class="background-white container d-flex flex-column">
 		<div class="mt-5 d-flex flex-wrap">
 			<div class="d-none d-md-block container-fluid">
 				<img src="/uploads/portada.jpg" class="img-cover" alt="">
@@ -154,51 +172,59 @@
 				<div class="col-5 col-md-3 float-left p-3">
 					<h4>Ubimark</h4>
 					<p>Ocotlán, Jalisco.</p>
-					<i class="fa fa-star colorStar"></i><i class="fa fa-star colorStar"></i><i class="fa fa-star colorStar"></i><i class="fa fa-star colorStar"></i><i class="fa fa-star-half colorStar"></i><small> (4.5)</small>
+					<i class="fa fa-star colorStar"></i>
+					<i class="fa fa-star colorStar"></i>
+					<i class="fa fa-star colorStar"></i>
+					<i class="fa fa-star colorStar"></i>
+					<i class="fa fa-star-half colorStar"></i>
+					<small> (4.5)</small>
 					<br>
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalContacto">
-				  Contacto
-				</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalContacto">
+						Contacto
+					</button>
 				</div>
 				<div class="mt-3 col-12 col-md-6 float-left">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119452.69716917786!2d-103.40545358012501!3d20.67377770932267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b18cb52fd39b%3A0xd63d9302bf865750!2sGuadalajara%2C+Jal.!5e0!3m2!1ses!2smx!4v1518049408177" width="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119452.69716917786!2d-103.40545358012501!3d20.67377770932267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b18cb52fd39b%3A0xd63d9302bf865750!2sGuadalajara%2C+Jal.!5e0!3m2!1ses!2smx!4v1518049408177"
+					    width="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
 				</div>
-				
+
 
 				<!-- Modal -->
 				<div class="modal fade" id="modalContacto" tabindex="-1" role="dialog" aria-labelledby="Modal Contacto" aria-hidden="true">
-				  <div class="modal-dialog" role="document">
-					<div class="modal-content">
-					  <div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Datos de contacto</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						  <span aria-hidden="true">&times;</span>
-						</button>
-					  </div>
-					  <div class="modal-body">
-						<p>Telefono: 333 333 3333</p>
-						<p>Correo: nombre@example.com</p>
-						<p>Dirección: Platón, #260</p>
-						<p>Colonia: Linda Vista</p>
-					  </div>
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Datos de contacto</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>Telefono: 333 333 3333</p>
+								<p>Correo: nombre@example.com</p>
+								<p>Dirección: Platón, #260</p>
+								<p>Colonia: Linda Vista</p>
+							</div>
+						</div>
 					</div>
-				  </div>
 				</div>
 
 			</div>
 		</div>
-  		
-  		
-  		
-  		
-   		<div class="p-5 container d-flex flex-wrap justify-content-center">
+
+
+
+
+		<div class="p-5 container d-flex flex-wrap justify-content-center">
 			<div class="card mr-2 col-12 col-md-3 col-lg-2 float-left mb-2">
 				<img class="card-img-top" src="../../../intranet/usuarios/1/uploads/7121331318135926110.jpg" alt="Card image cap">
 				<div class="card-block">
 					<a href="">
 						<h4 class="card-title">Producto</h4>
 					</a>
-					<p class="card-text"><strong>$Precio</strong></p>
+					<p class="card-text">
+						<strong>$Precio</strong>
+					</p>
 				</div>
 			</div>
 			<div class="card mr-2 col-12 col-md-3 col-lg-2 float-left mb-2">
@@ -207,7 +233,9 @@
 					<a href="">
 						<h4 class="card-title">Producto</h4>
 					</a>
-					<p class="card-text"><strong>$Precio</strong></p>
+					<p class="card-text">
+						<strong>$Precio</strong>
+					</p>
 				</div>
 			</div>
 			<div class="card mr-2 col-12 col-md-3 col-lg-2 float-left mb-2">
@@ -216,7 +244,9 @@
 					<a href="">
 						<h4 class="card-title">Producto</h4>
 					</a>
-					<p class="card-text"><strong>$Precio</strong></p>
+					<p class="card-text">
+						<strong>$Precio</strong>
+					</p>
 				</div>
 			</div>
 			<div class="card mr-2 col-12 col-md-3 col-lg-2 float-left mb-2">
@@ -225,7 +255,9 @@
 					<a href="">
 						<h4 class="card-title">Producto</h4>
 					</a>
-					<p class="card-text"><strong>$Precio</strong></p>
+					<p class="card-text">
+						<strong>$Precio</strong>
+					</p>
 				</div>
 			</div>
 			<div class="card mr-2 col-12 col-md-3 col-lg-2 float-left mb-2">
@@ -234,14 +266,16 @@
 					<a href="">
 						<h4 class="card-title">Producto</h4>
 					</a>
-					<p class="card-text"><strong>$Precio</strong></p>
+					<p class="card-text">
+						<strong>$Precio</strong>
+					</p>
 				</div>
 			</div>
 
-		</div>	
 		</div>
-   
-   <footer class="account mt-5 container-fluid">
+	</div>
+
+	<footer class="account mt-5 container-fluid">
 		<div class="col-12">
 			<ul class="list-inline d-flex justify-content-center">
 				<li class="list-inline-item text-white col-md-1 d-none d-md-block">
@@ -267,9 +301,11 @@
 			<small class="text-white">Copyright © 2017-2018 Ubimark</small>
 		</div>
 	</footer>
-    <script src=".../../../js/popper.min.js" type="application/javascript"></script>
-	<script src="../../../js/bootstrap.min.js" type="application/javascript"></script>
-	<script src="../../../js/index.js" type="application/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+	<script src=".../../../lib/js/popper.min.js" type="application/javascript"></script>
+	<script src="../../../lib/js/bootstrap.min.js" type="application/javascript"></script>
+	<script src="../../../js/index.js" type="application/javascript"></script>
+
 </body>
+
 </html>
