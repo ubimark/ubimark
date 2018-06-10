@@ -10,7 +10,7 @@ function add2cart(id, cantidad) {
         href("paginas/login.html");
     }
     $.ajax({
-        url: dir + "php/agregar-carrito.php",
+        url: dir + "php/agregarCarrito.php",
         type: "post",
         dataType: "json",
         data: {
@@ -49,7 +49,7 @@ function cargarPreguntas() {
         switch (result.status_code) {
             case 200:
                 datos = result.data;
-                console.log(datos);
+                 
                 for(var pregunta of datos){
                     $("#seccion_preguntas").append(
                         '<div class="background-grey col-12 rounded p-2 mb-3 " id="pregunta_'+pregunta.Id_pregunta+'">' +

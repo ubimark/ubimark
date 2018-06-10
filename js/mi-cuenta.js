@@ -49,9 +49,9 @@ function cargarDatos() {
                         datos[key] = "";
                     }
                     if (key == 'sexo') {
-                        console.log($("input[name='" + key + "'][value='" + datos[key] + "']"));
+                         
                         $("input[name='" + key + "'][value='" + datos[key] + "']").prop("checked", true);
-                        console.log($("input[name='" + key + "'][value='" + datos[key] + "']"));
+                         
                     } else {
                         $("input[name='" + key + "']").val(datos[key]);
                     }

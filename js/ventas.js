@@ -6,7 +6,7 @@ function cargarPublicaciones() {
     }).done(function (result) {
         switch (result.status_code) {
             case 200:
-                console.log(result.data);
+                 
                 for (var key in result.data) {
                     datos = result.data[key];
                     $("#publicaciones").append(

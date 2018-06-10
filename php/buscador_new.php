@@ -4,7 +4,6 @@
     include("busqueda.php");
     $token = $_GET['search'];
     $results = buscar($token);
-
 ?>
 
     <html lang="es">
@@ -15,19 +14,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
 		<meta name="theme-color" content="#002F3F">
-        <link rel="stylesheet" href="../css/font-awesome.min.css">
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../lib/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/estilos.min.css">
         <link rel="stylesheet" href="../css/estilos1.css">
     </head>
-    <script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
-    <script src="../js/main.js" type="application/javascript"></script>
-    <script>
-        get_Dir();
-        check_session();
-        session_required(window.location.pathname);
-    </script>
+    
     <body class="background-grey">
+        <script src="../lib/js/jquery-3.2.1.min.js" type="application/javascript"></script>
+        <script src="../js/main.js" type="application/javascript"></script>
+        <script>
+            get_Dir();
+            check_session();
+            session_required(window.location.pathname);
+        </script>
         <header class="container">
             <nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
                 <a class="navbar-brand col-4 col-md-2 mr-auto">
@@ -237,12 +237,10 @@
 			<div class=" d-flex justify-content-center">
 				<small class="text-white">Copyright © 2017-2018 Ubimark</small>
 			</div>
-		</footer>
-
-                <script src="../js/popper.min.js" type="application/javascript"></script>
-                <script src="../js/bootstrap.min.js" type="application/javascript"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
-                
+        </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+        <script src="../lib/js/popper.min.js" type="application/javascript"></script>
+        <script src="../lib/js/bootstrap.min.js" type="application/javascript"></script>        
     </body>
 
-    </html>
+</html>

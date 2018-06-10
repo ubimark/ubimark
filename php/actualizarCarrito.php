@@ -6,6 +6,11 @@
         echo json_encode($res);
         return;
     }
+    $JSON = json_decode(file_get_contents("php://input"), true);
+    if(isset($JSON) && $JSON != null){
+        $_POST = $JSON;
+    }
+    
     $folio = array("folio_carrito" => $_POST['folio_carrito']);
     $cantidad = array("cantidad" => $_POST['cantidad']);
     $table = "carrito";

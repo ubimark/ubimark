@@ -103,13 +103,13 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose = false, clo
  * @author Luis Sanchez
  */
 function cargarCarritoDrop() {
-    console.log("peticion...");
+     
     $.ajax({
         url: dir + "php/obtenerCarrito.php",
         type: "post",
         dataType: "json"
     }).done(function (result) {
-        console.log(result);
+         
         switch (result.status_code) {
 
             case 200:
@@ -187,7 +187,7 @@ function cargarNotificaciones() {
                 let not_empresa = false;
                 let not_personal = false;
                 for (let notificacion of res.data) {
-                    console.log(notificacion);
+                     
                     let title = "";
                     let estado = "";
                     switch (notificacion.tipo) {
@@ -335,7 +335,7 @@ function getGeolocation() {
                     language: "es"
                 }
             }).done(function (data) {
-                console.log(data);
+                 
                 estado = data.results[0].address_components[5].long_name; //Guarda la entidad federativa del usuario
             });
         },
@@ -539,7 +539,7 @@ function session_data() {
 }
 
 function session_required(path = window.location.pathname, redirect = false) {
-    console.log(path);
+     
     if (path.indexOf("/ubimark/") == 0) {
         path = path.substr(9);
 
@@ -553,7 +553,7 @@ function session_required(path = window.location.pathname, redirect = false) {
     if (i != -1) {
         params = path.substring(i, path.length);
         path = path.substring(0, i);
-        console.log(path);
+         
     }
     $.ajax({
         url: dir + "php/session_required.php",
@@ -575,7 +575,7 @@ function session_required(path = window.location.pathname, redirect = false) {
                 }
                 break;
             case 108:
-                console.log("108");
+                 
                 window.location.assign(dir + "paginas/no-access-assigned.html");
         }
     });
@@ -672,7 +672,7 @@ $(document).ready(function (e) {
 
     socket.on("notificacion", function (data) {
         check_session();
-        console.log(data);
+         
         destino = parseInt(data.destino);
         if (sess == 1 && (destino == user && $("#drpdwn_noti_body").attr('user') == destino)) {
             solicitar_noti(data.notificacion);

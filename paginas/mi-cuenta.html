@@ -8,21 +8,23 @@
 	<meta name="description" content="">
 	<meta name="theme-color" content="#002F3F">
 	<link rel="shortcut icon" href="../images/shortcut-ubi.ico">
-	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<link rel="stylesheet" href="../lib/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../lib/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../lib/css/slick.css" />
+	<link rel="stylesheet" href="../lib/css/slick-theme.css" />
 	<link rel="stylesheet" href="../css/estilos.min.css">
-	<link rel="stylesheet" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/estilos1.css">
-	<link rel="stylesheet" type="../text/css" href="css/slick.css" />
-	<link rel="stylesheet" type="../text/css" href="css/slick-theme.css" />
+
 </head>
-<script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
-<script src="../js/main.js" type="application/javascript"></script>
-<script>
-	get_Dir();
-	check_session();
-	session_required(window.location.pathname);
-</script>
+
 <body>
+	<script src="../lib/js/jquery-3.2.1.min.js" type="application/javascript"></script>
+	<script src="../js/main.js" type="application/javascript"></script>
+	<script>
+		get_Dir();
+		check_session();
+		session_required(window.location.pathname);
+	</script>
 	<header class="container">
 		<nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
 			<a class="navbar-brand col-4 col-md-2 mr-auto">
@@ -101,22 +103,22 @@
 				</ul>
 			</div>
 			<div class="container-fluid account d-none" id="menu-user">
-                <div class="container ">
-                    <ul class="nav  nav-fill">
-                        <li class="nav-item">
-                            <a class="nav-link mc-resumen text-white">Resumen</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mc-compras text-white">Compras</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mc-ventas text-white">Ventas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mc-stats text-white">Estadisticas</a>
-                        </li>
-                        <li class="nav-item">
-                            <div class="mc-alerts nav-link dropdown">
+				<div class="container ">
+					<ul class="nav  nav-fill">
+						<li class="nav-item">
+							<a class="nav-link mc-resumen text-white">Resumen</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link mc-compras text-white">Compras</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link mc-ventas text-white">Ventas</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link mc-stats text-white">Estadisticas</a>
+						</li>
+						<li class="nav-item">
+							<div class="mc-alerts nav-link dropdown">
 								<i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<span class="badge badge-danger d-none" id="noti_cont">0</span>
 								</i>
@@ -125,17 +127,19 @@
 									<div class="dropdown-divider mb-0"></div>
 									<ul class="nav nav-tabs" id="noti_body_tabs" role="tablist">
 										<li class="nav-item">
-											<span class="nav-link disabled" id="company_tab" data-toggle="tab" href="#company_noti" role="tab" aria-controls="company_noti" aria-selected="true">Empresa</span>
+											<span class="nav-link disabled" id="company_tab" data-toggle="tab" href="#company_noti" role="tab" aria-controls="company_noti"
+											    aria-selected="true">Empresa</span>
 										</li>
 										<li class="nav-item">
-											<span class="nav-link disabled" id="personal_tab" data-toggle="tab" href="#personal_noti" role="tab" aria-controls="personal_noti" aria-selected="false">Personal</span>
+											<span class="nav-link disabled" id="personal_tab" data-toggle="tab" href="#personal_noti" role="tab" aria-controls="personal_noti"
+											    aria-selected="false">Personal</span>
 										</li>
 									</ul>
 									<div id="drpdwn_noti_body" user="0">
-										
+
 										<div class="tab-content" id="noti_content">
 											<div class="tab-pane fade" id="company_noti" role="tabpanel" aria-labelledby="company_tab">
-												
+
 											</div>
 											<div class="tab-pane fade" id="personal_noti" role="tabpanel" aria-labelledby="personal_tab">
 
@@ -144,20 +148,20 @@
 									</div>
 
 								</div>
-							</div>                             
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mc-mail">
-                                <i class="fa fa-envelope-o text-white" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link mc-mail">
+								<i class="fa fa-envelope-o text-white" aria-hidden="true"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</nav>
 	</header>
-	
-	
+
+
 	<div id="contenido">
 		<div id="alertas"></div>
 		<section class="mt-6">
@@ -175,43 +179,93 @@
 				<div class="mb-3">
 					<strong>Datos Personales</strong>
 					<small class="font-blue" id="mc_act_datos_personales" data-toggle="modal" data-target="#infoPersonalAct">Modificar</small>
-					<p>Nombre(s):<span id="personal_nombre"></span></p>
-					<p>Apellidos:<span id="personal_apellidos"></span></p>
-					<p>Nacimiento:<span id="personal_nacimiento"></span></p>
-					<p>Sexo:<span id="personal_sexo"></span></p>
+					<p>Nombre(s):
+						<span id="personal_nombre"></span>
+					</p>
+					<p>Apellidos:
+						<span id="personal_apellidos"></span>
+					</p>
+					<p>Nacimiento:
+						<span id="personal_nacimiento"></span>
+					</p>
+					<p>Sexo:
+						<span id="personal_sexo"></span>
+					</p>
 				</div>
 				<div class="">
 					<strong>Datos de contacto</strong>
 					<small class="font-blue" id="mc_act_datos_contacto" data-toggle="modal" data-target="#infoContactoAct">Modificar</small>
-					<p>Calle:<span id="personal_calle"></span></p>
-					<p>Numero:<span id="personal_numero"></span></p>
-					<p>Colonia o asentamiento:<span id="personal_colonia"></span></p>
-					<p>Ciudad o delegación:<span id="personal_delegacion"></span></p>
-					<p>Estado:<span id="personal_estado"></span></p>
-					<p>Código Postal:<span id="personal_cp"></span></p>
-					<p>Teléfono:<span id="personal_telefono"></span></p>
-					<p>Correo de respaldo:<span id="personal_correo_back"></span></p>
+					<p>Calle:
+						<span id="personal_calle"></span>
+					</p>
+					<p>Numero:
+						<span id="personal_numero"></span>
+					</p>
+					<p>Colonia o asentamiento:
+						<span id="personal_colonia"></span>
+					</p>
+					<p>Ciudad o delegación:
+						<span id="personal_delegacion"></span>
+					</p>
+					<p>Estado:
+						<span id="personal_estado"></span>
+					</p>
+					<p>Código Postal:
+						<span id="personal_cp"></span>
+					</p>
+					<p>Teléfono:
+						<span id="personal_telefono"></span>
+					</p>
+					<p>Correo de respaldo:
+						<span id="personal_correo_back"></span>
+					</p>
 				</div>
-				
+
 			</div>
 			<div class="pull-left d-none" id="cont-empresa">
-				<div >
+				<div>
 					<strong>Datos empresa o negocio</strong>
 					<small class="font-blue" id="mc_act_datos_empresa" data-toggle="modal" data-target="#act-datos-empresa">Modificar</small>
-					<p>Nombre: <span id="empresa_nombre"></span></p>
-					<p>RFC: <span id="empresa_RFC"></span></p>
-					<p>Correo electrónico <span id="empresa_email"></span></p>
-					<p>Teléfono: <span id="empresa_telefono"></span></p>
-					<p>País: <span id="empresa_pais"></span></p>
-					<p>Estado: <span id="empresa_estado"></span></p>
-					<p>Ciudad: <span id="empresa_ciudad"></span></p>
-					<p>Delegación: <span id="empresa_delegacion"></span></p>
-					<p>Colonia o Asentamiento: <span id="empresa_colonia"></span></p>
-					<p>Código Postal: <span id="empresa_cp"></span></p>
-					<p>Calle: <span id="empresa_calle"></span></p>
-					<p>Número Interior:<span id="empresa_num_int"></span></p>
-					<p>Número Exterior: <span id="empresa_num_ext"></span></p>
-					
+					<p>Nombre:
+						<span id="empresa_nombre"></span>
+					</p>
+					<p>RFC:
+						<span id="empresa_RFC"></span>
+					</p>
+					<p>Correo electrónico
+						<span id="empresa_email"></span>
+					</p>
+					<p>Teléfono:
+						<span id="empresa_telefono"></span>
+					</p>
+					<p>País:
+						<span id="empresa_pais"></span>
+					</p>
+					<p>Estado:
+						<span id="empresa_estado"></span>
+					</p>
+					<p>Ciudad:
+						<span id="empresa_ciudad"></span>
+					</p>
+					<p>Delegación:
+						<span id="empresa_delegacion"></span>
+					</p>
+					<p>Colonia o Asentamiento:
+						<span id="empresa_colonia"></span>
+					</p>
+					<p>Código Postal:
+						<span id="empresa_cp"></span>
+					</p>
+					<p>Calle:
+						<span id="empresa_calle"></span>
+					</p>
+					<p>Número Interior:
+						<span id="empresa_num_int"></span>
+					</p>
+					<p>Número Exterior:
+						<span id="empresa_num_ext"></span>
+					</p>
+
 				</div>
 			</div>
 
@@ -280,17 +334,19 @@
 									<input class="form-control" type="text" placeholder="Estado" id="est-input" name="estado">
 								</div>
 								<div class="form-group">
-									<label for="file-logo" id="popoverHelpLogo" data-content="<img src='../images/demo-logo.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen del Logotipo" data-trigger="hover">Imagen de logotipo</label>
+									<label for="file-logo" id="popoverHelpLogo" data-content="<img src='../images/demo-logo.jpg' class='img-fluid'>" rel="popover"
+									    data-placement="right" data-original-title="Imagen del Logotipo" data-trigger="hover">Imagen de logotipo</label>
 									<input type="file" class="form-control-file" id="file-logo" name="logo" aria-describedby="fileHelp">
 									<small name="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 400 x 400 px</small>
 								</div>
 								<div class="form-group">
-										<label for="file-logo" id="popoverHelpCover" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
-										<input type="file" class="form-control-file" id="file-cover" name="portada" aria-describedby="fileHelp">
-										<small name="fileHelp1" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1020 x 300 px</small>
+									<label for="file-logo" id="popoverHelpCover" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover"
+									    data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
+									<input type="file" class="form-control-file" id="file-cover" name="portada" aria-describedby="fileHelp">
+									<small name="fileHelp1" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1020 x 300 px</small>
 								</div>
 							</form>
-							
+
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -433,110 +489,124 @@
 			</div>
 		</section>
 	</div>
-	
-	<!-- Modal Formulario Empresas modificarr-->
-			<div class="modal fade" id="act-datos-empresa" tabindex="-1" role="dialog" aria-labelledby="Modal-Empresas" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="form-act-empresas">Modificar datos empresa</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form action="" id="form_act_empresa">
-								<input type="text" hidden id="coords_emp_act" name="coordenadas">
-								<div class="form-group">
-									<label for="nombre-empresa">Nombre de la empresa o negocio</label>
-									<input type="text" class="form-control" placeholder="Nombre" name="nombre_empresa" id="nombre-inp-emp">
-								</div>
-								<div class="form-group">
-									<label for="correo-empresa">Correo Electrónico</label>
-									<input type="email" class="form-control" placeholder="tuemail@ejemplo.com" name="email" id="email-inp-emp">
-								</div>
-								<div class="form-group">
-									<label for="telefono-empresa">Teléfono</label>
-									<input type="tel" class="form-control" placeholder="(123) 456 7890" name="telefono" id="tel-inp-emp">
-								</div>
-								<div class="form-group">
-									<label for="rfc">RFC</label>
-									<input type="text" class="form-control" placeholder="Registro Federal de Contribuyentes" name="RFC" id="rfc-inp-emp">
-								</div>
-								<div class="form-group">
-									<label for="cp-empressa">Código Postal</label>
-									<input class="form-control" type="number" placeholder="1234 " id="cp-inp-emp" name="cp">
-								</div>
-								<div class="form-group">
-									<label for="calle-empresa">Calle</label>
-									<input class="form-control" type="text" placeholder="Calle" id="calle-inp-emp" name="calle">
-								</div>
-								<div class="form-group row">
-									<label for="example-text-input" class="col-2 col-form-label">Núm. Exterior</label>
-									<div class="col-4">
-										<input class="form-control" type="text" placeholder="Nº Ext." id="num-ext-inp-emp" name="numero">
-									</div>
-									<label for="example-text-input" class="col-1 col-form-label">Num. Int</label>
-									<div class="col-4">
-										<input class="form-control" type="text" placeholder="Nº Int." id="num-int-inp-emp" name="numinterior">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="colonia-empresa">Asentamiento</label>
-									<input class="form-control" type="text" placeholder="Colonia, fraccionamiento, etc." id="colonia-inp-emp" name="colonia">
-								</div>
-								<div class="form-group">
-									<label for="colonia-empresa">Ciudad</label>
-									<input class="form-control" type="text" placeholder="Ciudad" id="ciudad-inp-emp" name="ciudad">
-								</div>
-								<div class="form-group">
-									<label for="del-mun-empresa">Municipio o delegación</label>
-									<input class="form-control" type="text" placeholder="Municipio" id="dele-inp-emp" name="delegacion">
-								</div>
-								<div class="form-group">
-									<label for="estado-empresa">Estado</label>
-									<input class="form-control" type="text" placeholder="Estado" id="est-inp-emp" name="estado">
-								</div>
-								<div class="form-group">
-										<label for="file-logo" id="popoverHelpLogoMod" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
-										<input type="file" class="form-control-file" id="file-logo-emp" aria-describedby="fileHelp">
-										<small name="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 400 x 400 px</small>
-									</div>
-									<div class="form-group">
-											<label for="file-logo" id="popoverHelpCoverMod" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover" data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
-											<input type="file" class="form-control-file" id="file-cover-emp" aria-describedby="fileHelp">
-											<small name="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1500 x 500 px</small>
-									</div>
-							</form>
 
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-								<button type="button" class="btn btn-primary" id="btn_act_empresa" data-dismiss="modal">Modificar</button>
+	<!-- Modal Formulario Empresas modificarr-->
+	<div class="modal fade" id="act-datos-empresa" tabindex="-1" role="dialog" aria-labelledby="Modal-Empresas" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="form-act-empresas">Modificar datos empresa</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="" id="form_act_empresa">
+						<input type="text" hidden id="coords_emp_act" name="coordenadas">
+						<div class="form-group">
+							<label for="nombre-empresa">Nombre de la empresa o negocio</label>
+							<input type="text" class="form-control" placeholder="Nombre" name="nombre_empresa" id="nombre-inp-emp">
+						</div>
+						<div class="form-group">
+							<label for="correo-empresa">Correo Electrónico</label>
+							<input type="email" class="form-control" placeholder="tuemail@ejemplo.com" name="email" id="email-inp-emp">
+						</div>
+						<div class="form-group">
+							<label for="telefono-empresa">Teléfono</label>
+							<input type="tel" class="form-control" placeholder="(123) 456 7890" name="telefono" id="tel-inp-emp">
+						</div>
+						<div class="form-group">
+							<label for="rfc">RFC</label>
+							<input type="text" class="form-control" placeholder="Registro Federal de Contribuyentes" name="RFC" id="rfc-inp-emp">
+						</div>
+						<div class="form-group">
+							<label for="cp-empressa">Código Postal</label>
+							<input class="form-control" type="number" placeholder="1234 " id="cp-inp-emp" name="cp">
+						</div>
+						<div class="form-group">
+							<label for="calle-empresa">Calle</label>
+							<input class="form-control" type="text" placeholder="Calle" id="calle-inp-emp" name="calle">
+						</div>
+						<div class="form-group row">
+							<label for="example-text-input" class="col-2 col-form-label">Núm. Exterior</label>
+							<div class="col-4">
+								<input class="form-control" type="text" placeholder="Nº Ext." id="num-ext-inp-emp" name="numero">
+							</div>
+							<label for="example-text-input" class="col-1 col-form-label">Num. Int</label>
+							<div class="col-4">
+								<input class="form-control" type="text" placeholder="Nº Int." id="num-int-inp-emp" name="numinterior">
 							</div>
 						</div>
+						<div class="form-group">
+							<label for="colonia-empresa">Asentamiento</label>
+							<input class="form-control" type="text" placeholder="Colonia, fraccionamiento, etc." id="colonia-inp-emp" name="colonia">
+						</div>
+						<div class="form-group">
+							<label for="colonia-empresa">Ciudad</label>
+							<input class="form-control" type="text" placeholder="Ciudad" id="ciudad-inp-emp" name="ciudad">
+						</div>
+						<div class="form-group">
+							<label for="del-mun-empresa">Municipio o delegación</label>
+							<input class="form-control" type="text" placeholder="Municipio" id="dele-inp-emp" name="delegacion">
+						</div>
+						<div class="form-group">
+							<label for="estado-empresa">Estado</label>
+							<input class="form-control" type="text" placeholder="Estado" id="est-inp-emp" name="estado">
+						</div>
+						<div class="form-group">
+							<label for="file-logo" id="popoverHelpLogoMod" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover"
+							    data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
+							<input type="file" class="form-control-file" id="file-logo-emp" aria-describedby="fileHelp">
+							<small name="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 400 x 400 px</small>
+						</div>
+						<div class="form-group">
+							<label for="file-logo" id="popoverHelpCoverMod" data-content="<img src='../images/demo-cover.jpg' class='img-fluid'>" rel="popover"
+							    data-placement="right" data-original-title="Imagen de portada" data-trigger="hover">Imagen de portada</label>
+							<input type="file" class="form-control-file" id="file-cover-emp" aria-describedby="fileHelp">
+							<small name="fileHelp" class="form-text text-muted">Para una mejor visualización se recomienda imagenes de 1500 x 500 px</small>
+						</div>
+					</form>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="button" class="btn btn-primary" id="btn_act_empresa" data-dismiss="modal">Modificar</button>
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
 
 
 
-		<footer class="account container-fluid d-flex flex-column mt-5 position-absolute">
-			<div class="">
-				<ul class="list-inline d-flex justify-content-center">
-				  <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>
-				  <li class="list-inline-item text-white col-3 col-md-2"><small>Trabaja con nosotros</small></li>
-				  <li class="list-inline-item text-white col-3 col-md-2"><small>Politicas de uso</small></li>
-				  <li class="list-inline-item text-white col-3 col-md-2"><small>Terminos y condiciones</small></li>
-				  <li class="list-inline-item text-white col-3 col-md-2"><small>Preguntas frecuentes</small></li>
-				</ul>
-			</div>
-			<div class=" d-flex justify-content-center">
-				<small class="text-white">Copyright © 2017-2018 Ubimark</small>
-			</div>
-		</footer>
+	<footer class="account container-fluid d-flex flex-column mt-5 position-absolute">
+		<div class="">
+			<ul class="list-inline d-flex justify-content-center">
+				<li class="list-inline-item text-white col-md-1 d-none d-md-block">
+					<small>
+						<img src="../images/ubimark_grey.svg" alt="">
+					</small>
+				</li>
+				<li class="list-inline-item text-white col-3 col-md-2">
+					<small>Trabaja con nosotros</small>
+				</li>
+				<li class="list-inline-item text-white col-3 col-md-2">
+					<small>Politicas de uso</small>
+				</li>
+				<li class="list-inline-item text-white col-3 col-md-2">
+					<small>Terminos y condiciones</small>
+				</li>
+				<li class="list-inline-item text-white col-3 col-md-2">
+					<small>Preguntas frecuentes</small>
+				</li>
+			</ul>
+		</div>
+		<div class=" d-flex justify-content-center">
+			<small class="text-white">Copyright © 2017-2018 Ubimark</small>
+		</div>
+	</footer>
 
 	<script>
-		$(document).ready(function(){
+		$(document).ready(function () {
 			$('#popoverHelpLogo').popover({
 				html: true,
 				trigger: "hover"
@@ -555,11 +625,11 @@
 			});
 		})
 	</script>
-
-	<script src="../js/popper.min.js" type="application/javascript"></script>
-	<script src="../js/bootstrap.min.js" type="application/javascript"></script>
-	<script src="../js/mi-cuenta.js" type="application/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+	<script src="../lib/js/popper.min.js" type="application/javascript"></script>
+	<script src="../lib/js/bootstrap.min.js" type="application/javascript"></script>
+	<script src="../js/mi-cuenta.js" type="application/javascript"></script>
+
 </body>
 
 </html>
