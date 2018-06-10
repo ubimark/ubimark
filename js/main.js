@@ -149,7 +149,7 @@ function cargarNotificacion(title, data, estado) {
     }
     $("#personal_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
         '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
-        '<img class="card-img p-2" src="intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
+        '<img class="card-img p-2" src="'+dir+'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
         '<p><span class="d-block">' + title + ':</span> ' +
@@ -165,7 +165,7 @@ function cargarNotificacionEmpresa(title, data, estado) {
     }
     $("#company_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
         '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
-        '<img class="card-img p-2" src="intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
+        '<img class="card-img p-2" src="'+dir+'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
         '<p><span class="d-block">' + title + ':</span> ' +
