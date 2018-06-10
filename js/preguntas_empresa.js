@@ -19,7 +19,7 @@ function cargarPreguntas() {
         switch (res.status_code) {
             case 200:
                 preguntas = res.data;
-                console.log(preguntas)
+                 
                 for (let producto in preguntas) {
                     preguntas_todas(preguntas[producto]);
                     if (preguntas[producto].completadas > 0) {
@@ -48,7 +48,7 @@ function cargarPreguntas() {
 
 function send_respuesta(seccion,pregunta,cliente,vendedor){
     let respuesta = $("#txtarea_"+seccion+"_"+pregunta).val();
-    console.log(respuesta);
+     
     $.ajax({
         url:dir+"php/send_respuesta.php",
         type:"post",
@@ -63,7 +63,7 @@ function send_respuesta(seccion,pregunta,cliente,vendedor){
     }).done(function(res){
         switch(res.status_code){
             case 200:
-                console.log("respuesta enviada")
+                 
                 datos = res.data;
                 send_notificacion("RESPUESTA",datos.user,datos.target,datos.destino,datos.fecha);
                 cargarPreguntas();
@@ -74,7 +74,7 @@ function send_respuesta(seccion,pregunta,cliente,vendedor){
 }
 
 function preguntas_todas(producto) {
-    console.log(producto);
+     
     $("#productos_todas").append(
         '<div class="d-flex border-bottom pb-2 mt-2" id="prod_' + producto.Id_producto + '">' +
         '<div class="card col-md-4 border-0 d-none d-md-block">' +
@@ -111,9 +111,9 @@ function preguntas_todas(producto) {
                 '</div>' +
                 '</div>'
             );
-            console.log(pregunta.respuestas)
+             
             for(let respuesta of pregunta.respuestas){
-                console.log(respuesta)
+                 
                 $("#respuestas_todas_"+pregunta.Id_pregunta).append(
                     '<span class="px-3">'+respuesta.respuesta+'</span><br>'
                 );
@@ -141,7 +141,7 @@ function preguntas_todas(producto) {
 }
 
 function preguntas_completadas(producto) {
-    console.log(producto);
+     
     $("#productos_comp").append(
         '<div class="d-flex border-bottom pb-2 mt-2" id="prod_comp_' + producto.Id_producto + '">' +
         '<div class="card col-md-4 border-0 d-none d-md-block">' +
@@ -177,9 +177,9 @@ function preguntas_completadas(producto) {
                 '</div>' +
                 '</div>'
             );
-            console.log(pregunta.respuestas)
+             
             for(let respuesta of pregunta.respuestas){
-                console.log(respuesta)
+                 
                 $("#respuestas_"+pregunta.Id_pregunta).append(
                     '<span class="px-3">'+respuesta.respuesta+'</span><br>'
                 );

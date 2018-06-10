@@ -49,7 +49,7 @@ function cargarPreguntas() {
         switch (result.status_code) {
             case 200:
                 datos = result.data;
-                console.log(datos);
+                 
                 for(var pregunta of datos){
                     $("#seccion_preguntas").append(
                         '<div class="background-grey col-12 rounded p-2 mb-3 " id="pregunta_'+pregunta.Id_pregunta+'">' +
