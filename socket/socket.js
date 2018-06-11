@@ -30,6 +30,7 @@ function emitNewOrder(http_server,x){
     io.sockets.on('connection',function(socket){
         socket.on('notificacion',function(data){
             logger.info("Mensaje enviado tipo: " +data.tipo);
+            delete data.tipo;
             io.emit("notificacion",data);
         });
         socket.on("connect",function(data){

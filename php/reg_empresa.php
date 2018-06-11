@@ -19,37 +19,37 @@
             $types .= "s";
         }
     }
+    
+    $filename = "../intranet/empresas/" . $params['nombre_empresa'] . "/uploads/";
+    if (!file_exists($filename)) {
+        mkdir($filename, 0777, true);
+    }
+    copy("../paginas/plantilla-empresa.html","../intranet/empresas/" . $params['nombre_empresa'] ."/index.html");
+    foreach($_FILES as $key => $val){
+        if($val['error'] == 0){
+            $extension = substr($_FILES[$key]['name'], strrpos($_FILES[$key]['name'], '.'), strlen($_FILES[$key]['name']));
+            $nombre = $key.$params['nombre_empresa'].date('zwjtnyGis').$params['Id_usuario'].$extension;
+            $tipo = $_FILES[$key]['type'];
+            $tam = $_FILES[$key]['size'];
+            $file = "../intranet/empresas/".$params['nombre_empresa'].'/uploads/'.$nombre;
+            $tmp_img = $_FILES[$key]['tmp_name'];
+            move_uploaded_file($tmp_img, $file);
+            $params[$key] = $nombre;
+            $types .= "s";
+        }
+    }
     $result = dbInsert($table,$types,$params);
     if($result['status_code'] != 200){
         echo json_encode($result);
         return;
     }
-    
-    $sql = "SELECT Id_empresa,nombre_empresa FROM empresa WHERE RFC = ?";
-    if($query = $enlace->prepare($sql)){
-        $query->bind_param("s",$params['RFC']);
-        $query->execute();
-        $query->bind_result($Id_empresa,$nombre_empresa);
-        $query->fetch();
-        $query->close();
-    }else{
-        echo json_encode(response(300));
-        return;
-    }
-    echo $nombre_empresa;
+    $Id_empresa = $result['data']['ID'];
+
     $params2 = array("trabaja_en" => $Id_empresa);
-    $result = dbUpdate("usuario","i",array("trabaja_en" => $Id_empresa),"i",array("Id_usuario" => $params['Id_usuario']));
+    $result = dbUpdate("usuario","i",$params2,"i",array("Id_usuario" => $params['Id_usuario']));
     if($result['status_code'] != 200){
         echo json_encode($result);
         return;
     }
-
-    $filename = "../intranet/empresas/" . $nombre_empresa . "/uploads/";
-    if (!file_exists($filename)) {
-        mkdir($filename, 0777, true);
-    }
-    copy("../paginas/pagina-vendedor.html","../intranet/empresas/" . $nombre_empresa ."/index.html");
-
-    echo json_encode(response(200,array("path"=>$filename)));
-
+    echo json_encode(response(200,array("path" => $filename)));
 ?>

@@ -4,25 +4,15 @@
     include("funciones.php");
     $Id = $_COOKIE['Id'];
 
-    $sql = "SELECT trabaja_en FROM usuario WHERE Id_usuario = ?";
-    if($query = $enlace -> prepare($sql)){
-        $query -> bind_param("i",$Id);
-        $query -> execute();
-        $query -> bind_result($Id_vendedor);
-        $query -> fetch();
-        $query -> close();
-    }else{
-        echo json_encode(response(300,sqlError($sql,"i",$Id)));
-        return;
-    }
-    $sql2 = "SELECT q.*,CONCAT(SUBSTRING_INDEX(u.nombre,' ',1),' ',SUBSTRING(u.apellidos,1,1),'.') as cliente FROM preguntas q JOIN usuario u ON u.Id_usuario = q.Id_cliente WHERE q.tipo_vendedor = 'EMPRESA' AND q.Id_vendedor = ?";
+
+    $sql2 = "SELECT q.*,CONCAT(SUBSTRING_INDEX(u.nombre,' ',1),' ',SUBSTRING(u.apellidos,1,1),'.') as cliente FROM preguntas q JOIN usuario u ON u.Id_usuario = q.Id_cliente WHERE q.tipo_vendedor = 'PERSONAL' AND q.Id_vendedor = ?";
     if($query = $enlace -> prepare($sql2)){
-        $query -> bind_param("i",$Id_vendedor);
+        $query -> bind_param("i",$Id);
         $query -> execute();
         $res = $query -> get_result();
         $query -> close();
     }else{
-        echo json_encode(response(300,sqlError($sql2,"i",$Id_vendedor)));
+        echo json_encode(response(300,sqlError($sql2,"i",$Id)));
         return;
     }
     $preguntas_prod = array();

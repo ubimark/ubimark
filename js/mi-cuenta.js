@@ -49,9 +49,9 @@ function cargarDatos() {
                         datos[key] = "";
                     }
                     if (key == 'sexo') {
-                        console.log($("input[name='" + key + "'][value='" + datos[key] + "']"));
+                         
                         $("input[name='" + key + "'][value='" + datos[key] + "']").prop("checked", true);
-                        console.log($("input[name='" + key + "'][value='" + datos[key] + "']"));
+                         
                     } else {
                         $("input[name='" + key + "']").val(datos[key]);
                     }
@@ -119,12 +119,15 @@ function registra_empresa() {
         datos = data.results[0].geometry.location;
         coords = datos.lat + "," + datos.lng; //Guarda la entidad federativa del usuario
         $("#coords_emp").val(coords);
-        data_form = $("#form_reg_empresa").serialize();
+        data_form = new FormData($("#form_reg_empresa")[0]);
+        //data_form = $("#form_reg_empresa").serialize();
         $.ajax({
             url: dir + "php/reg_empresa.php",
             dataType: "json",
             type: "post",
-            data: data_form
+            data: data_form,
+            contentType: false,
+            processData: false
         }).done(function (result) {
             switch (result.status_code) {
                 case 200:
