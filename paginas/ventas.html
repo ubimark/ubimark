@@ -144,7 +144,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </li>
@@ -161,25 +160,167 @@
 
     <div id="contenido">
         <div id="alertas"></div>
-        <section class="margen">
-            <div class="col-2 pull-left d-none d-md-block">
-                <div class="list-group">
-                    <a href="#publicaciones" class="list-group-item list-group-item-action active">Publicaciones</a>
-                    <a href="#" class="list-group-item list-group-item-action">Ventas</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#preguntas-collapse" role="button" aria-expanded="true"
-                        aria-controls="preguntas-collapse">Preguntas</a>
-                    <div class="collapse" id="preguntas-collapse">
-                        <div class="list-group list-group-flush">
-                            <a href="preguntas-personal.html" class="list-group-item">Cuenta personal</a>
-                            <a href="preguntas-empresa.html" class="list-group-item">Cuenta empresa</a>
+        <section class="">
+                <div class="col-12 col-md-2 pull-left d-none d-md-block position-static">
+                    <div class="list-group">
+                        <a href="publicaciones.html" class="list-group-item">Publicaciones</a>
+                        
+                        <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#ventas-collapse" role="button" aria-expanded="true" aria-controls="ventas-collapse">Ventas</a>
+                        <div class="collapse show" id="ventas-collapse">
+                            <div class="list-group list-group-flush">
+                                <a href="#" class="list-group-item active">Cuenta personal</a>
+                                <a href="ventas-empresa.html" class="list-group-item">Cuenta empresa</a>
+                            </div>
                         </div>
+                        <a href="preguntas-personal.html" class="list-group-item">Preguntas</a>
                     </div>
                 </div>
-            </div>
-            <span class="">
-                <div class="col-9 pull-left container" id="publicaciones"></div>
-            </span>
-        </section>
+                <!-- Tab de opciones -->
+                <div class="col-10 pull-left">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="todas-tab" data-toggle="tab" href="#todas" role="tab" aria-controls="todas" aria-selected="true">Todas</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="pendientes-tab" data-toggle="tab" href="#pendientes" role="tab" aria-controls="pendientes" aria-selected="false">Pendientes</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="contestadas-tab" data-toggle="tab" href="#finalizadas" role="tab" aria-controls="finalizadas" aria-selected="false">Finalizadas</a>
+                      </li>
+                    </ul>
+                </div>
+                
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="todas" role="tabpanel" aria-labelledby="todas-tab">
+                            <!--demostración de como se deben de mostrar los productos vendidos.  en el modal hay un input para ingresar numero de rastreo,
+                            en cuanto se envie el producto cambiará el estado a enviado y en el modal se ocultará la pregunta de si ya envio y se remplazará 
+                            por información acerca del envio. Ya -->
+                            <span class="col-10 pull-right" id="publicaciones">
+                                    <div class="d-flex flex-nowrap mb-2 col-10" id="ventas"> 
+                                        <div class="card col-md-2"> 
+                                            <img class="card-img" src="../intranet/usuarios/2/uploads/7121331318222635280.jpg" alt="Foto del producto">
+                                        </div>
+                                        <div class="card col-10 d-flex flex-row align-items-center">
+                                            <div class="col-6">
+                                                    <h5 class="">Nombre producto</h5>
+                                                    <strong>Precio</strong>
+                                                    <br>
+                                                    <small>Cantidad</small>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="p-2 bg-light rounded">
+                                                        <p class="m-0"> <i class="text-primary fa fa-user-circle"></i> Jonathan Aguilar V.</p>
+                                                        <small class="m-0 text-muted"> <i class="fa fa-phone "></i> Numero de telefono</small>
+                                                        <!--Si el envio esta realizado agregar el icono y clase "fa-check-circle text-success" y en caso de que no agregar "fa-times-circle" -->
+                                                        <p class="m-0"> <i class="fa fa-times-circle text-danger"></i> No enviado</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-info">Información</button>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+    
+                                    <!--Modal para información detallada-->
+                                    <div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="modal-info" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="etiqueta-info">Información de venta</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body row">
+                                                    <div class="col-6 border-right">
+                                                        <div class="card border-0">
+                                                            <img class="card-img col-5" src="../intranet/usuarios/2/uploads/7121331318222635280.jpg" alt="Img Producto">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Nombre producto</h5>
+                                                                <p class="card-text m-0">Cantidad</p>
+                                                                <strong class="card-text" id="precio-producto">$Precio</strong>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <h5>Comprador</h5>
+                                                        <p>Nombre: Jonathan Aguilar Villegas</p>
+                                                        <p>Domicilio: Hidalgo</p>
+                                                        <p>Número: 224</p>
+                                                        <p>Colonia Centro</p>
+                                                        <p>Código Postal: 47910</p>
+                                                        <p>Ciudad: La Barca</p>
+                                                    </div>
+                                                    <div class="col-6 border-right mt-5">
+                                                        <h5>Mensajes</h5>
+                                                        <div class="container box-message">
+                                                            <p class="bg-light p-2 rounded pull-left">Me los mandas en color blanco</p>
+                                                            <p class="bg-primary text-light p-2 rounded pull-right">Muy bien! hoy te mando el producto</p>
+                                                        </div>
+                                                        <textarea name="" id="input-mensaje" class="form-control" rows="1" placeholder="Escribe mensaje"></textarea>
+                                                        <button class="btn btn-primary float-right mt-1">Enviar</button>
+                                                    </div>
+    
+                                                    <div class="col-6 mt-5">
+                                                        <form action="">
+                                                            <h5>¿Ya enviaste?</h5>
+                                                            <label for="num-rastreo">Agrega número de rastreo o link</label>
+                                                            <input type="text" class="form-control" placeholder="Agregar número de rastreo" id="num-rastreo-emp" name="inp-num-rastreo-emp">
+                                                            <label for="num-rastreo">Paquetería</label>
+                                                            <select class="form-control" id="selector-envio">
+                                                                <option value="DHL">DHL</option>
+                                                                <option value="FedEx">FedEx</option>
+                                                                <option value="Estafeta">Estafeta</option>
+                                                                <option value="Correos de Mexico">Correos de México</option>
+                                                                <option value="MultiPack">MultiPack</option>
+                                                                <option value="RedPack">RedPack</option>
+                                                                <option value="UPS">UPS</option>
+                                                            </select>
+                                                            <button class="btn btn-secondary float-right mt-1">Agregar</button>
+                                                        </form>
+                                                    </div>
+                                                    
+    
+                                                    <!--Div que aparecera cuando se ingrese el número de guía y la paquetería utilizada. Cuando el vendedor 
+                                                    seleccione que fue entregado el producto cambiar el estado del producto a entregado 
+                                                    y poner la venta en finalizada-->
+                                                    <div class="col-6 mt-5 d-none">
+                                                        <h5>Información de envío:</h5>
+                                                        <p>Entregado</p>
+                                                        <form action="">
+                                                            <select class="form-control" id="selector-entregado-emp">
+                                                                <option value="si">Si</option>
+                                                                <option value="no">No</option>
+                                                            </select>
+                                                        </form>
+                                                        <p>Paquetería: DHL</p>
+                                                        <p>Número de guía: 123456789</p>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </span> 
+                    </div>
+                     
+                    
+                     
+                     
+                      <div class="tab-pane fade" id="pendientes" role="tabpanel" aria-labelledby="pendientes-tab">
+                          <!--Generar contenido de ventas pendientes aqui-->
+                          Pendientes
+                      </div>
+                      
+                      
+                      
+                     <div class="tab-pane fade" id="finalizadas" role="tabpanel" aria-labelledby="finalizadas-tab">
+                          <!--Generar contenido de ventas finalizadas aqui-->
+                          Finalizadas
+                     </div>
+                </div>
+            </section>
     </div>
 
     <footer class="account container-fluid d-flex flex-column mt-5 position-absolute">
