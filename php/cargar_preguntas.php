@@ -4,7 +4,11 @@
     include_once("funciones.php");
    
     $Id_producto = $_POST['Id_producto'];
-    $sql = "SELECT p.Id_pregunta,p.pregunta,p.fecha, CONCAT(SUBSTRING_INDEX(u.nombre,' ',1),' ',SUBSTRING(u.apellidos,1,1),'.') as cliente FROM preguntas as p JOIN usuario as u ON u.Id_usuario = p.Id_cliente WHERE p.Id_producto = ? ORDER BY p.Id_pregunta DESC" ;
+    $sql = "SELECT p.Id_pregunta,p.pregunta,p.fecha, CONCAT(SUBSTRING_INDEX(u.nombre,' ',1),' ',SUBSTRING(u.apellidos,1,1),'.') as cliente 
+            FROM preguntas as p 
+            JOIN usuario as u ON u.Id_usuario = p.Id_cliente 
+            WHERE p.Id_producto = ? 
+            ORDER BY p.Id_pregunta DESC" ;
     if($query = $enlace -> prepare($sql)){
         $query -> bind_param("i",$Id_producto);
         $query -> execute();
@@ -16,7 +20,9 @@
     $preguntas = array();
     while($row = $res -> fetch_Assoc()){
         $row['fecha'] = get_diferencia($row['fecha']);
-        $sql2 = "SELECT * FROM respuestas WHERE Id_pregunta = ?";
+        $sql2 = "SELECT * 
+                FROM respuestas 
+                WHERE Id_pregunta = ?";
         if($query = $enlace -> prepare($sql2)){
             $query -> bind_param("i",$row['Id_pregunta']);
             $query -> execute();

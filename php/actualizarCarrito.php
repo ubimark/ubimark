@@ -19,7 +19,10 @@
         echo json_encode($result);
         return;
     }else{
-        $sql = "SELECT c.*,p.nombre_producto,p.existencias,p.precio FROM carrito c JOIN productos p ON p.Id_producto = c.Id_producto WHERE c.folio_carrito = ? ";
+        $sql = "SELECT c.*,p.nombre_producto,p.existencias,p.precio 
+                FROM carrito c 
+                JOIN productos p ON p.Id_producto = c.Id_producto 
+                WHERE c.folio_carrito = ? ";
         if($query = $enlace->prepare($sql)){
             $query->bind_param("i",$folio['folio_carrito']);
             $query->execute();

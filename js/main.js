@@ -103,13 +103,13 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose = false, clo
  * @author Luis Sanchez
  */
 function cargarCarritoDrop() {
-     
+
     $.ajax({
         url: dir + "php/obtenerCarrito.php",
         type: "post",
         dataType: "json"
     }).done(function (result) {
-         
+
         switch (result.status_code) {
 
             case 200:
@@ -149,7 +149,7 @@ function cargarNotificacion(title, data, estado) {
     }
     $("#personal_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
         '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
-        '<img class="card-img p-2" src="'+dir+'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
+        '<img class="card-img p-2" src="' + dir + 'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
         '<p><span class="d-block">' + title + ':</span> ' +
@@ -165,7 +165,7 @@ function cargarNotificacionEmpresa(title, data, estado) {
     }
     $("#company_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
         '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
-        '<img class="card-img p-2" src="'+dir+'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
+        '<img class="card-img p-2" src="' + dir + 'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
         '<p><span class="d-block">' + title + ':</span> ' +
@@ -186,8 +186,9 @@ function cargarNotificaciones() {
                 let cont = 0;
                 let not_empresa = false;
                 let not_personal = false;
+                res.data.reverse();
                 for (let notificacion of res.data) {
-                     
+
                     let title = "";
                     let estado = "";
                     switch (notificacion.tipo) {
@@ -255,6 +256,7 @@ function cargarNotificaciones() {
  * @returns  int Estado de la sesion
  */
 function check_session() {
+
     $.ajax({
         url: dir + "php/check-session.php",
         dataType: 'json',
@@ -262,9 +264,11 @@ function check_session() {
         async: false,
         data: {}
     }).done(function (result) {
+        
         //Si se encuentra la sesión activa.
         switch (result.status_code) {
             case 100:
+            
                 sess = 0; //Cambia la sessión a inactiva
                 break;
             case 101:
@@ -273,7 +277,9 @@ function check_session() {
                 empresa = result.data.empresa;
                 break;
         }
+        
     });
+
     return sess;
 }
 
@@ -321,9 +327,10 @@ function getGeolocation() {
     //Obtiene la localización actual mediante el navegador
     navigator.geolocation.getCurrentPosition(
         function (geoloc) {
-            lat = geoloc.coords.latitude; //Obtiene la latitud.
-            lon = geoloc.coords.longitude; //Obtiene la longitud.
+            let lat = geoloc.coords.latitude; //Obtiene la latitud.
+            let lon = geoloc.coords.longitude; //Obtiene la longitud.
             //Si se encontro la latitud y longitud se utilza el geocodificador de google para obtener la entidad federativa del usuario
+
             $.ajax({
                 url: "https://maps.googleapis.com/maps/api/geocode/json",
                 dataType: "json",
@@ -335,9 +342,11 @@ function getGeolocation() {
                     language: "es"
                 }
             }).done(function (data) {
-                 
+
                 estado = data.results[0].address_components[5].long_name; //Guarda la entidad federativa del usuario
+                
             });
+
         },
         //Se ejecuta en caso de que ocurra un error al obtener las coordenadas.
         function (error) {
@@ -539,7 +548,7 @@ function session_data() {
 }
 
 function session_required(path = window.location.pathname, redirect = false) {
-     
+
     if (path.indexOf("/ubimark/") == 0) {
         path = path.substr(9);
 
@@ -553,8 +562,9 @@ function session_required(path = window.location.pathname, redirect = false) {
     if (i != -1) {
         params = path.substring(i, path.length);
         path = path.substring(0, i);
-         
+
     }
+
     $.ajax({
         url: dir + "php/session_required.php",
         dataType: "json",
@@ -575,10 +585,13 @@ function session_required(path = window.location.pathname, redirect = false) {
                 }
                 break;
             case 108:
-                 
+
                 window.location.assign(dir + "paginas/no-access-assigned.html");
         }
+
     });
+
+
 }
 
 function show_noti(id, titulo, message, color) {
@@ -625,13 +638,13 @@ function solicitar_noti(notificacion, empresa = false) {
                         title = "Se ha respondido tu pregunta";
                         break;
                 }
-                switch(res.data.tipo_destino){
+                switch (res.data.tipo_destino) {
                     case "PERSONAL":
-                    cargarNotificacion(title, res.data, "unread");
-                    break;
+                        cargarNotificacion(title, res.data, "unread");
+                        break;
                     case "EMPRESA":
-                    cargarNotificacionEmpresa(title, res.data, "unread");
-                    break;
+                        cargarNotificacionEmpresa(title, res.data, "unread");
+                        break;
                 }
                 show_noti("notificacion", title, res.data.mensaje, "info");
                 break;
@@ -672,7 +685,7 @@ $(document).ready(function (e) {
 
     socket.on("notificacion", function (data) {
         check_session();
-         
+
         destino = parseInt(data.destino);
         if (sess == 1 && (destino == user && $("#drpdwn_noti_body").attr('user') == destino)) {
             solicitar_noti(data.notificacion);
@@ -848,5 +861,5 @@ $(document).ready(function (e) {
         $("#personal_tab").addClass("active");
     });
 
-
+    
 });
