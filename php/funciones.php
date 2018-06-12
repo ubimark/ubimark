@@ -8,7 +8,9 @@
         $date = new \DateTime('now', new \DateTimeZone('America/Mexico_City'));
         $id = $_COOKIE['Id'];
         $token = $_COOKIE['token'];
-        $sql = "SELECT expira FROM sesiones_activas WHERE Id_usuario = ? AND token = ?";
+        $sql = "SELECT expira 
+                FROM sesiones_activas 
+                WHERE Id_usuario = ? AND token = ?";
 
         if($query = $link->prepare($sql)){
             $query->bind_param("is",$id,$token);
@@ -106,7 +108,7 @@
         }else{
             return response(300,sqlError($sql,$types,$values));
         }
-        return response(200,array("ID" => $new_id));
+        return response(200,array("ID" => $new_id, "QUERY" => array("SQL"=>$sql, "datos" => $a_params)));
     }
 
     /**

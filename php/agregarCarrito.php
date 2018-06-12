@@ -7,7 +7,9 @@
     $params["Id_usuario"] = $_COOKIE['Id'];
     $types = "iii";
 
-    $sql = "SELECT count(*) FROM carrito WHERE Id_producto = ? AND Id_usuario = ?";
+    $sql = "SELECT count(*) 
+            FROM carrito 
+            WHERE Id_producto = ? AND Id_usuario = ?";
     if($query = $enlace -> prepare($sql)){
         $query->bind_param("ii",$params['Id_producto'],$params['Id_usuario']);
         $query->execute();

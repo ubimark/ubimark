@@ -3,7 +3,10 @@
     include_once("conectar.php");
     include("funciones.php");
     $Id = $_COOKIE['Id'];
-    $sql = "SELECT pe.*,p.nombre_producto FROM pedido pe JOIN productos p ON p.Id_producto = pe.Id_producto WHERE pe.Id_usuario = ?";
+    $sql = "SELECT pe.*,p.nombre_producto 
+            FROM pedido pe 
+            JOIN productos p ON p.Id_producto = pe.Id_producto 
+            WHERE pe.Id_usuario = ?";
     if($query = $enlace -> prepare($sql)){
         $query->bind_param("i",$Id);
         $query->execute();
@@ -15,7 +18,10 @@
     }
     $result=array();
     while($row = $res->fetch_Assoc()){
-        $sql = "SELECT path, Id_usuario FROM imagen_prod WHERE Id_producto = ? LIMIT 1";
+        $sql = "SELECT path, Id_usuario 
+                FROM imagen_prod 
+                WHERE Id_producto = ? 
+                LIMIT 1";
         if($query=$enlace->prepare($sql)){
             $query->bind_param("i",$row['Id_producto']);
             $query->execute();

@@ -4,7 +4,9 @@
     include("funciones.php");
     $Id = $_COOKIE['Id'];
 
-    $sql = "SELECT trabaja_en FROM usuario WHERE Id_usuario = ?";
+    $sql = "SELECT trabaja_en 
+            FROM usuario 
+            WHERE Id_usuario = ?";
     if($query = $enlace -> prepare($sql)){
         $query -> bind_param("i",$Id);
         $query -> execute();
@@ -15,7 +17,11 @@
         echo json_encode(response(300,sqlError($sql,"i",$Id)));
         return;
     }
-    $sql2 = "SELECT q.*,CONCAT(SUBSTRING_INDEX(u.nombre,' ',1),' ',SUBSTRING(u.apellidos,1,1),'.') as cliente FROM preguntas q JOIN usuario u ON u.Id_usuario = q.Id_cliente WHERE q.tipo_vendedor = 'EMPRESA' AND q.Id_vendedor = ?";
+    $sql2 = "SELECT q.*, CONCAT(SUBSTRING_INDEX(u.nombre,' ',1),' ',SUBSTRING(u.apellidos,1,1),'.') as cliente 
+            FROM preguntas q 
+            JOIN usuario u ON u.Id_usuario = q.Id_cliente 
+            JOIN preguntas_empresa pe ON  q.id_pregunta = pe.id_pregunta
+            WHERE pe.Id_empresa = ?";
     if($query = $enlace -> prepare($sql2)){
         $query -> bind_param("i",$Id_vendedor);
         $query -> execute();
@@ -25,9 +31,12 @@
         echo json_encode(response(300,sqlError($sql2,"i",$Id_vendedor)));
         return;
     }
+
     $preguntas_prod = array();
     while($row = $res -> fetch_Assoc()){
-        $sql3 = "SELECT * FROM respuestas WHERE Id_pregunta = ?";
+        $sql3 = "SELECT * 
+                FROM respuestas 
+                WHERE Id_pregunta = ?";
         if($query = $enlace -> prepare($sql3)){
             $query -> bind_param("i",$row['Id_pregunta']);
             $query -> execute();
@@ -48,7 +57,10 @@
         if(!isset($preguntas_prod[$row['Id_producto']])){
             $preguntas_prod[$row['Id_producto']] = array();
             
-            $sql4 = "SELECT p.*,i.path,i.Id_usuario AS usr_path FROM productos p JOIN imagen_prod i ON i.Id_producto = p.Id_producto WHERE p.Id_producto = ?";
+            $sql4 = "SELECT p.*,i.path,i.Id_usuario AS usr_path 
+                    FROM productos p 
+                    JOIN imagen_prod i ON i.Id_producto = p.Id_producto 
+                    WHERE p.Id_producto = ?";
             if($query = $enlace -> prepare($sql4)){
                 $query -> bind_param("i",$row['Id_producto']);
                 $query -> execute();

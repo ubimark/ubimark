@@ -4,7 +4,7 @@ include_once("conectar.php");
 include("funciones.php");
 
 $id = $_COOKIE['Id'];
-$sql = "SELECT * FROM notificaciones WHERE destino = ? AND estado != 'COMPLETADO' ORDER BY fecha ASC LIMIT 50";
+$sql = "SELECT * FROM notificaciones WHERE destino = ? AND estado != 'COMPLETADO' ORDER BY fecha DESC LIMIT 50";
 if($query = $enlace -> prepare($sql)){
     $query -> bind_param("i",$id);
     $query -> execute();
@@ -18,7 +18,10 @@ if($query = $enlace -> prepare($sql)){
 $notificaciones = array();
 while($row = $res-> fetch_assoc()){
     if(strcmp($row['tipo'],"PREGUNTA")==0){
-        $sql2 = "SELECT p.pregunta,i.path,i.Id_usuario FROM preguntas p JOIN imagen_prod i ON i.Id_producto = p.Id_producto WHERE p.Id_pregunta = ?";
+        $sql2 = "SELECT p.pregunta,i.path,i.Id_usuario 
+                FROM preguntas p 
+                JOIN imagen_prod i ON i.Id_producto = p.Id_producto 
+                WHERE p.Id_pregunta = ?";
         if($query = $enlace -> prepare($sql2)){
             $query -> bind_param("i",$row['origen']);
             $query -> execute();

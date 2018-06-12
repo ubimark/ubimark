@@ -18,11 +18,16 @@
 
     $row = $res-> fetch_assoc();
     if(strcmp($row['tipo'],"PREGUNTA")==0){
-        $sql2 = "SELECT p.pregunta,p.tipo_vendedor,i.path,i.Id_usuario FROM preguntas p JOIN imagen_prod i ON i.Id_producto = p.Id_producto WHERE p.Id_pregunta = ?";
+        $sql2 = "SELECT p.pregunta,i.path,i.Id_usuario ,if(count(pe.Id_empresa)> 0, 'EMPRESA' , 'PERSONAL')as tipo_vendedor
+                FROM preguntas p 
+                JOIN imagen_prod i ON i.Id_producto = p.Id_producto
+                LEFT JOIN preguntas_empresa pe ON pe.Id_pregunta = p.Id_pregunta
+                LEFT JOIN preguntas_personal pp ON pp.Id_pregunta = p.Id_pregunta
+                WHERE p.Id_pregunta = ?";
         if($query = $enlace -> prepare($sql2)){
             $query -> bind_param("i",$row['origen']);
             $query -> execute();
-            $query -> bind_result($mensaje,$vendedor,$ruta,$autor_img);
+            $query -> bind_result($mensaje,$ruta,$autor_img,$vendedor);
             $query -> fetch();
             $query -> close();
         }else{
