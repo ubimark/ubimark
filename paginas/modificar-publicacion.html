@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar publicación</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#002F3F">
+    <link rel="shortcut icon" href="../images/shortcut-ubi.ico">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/estilos.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilos1.css">
+
+</head>
+<script src="../js/jquery-3.2.1.min.js" type="application/javascript"></script>
+<script src="../js/main.js" type="application/javascript"></script>
+<script>
+	get_Dir();
+	check_session();
+	session_required(window.location.pathname);
+</script>
+<body class="bg-light">
+    <header class="container">
+        <nav class="navbar navbar-expand-md navbar-dark container-fluid fixed-top d-flex flex-wrap">
+            <a class="navbar-brand col-4 col-md-2 mr-auto">
+                <img src="../images/ubimark_bco.svg" alt="">
+            </a>
+
+            <div class="btn-group dropdown d-none mr-2" id="btn-cuenta">
+                <button class="btn navbar-toggler py-2 px-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"></button>
+                <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item vender">Vender</a>
+                    <a class="dropdown-item carrito">
+                        <em class="fa fa-shopping-cart"></em>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item mc-resumen">Resumen</a>
+                    <a class="dropdown-item mc-compras">Compras</a>
+                    <a class="dropdown-item mc-ventas">Ventas</a>
+                    <a class="dropdown-item mc-stats">Estadisticas</a>
+                    <a class="dropdown-item mc-alerts">
+                        <i class="fa fa-bell-o" aria-hidden="true"></i>
+                    </a>
+                    <a class="dropdown-item mc-mail">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item cuenta">Mi cuenta</a>
+                    <a class="dropdown-item logout">Cerrar sesion</a>
+                </div>
+
+            </div>
+            <button class="btn d-none navbar-toggler col-1 px-0 py-2 mr-2" data-toggle="collapse" href="#menu" id="mi-ingresar2">
+                <em class="fa fa-bars"></em>
+            </button>
+            <button class="btn navbar-toggler col-1 px-0 py-2 mr-2" data-toggle="collapse" href=#buscador>
+                <i class="fa fa-search"></i>
+            </button>
+
+            <div class="collapse navbar-collapse col-md-7 mx-0 px-0 pt-2 pt-md-0 justify-content-center" id="buscador">
+                <form class="form-inline col-lg-10 col-md-9 col-sm-auto" action="">
+                    <div class="input-group col rounded-0 px-0">
+                        <input type="search" class="form-control mr-md-0 " id="token">
+                        <button class="btn btn-secondary input-group-addon" id="buscar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="collapse navbar-collapse col-md-3 justify-content-end text-center" id="menu">
+                <ul class="nav navbar-nav mr-0 my-0 d-flex flex-nowrap">
+                    <li class="nav-item">
+                        <div class="dropleft">
+                            <em class="nav-link fa fa-shopping-cart" id="dropdownShopping-Cart" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"></em>
+                            <div class="dropdown-menu" aria-labelledby="dropdownShopping-Cart" id="carrito-dropdown">
+
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link vender">Vender</a>
+                    </li>
+                    <li class="nav-item d-none" id="mi-ingresar">
+                        <a class="nav-link login">Ingresar</a>
+                    </li>
+                    <li class="nav-item dropdown d-none" id="mi-cuenta">
+                        <a class="nav-link dropdown-toggle" id="drop-mi-cuenta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Luis S.
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" area-labelledby="drop-mi-cuenta">
+                            <a class="dropdown-item cuenta">Mi Cuenta</a>
+                            <a class="dropdown-item logout">Cerrar Sesión</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="container-fluid account d-none" id="menu-user">
+                <div class="container ">
+                    <ul class="nav  nav-fill">
+                        <li class="nav-item">
+                            <a class="nav-link mc-resumen text-white">Resumen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mc-compras text-white">Compras</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mc-ventas text-white">Ventas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mc-stats text-white">Estadisticas</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="mc-alerts nav-link dropdown">
+								<i class="fa fa-bell-o text-white" id="dropdownNoti" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="badge badge-danger d-none" id="noti_cont">0</span>
+								</i>
+								<div class="dropdown-menu pb-1 px-1" id="drpdwn_noti" aria-labelledby="dropdownNoti">
+									<strong class="text-center d-block">Notificaciones</strong>
+									<div class="dropdown-divider mb-0"></div>
+									<div id="drpdwn_noti_body" user = "0">
+										
+									</div>
+
+								</div>
+							</div>                            
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mc-mail">
+                                <i class="fa fa-envelope-o text-white" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </nav>
+    </header>
+    
+    
+    
+    <div id="contenido">
+        <div id="alertas"></div>
+        <section class="margen container bg-white">
+            <form method="post" id="form2" enctype="multipart/form-data" action="../php/subir_producto.php">
+                <!--Cuando el usuario presione actualizar redirigir a esta pagina y en los input cargar una previsualización de los datos ingresados-->
+                <h4>Actualizar información de producto</h4>
+				<span id="form_sell-act" class="">
+					Nombre del producto
+					<div class="">
+						<div class="form-group">
+							<input type="text" class="form-control" name="nombre_producto" id="inputProduct" required>
+						</div>
+						<div class="form-check d-none" id="up_tipo_cuenta">
+							<p>¿En qué tipo de cuenta deseas hacer tu publicación?</p>
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="tipo_cuenta" id="tipo-cuenta1" value="PERSONAL" checked>
+								Personal
+						 	</label>
+						 	<label class="form-check-label ml-5">
+								<input type="radio" class="form-check-input" name="tipo_cuenta" id="tipo-cuenta2" value="EMPRESA">
+								Empresa
+						 	</label>
+						</div>
+					</div>
+				</span>
+				<span id="form_sell2-act" class="">
+					<div class="">
+                        <!--Hacer previsualización de imagenes ya subidas-->
+						<div class="d-flex flex-wrap col-12 col-md-5 pull-right">
+							<div class="d-flex flex-row">
+								<div class="p-2 col-3">
+									<label for="upload_img1">
+										<img src="../images/img-upload1.svg" alt="Responsive image" class="img-fluid" id="img1">
+									</label>
+									<input type="file" name="upload_img1" id="upload_img1" class="d-none" required>
+								</div>
+								<div class="p-2 col-3">
+
+									<label for="upload_img2">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img2">
+									</label>
+									<input type="file" name="upload_img2" id="upload_img2" class="d-none">
+
+								</div>
+								<div class="p-2 col-3">
+									<label for="upload_img3">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img3">
+									</label>
+									<input type="file" name="upload_img3" id="upload_img3" class="d-none">
+								</div>
+								<div class="p-2 col-3">
+									<label for="upload_img4">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img4">
+									</label>
+									<input type="file" name="upload_img4" id="upload_img4" class="d-none">
+								</div>
+							</div>
+							<div class="d-flex flex-row">
+								<div class="p-2 col-3">
+									<label for="upload_img5">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img5">
+									</label>
+									<input type="file" name="upload_img5" id="upload_img5" class="d-none">
+								</div>
+								<div class="p-2 col-3">
+									<label for="upload_img6">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img6">
+									</label>
+									<input type="file" name="upload_img6" id="upload_img6" class="d-none">
+								</div>
+								<div class="p-2 col-3">
+									<label for="upload_img7">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img7">
+									</label>
+									<input type="file" name="upload_img7" id="upload_img7" class="d-none">
+								</div>
+								<div class="p-2 col-3">
+									<label for="upload_img8">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img8">
+									</label>
+									<input type="file" name="upload_img8" id="upload_img8" class="d-none">
+								</div>
+							</div>
+							<div class="d-flex flex-row">
+								<div class="p-2 col-3">
+									<label for="upload_img9">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img9">
+									</label>
+									<input type="file" name="upload_img9" id="upload_img9" class="d-none">
+								</div>
+								<div class="p-2 col-3">
+									<label for="upload_img10">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img10">
+									</label>
+									<input type="file" name="upload_img10" id="upload_img10" class="d-none">
+								</div>
+								<div class="p-2 col-3">
+									<label for="upload_img11">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img11">
+									</label>
+									<input type="file" name="upload_img11" id="upload_img11" class="d-none">
+								</div>
+								<div class="p-2 col-3">
+									<label for="upload_img12">
+										<img src="../images/img-upload.svg" alt="..." class="img-thumbnail d-none" id="img12">
+									</label>
+									<input type="file" name="upload_img12" id="upload_img12" class="d-none">
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-row col-12 col-md-6">
+						<div class="form-group col-6">
+							Cantidad
+							<input type="number" class="form-control" name="existencias" id="cantidad" required>
+						</div>
+						<div class="form-group col-6">
+							Precio
+							<input type="number" class="form-control" name="precio" id="precio"required>
+						</div>
+						<div class="form-group col-12">
+							Describe tu producto
+							<textarea class="form-control" name="descripcion" id="descripcion" rows="5" required></textarea>
+						</div>
+						<div class="form-group col-12">
+							<label for="">Etiquetas</label>
+							<small>(Agrega palabras separadas por coma, que describan tu producto para que lo encuentren facilmente)</small>
+							<textarea class="form-control" name="etiquetas" id="etiquetas" rows="2" required></textarea>
+                        </div>
+                        <!--Despues de actualizar la información redireccionar a publicaciones.html-->
+						<div class="">
+							<button type="submit" class="btn btn-primary" id="form-sell-btn2">Actualizar</button>
+						</div>
+					</div>
+
+				</span>
+			</form>
+        </section>
+        
+    </div>
+
+        <footer class="account container-fluid d-flex flex-column position-absolute">
+			<div class="">
+				<ul class="list-inline d-flex justify-content-center">
+				  <li class="list-inline-item text-white col-md-1 d-none d-md-block"><small><img src="../images/ubimark_grey.svg" alt=""></small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Trabaja con nosotros</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Politicas de uso</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Terminos y condiciones</small></li>
+				  <li class="list-inline-item text-white col-3 col-md-2"><small>Preguntas frecuentes</small></li>
+				</ul>
+			</div>
+			<div class=" d-flex justify-content-center">
+				<small class="text-white">Copyright © 2017-2018 Ubimark</small>
+			</div>
+		</footer>
+   
+    <script src="../js/popper.min.js" type="application/javascript"></script>
+    <script src="../js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+</body>
+
+</html>
