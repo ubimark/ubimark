@@ -10,7 +10,7 @@ function add2cart(id, cantidad) {
         href("paginas/login.html");
     }
     $.ajax({
-        url: dir + "php/agregarCarrito.php",
+        url: dir + "php/carrito.php",
         type: "post",
         dataType: "json",
         data: {

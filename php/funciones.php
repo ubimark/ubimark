@@ -1,5 +1,9 @@
 <?php
     include_once("conectar.php");
+    include('log4php/Logger.php');
+   
+    
+
     function check_session(){
         $link = getDBConnection();
         if(!isset($_COOKIE['Id']) || !isset($_COOKIE['token'])){
@@ -108,7 +112,7 @@
         }else{
             return response(300,sqlError($sql,$types,$values));
         }
-        return response(200,array("ID" => $new_id, "QUERY" => array("SQL"=>$sql, "datos" => $a_params)));
+        return response(200,array("ID" => $new_id));
     }
 
     /**
@@ -157,6 +161,33 @@
         }
         return response(200);
     }
+    
+    /**
+     * Función que genera la instancia del Logger
+     * 
+     * @param string LoggerName
+     * @return object
+     */
+    function getLogger($class){
+        Logger::configure('config.xml');
+        return Logger::getLogger($class);;
+    }
+
+    function getMethod(){
+        return $_SERVER['REQUEST_METHOD'];
+    }
+
+    function getRequest($req,$fileContents){
+        $JSON = json_decode($fileContents, true);
+        if(isset($JSON) && $JSON != null){
+            $req = $JSON;
+        }
+        return $req;
+    }
+
+    function methodError($acceptedMethods, $method){
+        return array("Accepted" => $acceptedMethods, "Request_method" => $method);
+    }
 
     /**
      * Función para comprobar si un valor no es nulo.
@@ -172,17 +203,21 @@
     }
 
     function paramsRequired($params,$required){
+        global $log;
         foreach($required as $null => $arr){
             foreach ($arr as $key ) {
                 if(!isset($params[$key])){
+                    $log -> error("Missing param in request ". $key);
                     return response(306,$key);
                 }
                 $temp = $params[$key];
                 if(!notNull($temp) && strcmp($null,"NotNull") == 0){
+                    $log -> error("Null data in param ".$key);
                     return response(302,$key);
                 }
             }
         }
+        $log->info("Well done");
         return response(200);
 
     }
@@ -217,7 +252,8 @@
             "304" => "No hay existencias suficientes para procesar la compra",
             "305" => "No se encontraron datos",
             "306" => "Faltan campos en la peticion",
-            "400" => "Petición al socket no valida"
+            "400" => "Petición al socket no valida",
+            "500" => "Metodo de petición invalido",
         );
         $arr = array(
             "status_code" => $code,

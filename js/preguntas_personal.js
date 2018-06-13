@@ -96,7 +96,7 @@ function preguntas_todas(producto) {
 
         if (pregunta.estado == 'completado') {
             $("#preguntas_todas_" + producto.Id_producto).prepend(
-                '<div class="rounded bg-light mb-3 d-flex flex-column">' +
+                '<div class="rounded bg-light mb-3 p-2 d-flex flex-column">' +
                 '<strong>' +
                 pregunta.cliente +
                 '<small class="mr-3 float-right">Historial</small>' +
@@ -105,7 +105,7 @@ function preguntas_todas(producto) {
                 '<span id="respuestas_todas_'+pregunta.Id_pregunta+'"></span></p>'+
                 '<div class="">' +
                 '<textarea name="" id="txtarea_todas_'+pregunta.Id_pregunta+'" class="form-control" rows="1"></textarea>' +
-                '<button type="button" class="btn btn-info pull-right send_respuesta_todas" pregunta="'+pregunta.Id_pregunta+'" cliente="'+pregunta.Id_cliente+'" vendedor="'+producto.Id_usuario+'">Responder</button>'   +
+                '<button type="button" class="btn btn-info mt-1 pull-right send_respuesta_todas" pregunta="'+pregunta.Id_pregunta+'" cliente="'+pregunta.Id_cliente+'" vendedor="'+producto.Id_usuario+'">Responder</button>'   +
                 '</div>' +
                 '</div>'
             );
@@ -118,7 +118,7 @@ function preguntas_todas(producto) {
             }
         }else{
             $("#preguntas_todas_" + producto.Id_producto).prepend(
-                '<div class="rounded bg-light mb-3 d-flex flex-column">' +
+                '<div class="rounded bg-light mb-3 p-2 d-flex flex-column">' +
                 '<strong>' +
                 pregunta.cliente +
                 '<small class="mr-3 float-right">Historial</small>' +
@@ -126,7 +126,7 @@ function preguntas_todas(producto) {
                 '<p>' + pregunta.pregunta + '</p>' +
                 '<div class="">' +
                 '<textarea name="" id="txtarea_todas_'+pregunta.Id_pregunta+'" class="form-control" rows="1"></textarea>' +
-                '<button type="button" class="btn btn-info pull-right send_respuesta_todas" pregunta="'+pregunta.Id_pregunta+'" cliente="'+pregunta.Id_cliente+'" vendedor="'+producto.Id_usuario+'">Responder</button>' +
+                '<button type="button" class="btn btn-info mt-1 pull-right send_respuesta_todas" pregunta="'+pregunta.Id_pregunta+'" cliente="'+pregunta.Id_cliente+'" vendedor="'+producto.Id_usuario+'">Responder</button>' +
                 '</div>' +
                 '</div>'
             );
@@ -162,7 +162,7 @@ function preguntas_completadas(producto) {
     for (let pregunta of producto.preguntas) {
         if (pregunta.estado == 'completado') {
             $("#preguntas_comp_" + producto.Id_producto).prepend(
-                '<div class="rounded bg-light mb-3 d-flex flex-column">' +
+                '<div class="rounded bg-light mb-3 p-2 d-flex flex-column">' +
                 '<strong>' +
                 pregunta.cliente +
                 '<small class="mr-3 float-right">Historial</small>' +
@@ -171,7 +171,7 @@ function preguntas_completadas(producto) {
                 '<span id="respuestas_'+pregunta.Id_pregunta+'"></span></p>'+
                 '<div class="">' +
                 '<textarea name="" id="txtarea_comp_'+pregunta.Id_pregunta+'" class="form-control" rows="1"></textarea>' +
-                '<button type="button" class="btn btn-info pull-right send_respuesta_comp" pregunta="'+pregunta.Id_pregunta+'" cliente="'+pregunta.Id_cliente+'" vendedor="'+producto.Id_usuario+'">Responder</button>' +
+                '<button type="button" class="btn btn-info mt-1 pull-right send_respuesta_comp" pregunta="'+pregunta.Id_pregunta+'" cliente="'+pregunta.Id_cliente+'" vendedor="'+producto.Id_usuario+'">Responder</button>' +
                 '</div>' +
                 '</div>'
             );
@@ -213,7 +213,7 @@ function preguntas_pendientes(producto) {
     for (let pregunta of producto.preguntas) {
         if (pregunta.estado == 'pendiente') {
             $("#preguntas_pend_" + producto.Id_producto).prepend(
-                '<div class="rounded bg-light mb-3 d-flex flex-column">' +
+                '<div class="rounded bg-light mb-3 p-2 d-flex flex-column">' +
                 '<strong>' +
                 pregunta.cliente +
                 '<small class="mr-3 float-right">Historial</small>' +
@@ -221,7 +221,7 @@ function preguntas_pendientes(producto) {
                 '<p>' + pregunta.pregunta + '</p>' +
                 '<div class="">' +
                 '<textarea name="" id="txtarea_pend_'+pregunta.Id_pregunta+'" class="form-control" rows="1"></textarea>' +
-                '<button type="button" class="btn btn-info pull-right send_respuesta_pend" pregunta="'+pregunta.Id_pregunta+'" cliente="'+pregunta.Id_cliente+'" vendedor="'+producto.Id_usuario+'">Responder</button>' +
+                '<button type="button" class="btn btn-info mt-1 pull-right send_respuesta_pend" pregunta="'+pregunta.Id_pregunta+'" cliente="'+pregunta.Id_cliente+'" vendedor="'+producto.Id_usuario+'">Responder</button>' +
                 '</div>' +
                 '</div>'
             );
