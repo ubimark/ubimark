@@ -1,7 +1,7 @@
 function cargarPublicaciones() {
     $.ajax({
-        url: dir + "php/getProductos.php",
-        type: "post",
+        url: dir + "php/publicacionesPersonal.php",
+        type: "get",
         dataType: "json"
     }).done(function (result) {
         switch (result.status_code) {
