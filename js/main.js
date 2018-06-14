@@ -1,3 +1,5 @@
+
+
 var dir; //Directorio a seguir
 var lat, lon, estado; //Latitud y Longitud , estado
 var sess = 2; //Guarda la sesion 0:inactiva 1:activa 2:sin comprobar
@@ -97,6 +99,11 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose = false, clo
     }
 }
 
+function api(target){
+    const API_URL = location.protocol+"//localhost/ubimark_api/";
+    return API_URL + target;
+}
+
 /**
  * Función que carga el carrito de compras en el dropdown del menu (max 5 items) y en la pagina de mostrar-carrito
  * 
@@ -105,8 +112,8 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose = false, clo
 function cargarCarritoDrop() {
 
     $.ajax({
-        url: dir + "php/obtenerCarrito.php",
-        type: "post",
+        url: api("carrito.php"),
+        type: "get",
         dataType: "json"
     }).done(function (result) {
 
@@ -178,7 +185,7 @@ function cargarNotificacionEmpresa(title, data, estado) {
 function cargarNotificaciones() {
     unread_noti = [];
     $.ajax({
-        url: dir + "php/cargar_notificaciones.php",
+        url: api("cargar_notificaciones.php"),
         type: "post"
     }).done(function (res) {
         switch (res.status_code) {
@@ -258,7 +265,7 @@ function cargarNotificaciones() {
 function check_session() {
 
     $.ajax({
-        url: dir + "php/check-session.php",
+        url:api("check-session.php"),
         dataType: 'json',
         type: 'post',
         async: false,
@@ -285,7 +292,7 @@ function check_session() {
 
 function emit_ws(datos) {
     $.ajax({
-        url: dir + "/socket/socket_command.php",
+        url: socket("socket_command.php"),
         type: "post",
         dataType: "json",
         data: datos
@@ -414,7 +421,7 @@ function href(url) {
  */
 function logout() {
     $.ajax({
-        url: dir + "php/logout.php",
+        url: api("logout.php"),
         dataType: "json",
         type: "post",
         data: {}
@@ -429,7 +436,7 @@ function logout() {
 
 function read_notifications() {
     $.ajax({
-        url: dir + "php/cambiar_estado_notificacion.php",
+        url: api("cambiar_estado_notificacion.php"),
         type: "post",
         dataType: "json",
         data: {
@@ -460,7 +467,7 @@ function read_notifications() {
 function reg_buscar(token, coords, estado) {
     if (token.trim() != "") {
         $.ajax({
-            url: dir + "php/reg_busqueda.php",
+            url: api("reg_busqueda.php"),
             dataType: "Json",
             type: "post",
             data: {
@@ -483,7 +490,7 @@ function reg_buscar(token, coords, estado) {
 
 function send_notificacion(tipo, remitente, origen, destino, fecha, tipo_destino) {
     $.ajax({
-        url: dir + "php/send_notificacion.php",
+        url: api("send_notificacion.php"),
         dataType: "json",
         type: "post",
         data: {
@@ -517,7 +524,7 @@ function session_data() {
             $("#btn-cuenta").removeClass("d-none"); //Muestra el boton dropdown del usuario en dispositivos moviles
             $("#btn-cuenta").addClass("d-md-none"); //Oculta el boton dropdown del usuario en pantallas md
             $.ajax({
-                url: dir + "php/datos_usuario.php",
+                url: api("datos_usuario.php"),
                 type: "post",
                 dataType: "json",
                 data: {
@@ -566,7 +573,7 @@ function session_required(path = window.location.pathname, redirect = false) {
     }
 
     $.ajax({
-        url: dir + "php/session_required.php",
+        url: api("session_required.php"),
         dataType: "json",
         type: "post",
         async: false,
@@ -616,9 +623,14 @@ function show_noti(id, titulo, message, color) {
     }, 4000);
 }
 
+function socket(file){
+    const SOCKET_URL = location.protocol+"//localhost/ubimark_socket/"
+    return SOCKET_URL + file;
+}
+
 function solicitar_noti(notificacion, empresa = false) {
     $.ajax({
-        url: dir + "php/cargar_notificacion.php",
+        url: api("cargar_notificacion.php"),
         type: "post",
         dataType: "json",
         data: {
@@ -787,7 +799,7 @@ $(document).ready(function (e) {
         $.ajax({
             type: "post",
             dataType: "json",
-            url: dir + "php/update_info_personal.php",
+            url: api("update_info_personal.php"),
             data: data_form
 
         }).done(function (result) {
@@ -807,7 +819,7 @@ $(document).ready(function (e) {
         $.ajax({
             type: "post",
             dataType: "json",
-            url: dir + "php/update_info_contacto.php",
+            url: api("update_info_contacto.php"),
             data: data_form
 
         }).done(function (result) {

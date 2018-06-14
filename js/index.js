@@ -5,7 +5,7 @@
  */
 function cargarProductosDestacados() {
     $.ajax({
-        url: dir + "php/getProductosDestacados.php",
+        url:api("getProductosDestacados.php"),
         dataType: "json",
         type: "post",
         data: {

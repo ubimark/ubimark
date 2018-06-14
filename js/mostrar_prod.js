@@ -10,7 +10,7 @@ function add2cart(id, cantidad) {
         href("paginas/login.html");
     }
     $.ajax({
-        url: dir + "php/carrito.php",
+        url:api("carrito.php"),
         type: "post",
         dataType: "json",
         data: {
@@ -39,7 +39,7 @@ function add2cart(id, cantidad) {
 function cargarPreguntas() {
     $("#seccion_preguntas").html("");
     $.ajax({
-        url: dir + "php/cargar_preguntas.php",
+        url:api("cargar_preguntas.php"),
         dataType: "json",
         type: "post",
         data: {
@@ -84,7 +84,7 @@ function cargarPreguntas() {
  */
 function comprarProducto(Id) {
     $.ajax({
-        url: dir + "php/comprarProducto.php",
+        url:api("comprarProducto.php"),
         dataType: "json",
         type: "post",
         data: {
@@ -154,7 +154,7 @@ function getCoords(location) {
 
 function send_pregunta(producto) {
     $.ajax({
-        url: dir + "php/enviar_pregunta.php",
+        url:api("enviar_pregunta.php"),
         dataType: "json",
         type: "post",
         data: {
