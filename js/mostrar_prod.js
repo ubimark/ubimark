@@ -39,12 +39,9 @@ function add2cart(id, cantidad) {
 function cargarPreguntas() {
     $("#seccion_preguntas").html("");
     $.ajax({
-        url:api("cargar_preguntas.php"),
+        url:api("preguntas.php?Id_producto="+getParameterByName('key')),
         dataType: "json",
-        type: "post",
-        data: {
-            "Id_producto": getParameterByName('key')
-        }
+        type: "get"
     }).done(function (result) {
         switch (result.status_code) {
             case 200:
@@ -154,7 +151,7 @@ function getCoords(location) {
 
 function send_pregunta(producto) {
     $.ajax({
-        url:api("enviar_pregunta.php"),
+        url:api("preguntas.php"),
         dataType: "json",
         type: "post",
         data: {

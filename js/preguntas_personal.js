@@ -13,8 +13,8 @@ function cargarPreguntas() {
     $("#productos_pend").html("");
     $("#preguntas_pend").html("");
     $.ajax({
-        url: api("getPreguntasPersonal.php"),
-        type: "post"
+        url: api("preguntas.php?tipo=PERSONAL"),
+        type: "get"
     }).done(function (res) {
         switch (res.status_code) {
             case 200:

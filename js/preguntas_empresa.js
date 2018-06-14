@@ -13,7 +13,7 @@ function cargarPreguntas() {
     $("#productos_pend").html("");
     $("#preguntas_pend").html("");
     $.ajax({
-        url:api("preguntasEmpresa.php"),
+        url:api("preguntas.php?tipo=EMPRESA"),
         type: "get"
     }).done(function (res) {
         switch (res.status_code) {
