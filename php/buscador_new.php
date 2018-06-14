@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?PHP
-    include("localhost/ubimark_api/busqueda.php");  
+    include("busqueda.php");  
     $enlace = getDBConnection();
     $token = $_GET['search'];
     $results = buscar($token);
