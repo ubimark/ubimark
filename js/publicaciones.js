@@ -1,6 +1,6 @@
 function cargarPublicaciones() {
     $.ajax({
-        url: dir + "php/publicacionesPersonal.php",
+        url:api("publicacionesPersonal.php"),
         type: "get",
         dataType: "json"
     }).done(function (result) {

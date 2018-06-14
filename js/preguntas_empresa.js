@@ -13,7 +13,7 @@ function cargarPreguntas() {
     $("#productos_pend").html("");
     $("#preguntas_pend").html("");
     $.ajax({
-        url: dir + "php/preguntasEmpresa.php",
+        url:api("preguntas.php?tipo=EMPRESA"),
         type: "get"
     }).done(function (res) {
         switch (res.status_code) {
@@ -50,7 +50,7 @@ function send_respuesta(seccion, pregunta, cliente, vendedor) {
     let respuesta = $("#txtarea_" + seccion + "_" + pregunta).val();
 
     $.ajax({
-        url: dir + "php/send_respuesta.php",
+        url:api("send_respuesta.php"),
         type: "post",
         dataType: "json",
         data: {

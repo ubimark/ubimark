@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?PHP
-    include_once("conectar.php");
-    include("busqueda.php");
+    include("busqueda.php");  
+    $enlace = getDBConnection();
     $token = $_GET['search'];
     $results = buscar($token);
 ?>

@@ -2,7 +2,7 @@ var empresa  = "";
 
 function cargarProductos_empresa() {
     $.ajax({
-        url: dir + "php/getProductosEmpresa.php",
+        url:api("getProductosEmpresa.php"),
         type: "post",
         dataType: "json",
         data: {

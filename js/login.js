@@ -8,7 +8,7 @@
 
 function login() {
     $.ajax({
-        url: "../php/login.php",
+        url: api("login.php"),
         dataType: "json",
         type: "post",
         data: {

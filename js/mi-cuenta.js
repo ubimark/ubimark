@@ -16,7 +16,7 @@ function actualizarEmpresa(){
         $("#coords_emp_act").val(coords);
         var form_data = $("#form_act_empresa").serialize();
         $.ajax({
-            url : dir+"php/updateEmpresa.php",
+            url :api("updateEmpresa.php"),
             type : "post",
             dataType : "json",
             data : form_data
@@ -37,7 +37,7 @@ function actualizarEmpresa(){
  */
 function cargarDatos() {
     $.ajax({
-        url: dir + "php/datos_usuario.php",
+        url:api("datos_usuario.php"),
         type: "post",
         dataType: "json"
     }).done(function (result) {
@@ -61,7 +61,7 @@ function cargarDatos() {
         }
     });
     $.ajax({
-        url: dir + "php/datos_empresa.php",
+        url:api("datos_empresa.php"),
         type: "post",
         dataType: "json"
     }).done(function (result) {
@@ -122,7 +122,7 @@ function registra_empresa() {
         data_form = new FormData($("#form_reg_empresa")[0]);
         //data_form = $("#form_reg_empresa").serialize();
         $.ajax({
-            url: dir + "php/reg_empresa.php",
+            url:api("reg_empresa.php"),
             dataType: "json",
             type: "post",
             data: data_form,

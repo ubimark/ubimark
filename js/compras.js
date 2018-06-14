@@ -5,7 +5,7 @@
  */
 function cargarCompras() {
     $.ajax({
-        url: dir + "php/getCompras.php",
+        url:api("getCompras.php"),
         type: "post",
         dataType: "json"
     }).done(function (result) {

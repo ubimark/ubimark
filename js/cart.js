@@ -9,7 +9,7 @@ function actualizarCarrito(folio, cantidad) {
     var total = parseFloat($("#cart-total").html());
     total -= parseFloat($("#t_" + folio).html());
     $.ajax({
-        url: dir + "php/carrito.php",
+        url:api("carrito.php"),
         type: "put",
         dataType: "json",
         data: {
@@ -69,7 +69,7 @@ function borrarCarrito(folio) {
     var total = parseFloat($("#cart-total").html());
     total -= parseFloat($("#t_" + folio).html());
     $.ajax({
-        url: dir + "php/quitar-carrito.php",
+        url:api("quitar-carrito.php"),
         type: "post",
         dataType: "json",
         data: {
@@ -92,7 +92,7 @@ function borrarCarrito(folio) {
  */
 function cargarCarrito() {
     $.ajax({
-        url: dir + "php/obtenerCarrito.php",
+        url:api("obtenerCarrito.php"),
         type: "post",
         dataType: "json"
     }).done(function (result) {
@@ -152,7 +152,7 @@ function cargarCarrito() {
 
 function comprarCarrito() {
     $.ajax({
-        url: dir + "php/comprar_carrito.php",
+        url:api("comprar_carrito.php"),
         dataType: "json",
         type: "post"
     }).done(function (result) {

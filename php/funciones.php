@@ -1,8 +1,6 @@
 <?php
     include_once("conectar.php");
-    include('log4php/Logger.php');
-   
-    
+    include('lib/log4php/Logger.php');
 
     function check_session(){
         $link = getDBConnection();
