@@ -120,7 +120,7 @@ function cargarPreguntas() {
 function cargarProducto() {
     key = getParameterByName('key');
     $.ajax({
-        url: api("producto.php?key=" + key),
+        url: api("producto.php?id_producto=" + key),
         type: "get",
         dataType: "JSON"
     }).done(function (res) {

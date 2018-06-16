@@ -1,6 +1,6 @@
 function cargarPublicaciones() {
     $.ajax({
-        url:api("publicacionesPersonal.php"),
+        url:api("producto.php?tipo=PERSONAL"),
         type: "get",
         dataType: "json"
     }).done(function (result) {
@@ -10,28 +10,27 @@ function cargarPublicaciones() {
                 for (var key in result.data) {
                     datos = result.data[key];
                     $("#publicaciones").append(
-                        '<div class="d-flex flex-nowrap mb-2">' +
-                        '<div class="card col-4 col-md-2">' +
-                        '<img class="card-img" src="' + dir + "intranet/usuarios/" + datos.imagen.Id_usuario + "/uploads/" + datos.imagen.path + '" alt="Foto del producto">' +
-                        '</div>' +
-                        '<div class="card col-11">' +
-                        '<div class="ml-4 d-flex justify-content-end">' +
-                        '<i class="fa fa-caret-down"></i>' +
-                        '</div>' +
-                        '<ul class="list-unstyled">' +
-                        '<li class="">' +
-                        '<h3>' +
-                        datos.nombre_producto +
-                        '</h3>' +
-                        '</li>' +
-                        '<li class="">' +
-                        '<h4>$ ' + datos.precio + '</h4>' +
-                        '</li>' +
-                        '<li class="">Existencias:' +
-                        datos.existencias +
-                        '</li>' +
-                        '</ul>' +
-                        '</div>' +
+                        '<div class="d-flex flex-nowrap mb-2 col-10">' +
+                            '<div class="card col-md-2">' +
+                                '<img class="card-img" src="' + dir + "intranet/usuarios/" + datos.imagen.Id_usuario + "/uploads/" + datos.imagen.path + '" alt="Foto del producto">' +
+                            '</div>' +
+                            '<div class="card col-10 justify-content-center">' +
+                                '<div class="dropdown">' +
+                                    '<i class="fa fa-angle-down float-right" id="dropdownPublicacion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>' +
+                                    '<div class="dropdown-menu" aria-labelledby="dropdownPublicacion">'+
+                                    '<a class="dropdown-item" href="modificar-publicacion.html">Modificar</a>'+
+                                    '<p class="dropdown-item">Eliminar</p>'+
+                                    '</div>'+
+                                '</div>' +
+                        
+                                '<h5>' +
+                                datos.nombre_producto +
+                                '</h5>' +
+                        
+                                '<strong>$ ' + datos.precio + '</strong>' +
+                                '<small>Existencias:' + datos.existencias +'</small>'+
+
+                            '</div>' +
                         '</div>'
                     );
                 }
