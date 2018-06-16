@@ -142,7 +142,7 @@ function cargarCarritoDrop() {
                 });
                 $(".Producto_link").click(function (e) {
                     e.preventDefault();
-                    href("php/mostrar-producto.php?key=" + this.id);
+                    href("paginas/mostrar-producto.html?key=" + this.id);
                 });
                 break;
         }
@@ -767,7 +767,7 @@ $(document).ready(function (e) {
     //Mostrar el producto de manera detallada 
     $(".Producto_link").click(function (e) {
         e.preventDefault();
-        href("php/mostrar-producto.php?key=" + this.id);
+        href("paginas/mostrar-producto.html?key=" + this.id);
     });
 
     $(window).resize(function () {
