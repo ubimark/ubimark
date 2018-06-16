@@ -110,7 +110,7 @@ function cargarCarrito() {
                     }
                     $("#carrito").append('<div class="d-flex flex-nowrap mb-3" id="cont_' + datos[key].folio_carrito + '">' +
                         '<div class="card col-4 col-md-2">' +
-                        '<img class="card-img" src="' + dir + "intranet/usuarios/" + datos[key].vendedor + "/uploads/" + datos[key].path + '" alt="Foto del producto">' +
+                        '<img class="card-img" src="' + api( "intranet/usuarios/" + datos[key].vendedor + "/uploads/" + datos[key].path) + '" alt="Foto del producto">' +
                         '</div>' +
                         '<div class="card container-fluid" id="fc_' + datos[key].folio_carrito + '">' +
                         '<div class="ml-4 d-flex justify-content-end close-carrito" folio="' + datos[key].folio_carrito + '">' +

@@ -1,7 +1,6 @@
 <?php
     include_once("conectar.php");
     include('lib/log4php/Logger.php');
-
     function check_session(){
         $link = getDBConnection();
         if(!isset($_COOKIE['Id']) || !isset($_COOKIE['token'])){

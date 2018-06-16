@@ -42,7 +42,7 @@ function cargarImagenes(images){
     images.forEach(image => {
         $("#carousel_body").append(
             '<div class = "carousel-item carousel-item-prod ' + (i == 1 ? "active" : "") + '" data-slide-number = ' + i + ' >' +
-            '<img src = "../intranet/usuarios/' + image.uploadedBy + '/uploads/' + image.path + '" class = "img-fluid img-resize" >' +
+            '<img src = "'+api('intranet/usuarios/' + image.uploadedBy + '/uploads/' + image.path )+ '" class = "img-fluid img-resize" >' +
             '</div>');
         $("#carousel_ind").append('<li class= "' + (i == 0 ? "active" : "") + '" data-slide-to="' + i + '" data-target="#myCarousel"></li>')
         i++;

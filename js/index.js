@@ -44,7 +44,7 @@ function cargarProductosDestacados() {
 
                         $("#PD_contenido").append(
                             '<div class="card mr-2">' +
-                            '<img class="card-img-top" width="100px" src="' + dir + "intranet/usuarios/" + datos.author + "/uploads/" + datos.path + '" alt="Card image cap">' +
+                            '<img class="card-img-top" width="100px" src="' + api( "intranet/usuarios/" + datos.author + "/uploads/" + datos.path )+ '" alt="Card image cap">' +
                             '<div class="card-body">' +
                             '<a class="Producto_link" id="' + datos.Id_producto + '">' +
                             '<h6 class="card-title">' + nombre_producto + '</h6>' +
