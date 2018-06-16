@@ -180,29 +180,7 @@
                         </div>
                         <span class="" id="publicaciones">
                             <div class="col-9 pull-right container" id="compras">
-                                <div class="d-flex flex-nowrap mb-2 col-10"> 
-                                    <div class="card col-md-2"> 
-                                        <img class="card-img" src="../intranet/usuarios/2/uploads/7121331318222635280.jpg" alt="Foto del producto">
-                                    </div>
-                                    <div class="card col-10 d-flex flex-row align-items-center">
-                                        <div class="col-6">
-                                                <h5 class="">Nombre producto</h5>
-                                                <strong>Precio</strong>
-                                                <br>
-                                                <small>Cantidad</small>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="p-2 bg-light rounded">
-                                                    <p class="m-0"> <i class="text-primary fa fa-user-circle"></i> Luis Sanchez.</p>
-                                                    <small class="m-0 text-muted"> <i class="fa fa-phone "></i> Numero de telefono</small>
-                                                    <p class="m-0"> <i class="fa fa-times-circle text-danger"></i> No enviado</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-2">
-                                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-info">Información</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                             
                             <div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="modal-info" aria-hidden="true">
@@ -217,22 +195,22 @@
                                         <div class="modal-body row">
                                             <div class="col-6 border-right">
                                                 <div class="card border-0">
-                                                    <img class="card-img col-5" src="../intranet/usuarios/2/uploads/7121331318222635280.jpg" alt="Img Producto">
+                                                    <img class="card-img col-5" id="modal_img" src="../intranet/usuarios/2/uploads/7121331318222635280.jpg" alt="Img Producto">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">Nombre producto</h5>
-                                                        <p class="card-text m-0">Cantidad</p>
-                                                        <strong class="card-text" id="precio-producto">$Precio</strong>
+                                                        <h5 class="card-title" id="nombre-prod">Nombre producto</h5>
+                                                        <p class="card-text m-0" id="cant-prod">Cantidad</p>
+                                                        <strong class="card-text" id="precio-prod">Precio</strong>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <h5>Vendedor</h5>
-                                                <p>Nombre: Luis Ignacio</p>
-                                                <p>Domicilio: Vicente Guerrero</p>
-                                                <p>Número: 224</p>
-                                                <p>Colonia El Santuario</p>
-                                                <p>Código Postal: 45950</p>
-                                                <p>Ciudad: Poncital</p>
+                                                <p>Nombre: <span id="vend_nombre"></span></p>
+                                                <p>Domicilio: <span id="vend_calle"></span></p>
+                                                <p>Número: <span id="vend_num"></span></p>
+                                                <p>Colonia <span id="vend_col"></span></p>
+                                                <p>Código Postal: <span id="vend_cp"></span></p>
+                                                <p>Ciudad: <span id="vend_ciudad"></span></p>
                                             </div>
                                             <div class="col-6 border-right mt-5">
                                                 <h5>Mensajes</h5>
@@ -246,7 +224,7 @@
                
                                             <div class="col-6 mt-5 ">
                                                 <h5>Información de envío:</h5>
-                                                <p>No entregado</p>
+                                                <p id="modal_estatus">No entregado</p>
                                                 <p>Paquetería: DHL</p>
                                                 <p>Número de guía: 123456789</p>
                                             </div>

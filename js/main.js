@@ -127,11 +127,18 @@ function cargarCarritoDrop() {
 
                     if (cont++ < 5) {
                         $("#carrito-dropdown").append(
+                            '<div class="d-flex border-bottom notificacion">' +
+                            '<div class="card col-3 p-0 border-0 bg-transparent">' +
+                            '<img class="card-img p-2" src="' + dir + 'intranet/usuarios/' + datos[key].vendedor + '/uploads/' + datos[key].path + '" alt="Foto del producto">' +
+                            '</div>' +
+                            '<div class="card col-9 border-0 bg-transparent">' +
                             '<span class="dropdown-item Producto_link" id="' + datos[key].Id_producto + '">' +
+                            
                             '<strong>' + datos[key].nombre_producto + '</strong>' +
                             '<p>x' + datos[key].cantidad + ' $' + (datos[key].precio * datos[key].cantidad) + '</p>' +
-                            '</span>'
-                        );
+                            '</span>'+
+                            '</div>' +
+                            '</div>');
                     }
                 }
                 $("#carrito-dropdown").append('<div class="dropdown-divider"></div>' +
