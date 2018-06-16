@@ -76,7 +76,7 @@ function preguntas_todas(producto) {
     $("#productos_todas").append(
         '<div class="d-flex border-bottom pb-2 mt-2" id="prod_' + producto.Id_producto + '">' +
         '<div class="card col-md-4 border-0 d-none d-md-block">' +
-        '<img class="card-img" src="' + dir + 'intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path + '" alt="Foto del producto">' +
+        '<img class="card-img" src="' + api('intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-12 col-md-7 border-0">' +
         '<strong>' + producto.nombre_producto + '</strong>' +
@@ -139,7 +139,7 @@ function preguntas_completadas(producto) {
     $("#productos_comp").append(
         '<div class="d-flex border-bottom pb-2 mt-2" id="prod_comp_' + producto.Id_producto + '">' +
         '<div class="card col-md-4 border-0 d-none d-md-block">' +
-        '<img class="card-img" src="' + dir + 'intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path + '" alt="Foto del producto">' +
+        '<img class="card-img" src="' + api('intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-12 col-md-7 border-0">' +
         '<strong>' + producto.nombre_producto + '</strong>' +
@@ -186,7 +186,7 @@ function preguntas_pendientes(producto) {
     $("#productos_pend").append(
         '<div class="d-flex border-bottom pb-2 mt-2" id="prod_pend_' + producto.Id_producto + '">' +
         '<div class="card col-md-4 border-0 d-none d-md-block">' +
-        '<img class="card-img" src="' + dir + 'intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path + '" alt="Foto del producto">' +
+        '<img class="card-img" src="' + api('intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-12 col-md-7 border-0">' +
         '<strong>' + producto.nombre_producto + '</strong>' +

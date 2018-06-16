@@ -32,7 +32,7 @@ function cargarCompras() {
                     $("#compras").append(
                         '<div class="d-flex flex-nowrap mb-2 col-10">' +
                             '<div class="card col-md-2">' +
-                            '<img class="card-img" src="' + dir + "intranet/usuarios/" + datos.imagen.Id_usuario + "/uploads/" + datos.imagen.path + '" alt="Foto del producto">' +
+                            '<img class="card-img" src="' + api( "intranet/usuarios/" + datos.imagen.Id_usuario + "/uploads/" + datos.imagen.path) + '" alt="Foto del producto">' +
                             '</div>' +
                             '<div class="card col-10 d-flex flex-row align-items-center">' +
                                 '<div class="col-6">' +
@@ -62,7 +62,7 @@ function cargarCompras() {
                 $(".modal_info_compra").click(function(e){
                     e.preventDefault();
                     data = window.saved_data[$(this).attr("prod")];
-                    $("#modal_img").prop("src",dir+"intranet/usuarios/"+data.imagen.Id_usuario+"/uploads/"+data.imagen.path);
+                    $("#modal_img").prop("src",api("intranet/usuarios/"+data.imagen.Id_usuario+"/uploads/"+data.imagen.path));
                     $("#nombre-prod").html(data.nombre_producto);
                     $("#cant-prod").html("x "+data.cantidad);
                     $("#precio-prod").html("$ "+parseFloat(data.total).toFixed(2)); 
