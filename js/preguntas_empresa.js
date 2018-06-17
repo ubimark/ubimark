@@ -13,7 +13,7 @@ function cargarPreguntas() {
     $("#productos_pend").html("");
     $("#preguntas_pend").html("");
     $.ajax({
-        url: dir + "php/preguntasEmpresa.php",
+        url:api("preguntas.php?tipo=EMPRESA"),
         type: "get"
     }).done(function (res) {
         switch (res.status_code) {
@@ -50,7 +50,7 @@ function send_respuesta(seccion, pregunta, cliente, vendedor) {
     let respuesta = $("#txtarea_" + seccion + "_" + pregunta).val();
 
     $.ajax({
-        url: dir + "php/send_respuesta.php",
+        url:api("send_respuesta.php"),
         type: "post",
         dataType: "json",
         data: {
@@ -62,7 +62,7 @@ function send_respuesta(seccion, pregunta, cliente, vendedor) {
         switch (res.status_code) {
             case 200:
                 datos = res.data;
-                send_notificacion("RESPUESTA", vendedor, datos.ID, cliente, datos.fecha, "EMPRESA");
+                send_notificacion("RESPUESTA", vendedor, datos.ID, cliente, datos.fecha, "PERSONAL");
                 cargarPreguntas();
 
                 break;
@@ -75,7 +75,7 @@ function preguntas_todas(producto) {
     $("#productos_todas").append(
         '<div class="d-flex border-bottom pb-2 mt-2" id="prod_' + producto.Id_producto + '">' +
         '<div class="card col-md-4 border-0 d-none d-md-block">' +
-        '<img class="card-img" src="' + dir + 'intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path + '" alt="Foto del producto">' +
+        '<img class="card-img" src="' + api('intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-12 col-md-7 border-0">' +
         '<strong>' + producto.nombre_producto + '</strong>' +
@@ -102,10 +102,6 @@ function preguntas_todas(producto) {
                 '</strong>' +
                 '<p>' + pregunta.pregunta + '<br>' +
                 '<span id="respuestas_todas_' + pregunta.Id_pregunta + '"></span></p>' +
-                '<div class="">' +
-                '<textarea name="" id="txtarea_todas_' + pregunta.Id_pregunta + '" class="form-control" rows="1"></textarea>' +
-                '<button type="button" class="btn btn-info mt-1 pull-right send_respuesta_todas" pregunta="' + pregunta.Id_pregunta + '" cliente="' + pregunta.Id_cliente + '" vendedor="' + producto.Id_empresa + '">Responder</button>' +
-                '</div>' +
                 '</div>'
             );
 
@@ -142,7 +138,7 @@ function preguntas_completadas(producto) {
     $("#productos_comp").append(
         '<div class="d-flex border-bottom pb-2 mt-2" id="prod_comp_' + producto.Id_producto + '">' +
         '<div class="card col-md-4 border-0 d-none d-md-block">' +
-        '<img class="card-img" src="' + dir + 'intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path + '" alt="Foto del producto">' +
+        '<img class="card-img" src="' + api('intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-12 col-md-7 border-0">' +
         '<strong>' + producto.nombre_producto + '</strong>' +
@@ -168,10 +164,6 @@ function preguntas_completadas(producto) {
                 '</strong>' +
                 '<p>' + pregunta.pregunta + '<br>' +
                 '<span id="respuestas_' + pregunta.Id_pregunta + '"></span></p>' +
-                '<div class="">' +
-                '<textarea name="" id="txtarea_comp_' + pregunta.Id_pregunta + '" class="form-control" rows="1"></textarea>' +
-                '<button type="button" class="btn btn-info mt-1 pull-right send_respuesta_comp" pregunta="' + pregunta.Id_pregunta + '" cliente="' + pregunta.Id_cliente + '" vendedor="' + producto.Id_empresa + '">Responder</button>' +
-                '</div>' +
                 '</div>'
             );
 
@@ -193,7 +185,7 @@ function preguntas_pendientes(producto) {
     $("#productos_pend").append(
         '<div class="d-flex border-bottom pb-2 mt-2" id="prod_pend_' + producto.Id_producto + '">' +
         '<div class="card col-md-4 border-0 d-none d-md-block">' +
-        '<img class="card-img" src="' + dir + 'intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path + '" alt="Foto del producto">' +
+        '<img class="card-img" src="' + api('intranet/usuarios/' + producto.usr_path + '/uploads/' + producto.path) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-12 col-md-7 border-0">' +
         '<strong>' + producto.nombre_producto + '</strong>' +

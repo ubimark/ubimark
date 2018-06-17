@@ -1,3 +1,5 @@
+
+
 var dir; //Directorio a seguir
 var lat, lon, estado; //Latitud y Longitud , estado
 var sess = 2; //Guarda la sesion 0:inactiva 1:activa 2:sin comprobar
@@ -97,6 +99,11 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose = false, clo
     }
 }
 
+function api(target){
+    const API_URL = location.protocol+"//localhost/ubimark_api/";
+    return API_URL + target;
+}
+
 /**
  * Función que carga el carrito de compras en el dropdown del menu (max 5 items) y en la pagina de mostrar-carrito
  * 
@@ -105,8 +112,8 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose = false, clo
 function cargarCarritoDrop() {
 
     $.ajax({
-        url: dir + "php/obtenerCarrito.php",
-        type: "post",
+        url: api("carrito.php"),
+        type: "get",
         dataType: "json"
     }).done(function (result) {
 
@@ -120,11 +127,18 @@ function cargarCarritoDrop() {
 
                     if (cont++ < 5) {
                         $("#carrito-dropdown").append(
+                            '<div class="d-flex border-bottom notificacion">' +
+                            '<div class="card col-3 p-0 border-0 bg-transparent">' +
+                            '<img class="card-img p-2" src="' + api( 'intranet/usuarios/' + datos[key].vendedor + '/uploads/' + datos[key].path) + '" alt="Foto del producto">' +
+                            '</div>' +
+                            '<div class="card col-9 border-0 bg-transparent">' +
                             '<span class="dropdown-item Producto_link" id="' + datos[key].Id_producto + '">' +
+                            
                             '<strong>' + datos[key].nombre_producto + '</strong>' +
                             '<p>x' + datos[key].cantidad + ' $' + (datos[key].precio * datos[key].cantidad) + '</p>' +
-                            '</span>'
-                        );
+                            '</span>'+
+                            '</div>' +
+                            '</div>');
                     }
                 }
                 $("#carrito-dropdown").append('<div class="dropdown-divider"></div>' +
@@ -135,7 +149,7 @@ function cargarCarritoDrop() {
                 });
                 $(".Producto_link").click(function (e) {
                     e.preventDefault();
-                    href("php/mostrar-producto.php?key=" + this.id);
+                    href("paginas/mostrar-producto.html?key=" + this.id);
                 });
                 break;
         }
@@ -149,7 +163,7 @@ function cargarNotificacion(title, data, estado) {
     }
     $("#personal_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
         '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
-        '<img class="card-img p-2" src="' + dir + 'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
+        '<img class="card-img p-2" src="' + api( 'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
         '<p><span class="d-block">' + title + ':</span> ' +
@@ -165,7 +179,7 @@ function cargarNotificacionEmpresa(title, data, estado) {
     }
     $("#company_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
         '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
-        '<img class="card-img p-2" src="' + dir + 'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img + '" alt="Foto del producto">' +
+        '<img class="card-img p-2" src="' + api( 'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
         '<p><span class="d-block">' + title + ':</span> ' +
@@ -178,7 +192,7 @@ function cargarNotificacionEmpresa(title, data, estado) {
 function cargarNotificaciones() {
     unread_noti = [];
     $.ajax({
-        url: dir + "php/cargar_notificaciones.php",
+        url: api("cargar_notificaciones.php"),
         type: "post"
     }).done(function (res) {
         switch (res.status_code) {
@@ -258,7 +272,7 @@ function cargarNotificaciones() {
 function check_session() {
 
     $.ajax({
-        url: dir + "php/check-session.php",
+        url:api("check-session.php"),
         dataType: 'json',
         type: 'post',
         async: false,
@@ -285,7 +299,7 @@ function check_session() {
 
 function emit_ws(datos) {
     $.ajax({
-        url: dir + "/socket/socket_command.php",
+        url: socket_api("socket_command.php"),
         type: "post",
         dataType: "json",
         data: datos
@@ -414,7 +428,7 @@ function href(url) {
  */
 function logout() {
     $.ajax({
-        url: dir + "php/logout.php",
+        url: api("logout.php"),
         dataType: "json",
         type: "post",
         data: {}
@@ -429,7 +443,7 @@ function logout() {
 
 function read_notifications() {
     $.ajax({
-        url: dir + "php/cambiar_estado_notificacion.php",
+        url: api("cambiar_estado_notificacion.php"),
         type: "post",
         dataType: "json",
         data: {
@@ -460,7 +474,7 @@ function read_notifications() {
 function reg_buscar(token, coords, estado) {
     if (token.trim() != "") {
         $.ajax({
-            url: dir + "php/reg_busqueda.php",
+            url: api("reg_busqueda.php"),
             dataType: "Json",
             type: "post",
             data: {
@@ -472,18 +486,18 @@ function reg_buscar(token, coords, estado) {
             //Si se registró la busqueda redirige al usuario a una página con los resultados de la busqueda.
             switch (result.status_code) {
                 case 200:
-                    href("php/buscador_new.php?search=" + token);
+                    href("paginas/buscador.html?search=" + token);
                     break;
             }
         });
     } else {
-        href("php/buscador_new.php?search=");
+        href("paginas/buscador.html?search=");
     }
 }
 
 function send_notificacion(tipo, remitente, origen, destino, fecha, tipo_destino) {
     $.ajax({
-        url: dir + "php/send_notificacion.php",
+        url: api("send_notificacion.php"),
         dataType: "json",
         type: "post",
         data: {
@@ -517,7 +531,7 @@ function session_data() {
             $("#btn-cuenta").removeClass("d-none"); //Muestra el boton dropdown del usuario en dispositivos moviles
             $("#btn-cuenta").addClass("d-md-none"); //Oculta el boton dropdown del usuario en pantallas md
             $.ajax({
-                url: dir + "php/datos_usuario.php",
+                url: api("datos_usuario.php"),
                 type: "post",
                 dataType: "json",
                 data: {
@@ -566,7 +580,7 @@ function session_required(path = window.location.pathname, redirect = false) {
     }
 
     $.ajax({
-        url: dir + "php/session_required.php",
+        url: api("session_required.php"),
         dataType: "json",
         type: "post",
         async: false,
@@ -616,9 +630,14 @@ function show_noti(id, titulo, message, color) {
     }, 4000);
 }
 
+function socket_api(file){
+    const SOCKET_URL = location.protocol+"//localhost/ubimark_socket/"
+    return SOCKET_URL + file;
+}
+
 function solicitar_noti(notificacion, empresa = false) {
     $.ajax({
-        url: dir + "php/cargar_notificacion.php",
+        url: api("cargar_notificacion.php"),
         type: "post",
         dataType: "json",
         data: {
@@ -755,7 +774,7 @@ $(document).ready(function (e) {
     //Mostrar el producto de manera detallada 
     $(".Producto_link").click(function (e) {
         e.preventDefault();
-        href("php/mostrar-producto.php?key=" + this.id);
+        href("paginas/mostrar-producto.html?key=" + this.id);
     });
 
     $(window).resize(function () {
@@ -776,8 +795,6 @@ $(document).ready(function (e) {
         href("paginas/mi-cuenta.html");
     });
 
-
-
     //Funcion para actualizar informacion de usuario antes de poder comprar
     //Formulario de información personal
     //@version json_api : 2.0
@@ -787,18 +804,20 @@ $(document).ready(function (e) {
         $.ajax({
             type: "post",
             dataType: "json",
-            url: dir + "php/update_info_personal.php",
+            url: api("update_info_personal.php"),
             data: data_form
 
         }).done(function (result) {
             switch (result.status_code) {
                 case 200:
-                    check_progress_compra();
                     cargarDatos();
+                    check_progress_compra();
+                    
                     break;
             }
         });
     });
+
     //Formulario de información contacto 
     //@version json_api : 2.0
     $("#btn-info-contacto").click(function (e) {
@@ -807,7 +826,7 @@ $(document).ready(function (e) {
         $.ajax({
             type: "post",
             dataType: "json",
-            url: dir + "php/update_info_contacto.php",
+            url: api("update_info_contacto.php"),
             data: data_form
 
         }).done(function (result) {

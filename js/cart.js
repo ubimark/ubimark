@@ -9,7 +9,7 @@ function actualizarCarrito(folio, cantidad) {
     var total = parseFloat($("#cart-total").html());
     total -= parseFloat($("#t_" + folio).html());
     $.ajax({
-        url: dir + "php/carrito.php",
+        url:api("carrito.php"),
         type: "put",
         dataType: "json",
         data: {
@@ -69,7 +69,7 @@ function borrarCarrito(folio) {
     var total = parseFloat($("#cart-total").html());
     total -= parseFloat($("#t_" + folio).html());
     $.ajax({
-        url: dir + "php/quitar-carrito.php",
+        url:api("quitar-carrito.php"),
         type: "post",
         dataType: "json",
         data: {
@@ -92,7 +92,7 @@ function borrarCarrito(folio) {
  */
 function cargarCarrito() {
     $.ajax({
-        url: dir + "php/obtenerCarrito.php",
+        url:api("obtenerCarrito.php"),
         type: "post",
         dataType: "json"
     }).done(function (result) {
@@ -110,7 +110,7 @@ function cargarCarrito() {
                     }
                     $("#carrito").append('<div class="d-flex flex-nowrap mb-3" id="cont_' + datos[key].folio_carrito + '">' +
                         '<div class="card col-4 col-md-2">' +
-                        '<img class="card-img" src="' + dir + "intranet/usuarios/" + datos[key].vendedor + "/uploads/" + datos[key].path + '" alt="Foto del producto">' +
+                        '<img class="card-img" src="' + api( "intranet/usuarios/" + datos[key].vendedor + "/uploads/" + datos[key].path) + '" alt="Foto del producto">' +
                         '</div>' +
                         '<div class="card container-fluid" id="fc_' + datos[key].folio_carrito + '">' +
                         '<div class="ml-4 d-flex justify-content-end close-carrito" folio="' + datos[key].folio_carrito + '">' +
@@ -152,7 +152,7 @@ function cargarCarrito() {
 
 function comprarCarrito() {
     $.ajax({
-        url: dir + "php/comprar_carrito.php",
+        url:api("comprar_carrito.php"),
         dataType: "json",
         type: "post"
     }).done(function (result) {

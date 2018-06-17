@@ -2,11 +2,11 @@ var empresa  = "";
 
 function cargarProductos_empresa() {
     $.ajax({
-        url: dir + "php/getProductosEmpresa.php",
+        url:api("getProductosEmpresa.php"),
         type: "post",
         dataType: "json",
         data: {
-            "nombre_empresa": empresa
+            "nombre_empresa": getParameterByName("key")
         }
     }).done(function (res) {
         switch (res.status_code) {
@@ -15,7 +15,7 @@ function cargarProductos_empresa() {
                 for (let producto of res.data.productos) {
                     $("#productos_empresa_pag").append(
                     '<div class="card mr-2 col-12 col-md-3 col-lg-2 float-left mb-2">'+
-                        '<img class="card-img-top" src="../../../intranet/usuarios/'+producto.imagen.Id_usuario+'/uploads/'+producto.imagen.path+'" alt="Card image cap">'+
+                        '<img class="card-img-top" src="' + api('intranet/usuarios/'+producto.imagen.Id_usuario+'/uploads/'+producto.imagen.path)+'" alt="Card image cap">'+
                         '<div class="card-block">'+
                             '<a id = "prod'+producto.Id_producto+'">'+
                                 '<h4 class="card-title">'+producto.nombre_producto+'</h4>'+
@@ -49,8 +49,8 @@ function loadDatosEmpresa(empresa){
         }
     }
     $(".rating").append('<small> ('+empresa.calificacion+')</small>');
-    $(".img-cover").attr("src","uploads/"+empresa.portada);
-    $(".img-logo").attr("src","uploads/"+empresa.logo);
+    $(".img-cover").attr("src",api('intranet/empresas/'+empresa.nombre_empresa+'/uploads/'+empresa.portada));
+    $(".img-logo").attr("src",api('intranet/empresas/'+empresa.nombre_empresa+'/uploads/'+empresa.logo));
 
     $(".tel_empresa").html(empresa.telefono);
     $(".mail_empresa").html(empresa.email);
@@ -59,11 +59,7 @@ function loadDatosEmpresa(empresa){
 
 function setNombreEmpresa(){
     let i = 0;
-    empresa = window.location.pathname;
-    i = window.location.pathname.indexOf("empresas/");
-    empresa = empresa.substr(i+9)
-    i = empresa.indexOf("/index.html");
-    empresa = empresa.substring(0,i);
+    empresa = getParameterByName("key")
     empresa = empresa.replace("%20"," ");
     $(".nom_empresa").html(empresa);
 }

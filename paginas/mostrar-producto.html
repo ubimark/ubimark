@@ -1,13 +1,11 @@
-<!doctype html>
 <html>
 
 <head>
     <meta charset="UTF-8">
-    <title>Compras</title>
+    <title>Mostrar producto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="theme-color" content="#002F3F">
-    <link rel="shortcut icon" href="../images/shortcut-ubi.ico">
     <link rel="stylesheet" href="../lib/css/font-awesome.min.css">
     <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/estilos.min.css">
@@ -15,9 +13,10 @@
 
 </head>
 
-<body>
+<body class="background-grey">
     <script src="../lib/js/jquery-3.2.1.min.js" type="application/javascript"></script>
     <script src="../js/main.js" type="application/javascript"></script>
+    <script src="../js/mostrar_prod.js" type="application/javascript"></script>
     <script>
         get_Dir();
         check_session();
@@ -74,7 +73,7 @@
 
             <div class="collapse navbar-collapse col-md-3 justify-content-end text-center" id="menu">
                 <ul class="nav navbar-nav mr-0 my-0 d-flex flex-nowrap">
-                    <li class="nav-item">
+                    <li class="nav-item pt-1">
                         <div class="dropleft">
                             <em class="nav-link fa fa-shopping-cart" id="dropdownShopping-Cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></em>
                             <div class="dropdown-menu" aria-labelledby="dropdownShopping-Cart" id="carrito-dropdown">
@@ -159,88 +158,102 @@
 
         </nav>
     </header>
+    <div class="background-white container d-flex flex-column">
+        <div id="contenido">
+            <div id="alertas"></div>
+
+            <section class="m-0">
+                <div class="d-flex justify-content-center col-lg-8 offset-lg-2">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner" id="carousel_body">
 
 
-
-    <div id="contenido">
-        <div id="alertas"></div>
-        <section class="margen">
-                <section class="margen">
-                        <div class="col-2 pull-left d-none d-md-block">
-                            <div class="list-group">
-                                <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#ventas-collapse" role="button" aria-expanded="true" aria-controls="ventas-collapse">Compras</a>
-                                <div class="collapse show" id="ventas-collapse">
-                                    <div class="list-group list-group-flush">
-                                        <a href="#" class="list-group-item active">Cuenta personal</a>
-                                        <a href="compras-empresa.html" class="list-group-item">Cuenta empresa</a>
-                                    </div>
-                                </div>
-                                <a href="#" class="list-group-item">Preguntas</a>
-                            </div>
                         </div>
-                        <span class="" id="publicaciones">
-                            <div class="col-9 pull-right container" id="compras">
-                                
-                            </div>
-                            
-                            <div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="modal-info" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="etiqueta-info">Información de compra</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body row">
-                                            <div class="col-6 border-right">
-                                                <div class="card border-0">
-                                                    <img class="card-img col-5" id="modal_img" src="../intranet/usuarios/2/uploads/7121331318222635280.jpg" alt="Img Producto">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" id="nombre-prod">Nombre producto</h5>
-                                                        <p class="card-text m-0" id="cant-prod">Cantidad</p>
-                                                        <strong class="card-text" id="precio-prod">Precio</strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5>Vendedor</h5>
-                                                <p>Nombre: <span id="vend_nombre"></span></p>
-                                                <p>Domicilio: <span id="vend_calle"></span></p>
-                                                <p>Número: <span id="vend_num"></span></p>
-                                                <p>Colonia <span id="vend_col"></span></p>
-                                                <p>Código Postal: <span id="vend_cp"></span></p>
-                                                <p>Ciudad: <span id="vend_ciudad"></span></p>
-                                            </div>
-                                            <div class="col-6 border-right mt-5">
-                                                <h5>Mensajes</h5>
-                                                <div class="container box-message">
-                                                    <p class="bg-light p-2 rounded pull-left">Me los mandas en color blanco</p>
-                                                    <p class="bg-primary text-light p-2 rounded pull-right">Muy bien! hoy te mando el producto</p>
-                                                </div>
-                                                <textarea name="" id="input-mensaje" class="form-control" rows="1" placeholder="Escribe mensaje"></textarea>
-                                                <button class="btn btn-primary float-right mt-1">Enviar</button>
-                                            </div>
-               
-                                            <div class="col-6 mt-5 ">
-                                                <h5>Información de envío:</h5>
-                                                <p id="modal_estatus">No entregado</p>
-                                                <p>Paquetería: DHL</p>
-                                                <p>Número de guía: 123456789</p>
-                                            </div>
-            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- main slider carousel nav controls -->
+
+                        <ol class="carousel-indicators" id="carousel_ind">
+
+
+                        </ol>
+
+                    </div>
+                </div>
+            </section>
+            <div class="container pt-3">
+                <div class="mt-3 d-flex position-relative flex-md-row flex-column" id="info_vendedor">
+
+
+                    <div class="col-12 col-md-6 order-2">
+                        <input type="text" value="" id="lat" hidden>
+                        <input type="text" value="" id="lon" hidden>
+
+                        <h5>Información del vendedor</h5>
+                        <span id="info_empresa">
+                            <strong id="empresa"></strong>
+                            <p>
+                                <span id="addr1">
+                                </span>
+                                <span id="addrEmp" class="d-none">
+                                    <br>
+                                    <span id="addr2"></span>
+                                    <br>
+                                    <span id="addr3"></span>
+                                </span>
+                            </p>
+                            <p>Reputación:
+                                <span id="stars"></span>
+                                <small id="calificacion"></small>
+                            </p>
                         </span>
-                    </section>
-        </section>
+                    </div>
 
+                    <div class="col-12 col-md-6 order-1">
+                        <h4 id="nom-producto">
+
+                        </h4>
+                        <h6 id="precio"></h6>
+                        <div class="mt-4 mb-3 d-flex">
+                            <input type="number" value="1" id="cantidad" class="form-control col-4 col-md-2 col-lg-2 mr-3">
+                            <div class="d-flex" id="add2cart-cont">
+                                <button type="button" class="btn btn-info add2cart" id="">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                            <button type="button" class="btn btn-info ml-3" id="btn-comprar" folio="">Comprar</button>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mt-5">
+                    <div class="px-3 col-12">
+                        <h5>Descripción</h5>
+                        <p id="description">
+
+                        </p>
+                    </div>
+                    <div class="px-3 col-12 mt-5">
+                        <h5>Ubicación</h5>
+                        <div id="map"></div>
+                    </div>
+                    <div class="px-3 col-12 mt-5">
+                        <h5>Preguntas</h5>
+                        <div class="form-group clearfix">
+                            <textarea name="pregunta" id="pregunta" rows="1" class="col-12 form-control"></textarea>
+                            <button type="button" id="send_pregunta" producto="" class="btn btn-success float-right mt-1">Enviar</button>
+                        </div>
+                        <div id="seccion_preguntas">
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <footer class="account container-fluid d-flex flex-column position-absolute">
-        <div class="">
+    <footer class="account mt-5 container-fluid">
+        <div class="col-12">
             <ul class="list-inline d-flex justify-content-center">
                 <li class="list-inline-item text-white col-md-1 d-none d-md-block">
                     <small>
@@ -261,15 +274,14 @@
                 </li>
             </ul>
         </div>
-        <div class=" d-flex justify-content-center">
+        <div class="col-12 d-flex justify-content-center">
             <small class="text-white">Copyright © 2017-2018 Ubimark</small>
         </div>
     </footer>
+    <script async="true" defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
     <script src="../lib/js/popper.min.js" type="application/javascript"></script>
     <script src="../lib/js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="../js/compras.js" type="application/javascript"></script>
-    
 </body>
 
 </html>

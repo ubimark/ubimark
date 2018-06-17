@@ -11,7 +11,7 @@ var imgcont, images = Array(); //imgcont: define el contenedor de la imagen subi
 function subir_Producto() {
     form_data = new FormData($("#form2")[0]);
     $.ajax({
-        url: dir + "php/subir_producto.php",
+        url:api("subir_producto.php"),
         dataType: "JSON",
         type: "post",
         data: form_data,
@@ -31,7 +31,7 @@ function subir_Producto() {
 
 function verificar_empresa(){
     $.ajax({
-        url: dir + "php/datos_empresa.php",
+        url:api("datos_empresa.php"),
         type: "post",
         dataType: "json"
     }).done(function (result) {
