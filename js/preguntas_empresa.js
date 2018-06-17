@@ -62,7 +62,7 @@ function send_respuesta(seccion, pregunta, cliente, vendedor) {
         switch (res.status_code) {
             case 200:
                 datos = res.data;
-                send_notificacion("RESPUESTA", vendedor, datos.ID, cliente, datos.fecha, "EMPRESA");
+                send_notificacion("RESPUESTA", vendedor, datos.ID, cliente, datos.fecha, "PERSONAL");
                 cargarPreguntas();
 
                 break;

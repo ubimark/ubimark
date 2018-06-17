@@ -299,7 +299,7 @@ function check_session() {
 
 function emit_ws(datos) {
     $.ajax({
-        url: socket("socket_command.php"),
+        url: socket_api("socket_command.php"),
         type: "post",
         dataType: "json",
         data: datos
@@ -486,12 +486,12 @@ function reg_buscar(token, coords, estado) {
             //Si se registró la busqueda redirige al usuario a una página con los resultados de la busqueda.
             switch (result.status_code) {
                 case 200:
-                    href("php/buscador_new.php?search=" + token);
+                    href("paginas/buscador.html?search=" + token);
                     break;
             }
         });
     } else {
-        href("php/buscador_new.php?search=");
+        href("paginas/buscador.html?search=");
     }
 }
 
@@ -630,7 +630,7 @@ function show_noti(id, titulo, message, color) {
     }, 4000);
 }
 
-function socket(file){
+function socket_api(file){
     const SOCKET_URL = location.protocol+"//localhost/ubimark_socket/"
     return SOCKET_URL + file;
 }
@@ -795,8 +795,6 @@ $(document).ready(function (e) {
         href("paginas/mi-cuenta.html");
     });
 
-
-
     //Funcion para actualizar informacion de usuario antes de poder comprar
     //Formulario de información personal
     //@version json_api : 2.0
@@ -812,12 +810,14 @@ $(document).ready(function (e) {
         }).done(function (result) {
             switch (result.status_code) {
                 case 200:
-                    check_progress_compra();
                     cargarDatos();
+                    check_progress_compra();
+                    
                     break;
             }
         });
     });
+
     //Formulario de información contacto 
     //@version json_api : 2.0
     $("#btn-info-contacto").click(function (e) {
