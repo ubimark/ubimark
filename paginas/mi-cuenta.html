@@ -115,7 +115,7 @@
 							<a class="nav-link mc-ventas text-white">Ventas</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link mc-stats text-white">Estadisticas</a>
+							<a class="nav-link mc-stats text-white" data-toggle="tooltip" data-placement="bottom" title="Esta función estará disponible próximamente">Estadisticas</a>
 						</li>
 						<li class="nav-item">
 							<div class="mc-alerts nav-link dropdown">
@@ -152,7 +152,7 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link mc-mail">
-								<i class="fa fa-envelope-o text-white" aria-hidden="true"></i>
+								<i class="fa fa-envelope-o text-white" data-toggle="tooltip" data-placement="bottom" title="Esta función estará disponible próximamente"aria-hidden="true"></i>
 							</a>
 						</li>
 					</ul>
@@ -168,11 +168,11 @@
 			<div class="col-2 pull-left d-none d-md-block">
 				<div class="list-group">
 					<a href="#" class="list-group-item list-group-item-action" id="mc-mis-datos">Mis Datos</a>
-					<a href="#" class="list-group-item list-group-item-action">Seguridad</a>
+					<a href="#" class="list-group-item list-group-item-action" id="mc-seguridad">Seguridad</a>
 					<a href="" class="list-group-item list-group-item-action d-none" id="mc-menu-empresa">Empresas</a>
 				</div>
 			</div>
-			<div class="pull-left col-10 d-flex flex-column" id="cont-mis-datos">
+			<div class="pull-left col-10 d-flex flex-column d-none" id="cont-mis-datos">
 				<span id="registra_empresa">¿Tienes una empresa o negocio?
 					<a href="" class="" id="reg_empresa" data-toggle="modal" data-target="#ModalEmpresa"> Registralo!</a>
 				</span>
@@ -222,6 +222,20 @@
 				</div>
 
 			</div>
+
+			<!--Contenido de seguridad-->
+			<div class="d-none" id="cont-seguridad">
+				<div class="form-group d-flex flex-column">
+					<label for="inp-pass">Contraseña actual</label>
+					<input type="text" name="inp-pass" id="inp-pass" class="form-control col-12 col-md-4">
+					<label for="inp-pass-new">Contraseña nueva</label>
+					<input type="text" name="inp-pass" id="inp-pass-new" class="form-control col-12 col-md-4">
+					<label for="inp-pass-conf">Confirmar contraseña</label>
+					<input type="text" name="inp-pass-conf" id="inp-pass-conf" class="form-control col-12 col-md-4">
+				</div>
+			</div>
+
+
 			<div class="pull-left d-none" id="cont-empresa">
 				<div>
 					<strong>Datos empresa o negocio</strong>
@@ -490,7 +504,7 @@
 		</section>
 	</div>
 
-	<!-- Modal Formulario Empresas modificarr-->
+	<!-- Modal Formulario Empresas modificar-->
 	<div class="modal fade" id="act-datos-empresa" tabindex="-1" role="dialog" aria-labelledby="Modal-Empresas" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -586,17 +600,17 @@
 						<img src="../images/ubimark_grey.svg" alt="">
 					</small>
 				</li>
-				<li class="list-inline-item text-white col-3 col-md-2">
-					<small>Trabaja con nosotros</small>
+				<li class="list-inline-item text-white col-3 col-md-2" >
+					<small data-toggle="tooltip" data-placement="bottom" title="Esta función estará disponible próximamente">Trabaja con nosotros</small>
 				</li>
 				<li class="list-inline-item text-white col-3 col-md-2">
-					<small>Politicas de uso</small>
+					<small data-toggle="tooltip" data-placement="bottom" title="Esta función estará disponible próximamente">Políticas de uso</small>
 				</li>
 				<li class="list-inline-item text-white col-3 col-md-2">
-					<small>Terminos y condiciones</small>
+					<small data-toggle="tooltip" data-placement="bottom" title="Esta función estará disponible próximamente">Términos y condiciones</small>
 				</li>
 				<li class="list-inline-item text-white col-3 col-md-2">
-					<small>Preguntas frecuentes</small>
+					<small data-toggle="tooltip" data-placement="bottom" title="Esta función estará disponible próximamente">Preguntas frecuentes</small>
 				</li>
 			</ul>
 		</div>
