@@ -8,6 +8,15 @@ var socket;
 var unread_noti;
 var empresa = 0;
 
+
+
+/**
+ * Funcion que inicializa el tooltip
+ */
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
 /**
  * Función que acomoda el contenido para no tener conflictos con el menu fixed
  * 
@@ -26,15 +35,15 @@ function acomodarContenido($reintento = false) {
     $("#contenido").css("min-height", "70vh");
     switch (sess) {
         case 0:
-            $("#contenido").css("margin-top", "4.1rem");
+            $("#contenido").css("margin-top", "5.1rem");
             break;
         case 1:
             if (width < 576) {
-                $("#contenido").css("margin-top", "3.5rem");
+                $("#contenido").css("margin-top", "4.5rem");
             } else if (width < 767) {
-                $("#contenido").css("margin-top", "3.9rem");
+                $("#contenido").css("margin-top", "4.9rem");
             } else {
-                $("#contenido").css("margin-top", "6.6rem");
+                $("#contenido").css("margin-top", "7.6rem");
             }
 
             break;

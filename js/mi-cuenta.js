@@ -154,16 +154,25 @@ $(document).ready(function (e) {
         e.preventDefault();
         $("#cont-empresa").removeClass("d-none");
         $("#cont-mis-datos").addClass("d-none");
+        $("#cont-seguridad").addClass("d-none");
         $("#cont-mis-datos").removeClass("d-flex");
 
     });
     $("#mc-mis-datos").click(function (e) {
         e.preventDefault();
         $("#cont-empresa").addClass("d-none");
+        $("#cont-seguridad").addClass("d-none");
         $("#cont-mis-datos").removeClass("d-none");
         $("#cont-mis-datos").addClass("d-flex");
 
     });
 
+    $("#mc-seguridad").click(function (e) {
+        e.preventDefault();
+        $("#cont-seguridad").removeClass("d-none");
+        $("#cont-mis-datos").addClass("d-none");
+        $("#cont-empresa").addClass("d-none");
+        $("#cont-mis-datos").removeClass("d-flex");
+    });
 
 });
