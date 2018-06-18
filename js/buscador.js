@@ -37,9 +37,13 @@ function buscar(val){
                     '</ul>'+
                     '</div>'+
                     '</section>');
+                   
             
                 }
-               
+                $(".Producto_link").click(function (e) {
+                    e.preventDefault();
+                    href("paginas/mostrar-producto.html?key=" + this.id);
+                });
                 break;
         }
     });
