@@ -1,7 +1,6 @@
-
-
 var dir; //Directorio a seguir
-var lat, lon, estado; //Latitud y Longitud , estado
+var lat = 0, lon = 0, estado, pais, ciudad; //Latitud y Longitud , estado
+var localizacionDB;
 var sess = 2; //Guarda la sesion 0:inactiva 1:activa 2:sin comprobar
 var user = 0;
 var socket;
@@ -16,7 +15,7 @@ var empresa = 0;
  */
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
-  })
+})
 
 /**
  * Función que acomoda el contenido para no tener conflictos con el menu fixed
@@ -110,8 +109,8 @@ function addAlert(id, message, color, bgcolor, ico, ico2, autoclose = false, clo
     }
 }
 
-function api(target){
-    const API_URL = location.protocol+"//localhost/ubimark_api/";
+function api(target) {
+    const API_URL = location.protocol + "//localhost/ubimark_api/";
     return API_URL + target;
 }
 
@@ -140,14 +139,14 @@ function cargarCarritoDrop() {
                         $("#carrito-dropdown").append(
                             '<div class="d-flex border-bottom notificacion">' +
                             '<div class="card col-3 p-0 border-0 bg-transparent">' +
-                            '<img class="card-img p-2" src="' + api( 'intranet/usuarios/' + datos[key].vendedor + '/uploads/' + datos[key].path) + '" alt="Foto del producto">' +
+                            '<img class="card-img p-2" src="' + api('intranet/usuarios/' + datos[key].vendedor + '/uploads/' + datos[key].path) + '" alt="Foto del producto">' +
                             '</div>' +
                             '<div class="card col-9 border-0 bg-transparent">' +
                             '<span class="dropdown-item Producto_link" id="' + datos[key].Id_producto + '">' +
-                            
+
                             '<strong>' + datos[key].nombre_producto + '</strong>' +
                             '<p>x' + datos[key].cantidad + ' $' + (datos[key].precio * datos[key].cantidad) + '</p>' +
-                            '</span>'+
+                            '</span>' +
                             '</div>' +
                             '</div>');
                     }
@@ -174,7 +173,7 @@ function cargarNotificacion(title, data, estado) {
     }
     $("#personal_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
         '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
-        '<img class="card-img p-2" src="' + api( 'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img) + '" alt="Foto del producto">' +
+        '<img class="card-img p-2" src="' + api('intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
         '<p><span class="d-block">' + title + ':</span> ' +
@@ -190,7 +189,7 @@ function cargarNotificacionEmpresa(title, data, estado) {
     }
     $("#company_noti").prepend('<div class="d-flex border-bottom notificacion ' + estado + '">' +
         '<div class="card col-4 col-md-2 p-0 border-0 bg-transparent">' +
-        '<img class="card-img p-2" src="' + api( 'intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img) + '" alt="Foto del producto">' +
+        '<img class="card-img p-2" src="' + api('intranet/usuarios/' + data.autor_img + '/uploads/' + data.ruta_img) + '" alt="Foto del producto">' +
         '</div>' +
         '<div class="card col-8 col-md-10 border-0 bg-transparent">' +
         '<p><span class="d-block">' + title + ':</span> ' +
@@ -205,7 +204,7 @@ function cargarNotificaciones() {
     $.ajax({
         url: api("notificacion.php"),
         type: "get",
-        dataType:"json"
+        dataType: "json"
     }).done(function (res) {
         switch (res.status_code) {
             case 200:
@@ -284,17 +283,17 @@ function cargarNotificaciones() {
 function check_session() {
 
     $.ajax({
-        url:api("check-session.php"),
+        url: api("check-session.php"),
         dataType: 'json',
         type: 'post',
         async: false,
         data: {}
     }).done(function (result) {
-        
+
         //Si se encuentra la sesión activa.
         switch (result.status_code) {
             case 100:
-            
+
                 sess = 0; //Cambia la sessión a inactiva
                 break;
             case 101:
@@ -303,7 +302,7 @@ function check_session() {
                 empresa = result.data.empresa;
                 break;
         }
-        
+
     });
 
     return sess;
@@ -353,25 +352,38 @@ function getGeolocation() {
     //Obtiene la localización actual mediante el navegador
     navigator.geolocation.getCurrentPosition(
         function (geoloc) {
-            let lat = geoloc.coords.latitude; //Obtiene la latitud.
-            let lon = geoloc.coords.longitude; //Obtiene la longitud.
-            //Si se encontro la latitud y longitud se utilza el geocodificador de google para obtener la entidad federativa del usuario
+            if (lat != geoloc.coords.latitude && lon != geoloc.coords.longitude) {
+                lat = parseFloat(geoloc.coords.latitude.toFixed(6)); //Obtiene la latitud.
+                lon = parseFloat(geoloc.coords.longitude.toFixed(6)); //Obtiene la longitud.
+                //Si se encontro la latitud y longitud se utilza el geocodificador de google para obtener la entidad federativa del usuario
+                $.ajax({
+                    url : api("localizacion.php?latitud="+lat+"&longitud="+lon),
+                    type : "get" 
+                }).done(function(res){
+                    switch(res.status_code){
+                        case 200:
+                            if(res.data == null || res.data == undefined){
+                                getGoogleLocation();
+                                break;
+                            }
+                            if(res.data.estado != null || res.data.estado != undefined){
+                                console.log(res.data);
+                                window.localizacionDB = res.data.Id_localizacion;
+                                ciudad = res.data.ciudad;
+                                estado = res.data.estado;
+                                pais = res.data.pais;
+                                console.log(window.localizacionDB);
 
-            $.ajax({
-                url: "https://maps.googleapis.com/maps/api/geocode/json",
-                dataType: "json",
-                type: "GET",
-                async: false,
-                data: {
-                    latlng: lat + "," + lon,
-                    key: "AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0",
-                    language: "es"
-                }
-            }).done(function (data) {
-
-                estado = data.results[0].address_components[5].long_name; //Guarda la entidad federativa del usuario
-                
-            });
+                            }else{
+                                getGoogleLocation();
+                            }
+                            break;
+                        default:
+                            getGoogleLocation();
+                    }
+                });
+               
+            }
 
         },
         //Se ejecuta en caso de que ocurra un error al obtener las coordenadas.
@@ -409,6 +421,42 @@ function getGeolocation() {
     if (window.location.pathname.indexOf("index.html") != -1 || window.location.pathname == '/') {
         cargarProductosDestacados();
     }
+}
+
+function getGoogleLocation(){
+    $.ajax({
+        url: "https://maps.googleapis.com/maps/api/geocode/json",
+        dataType: "json",
+        type: "GET",
+        async: false,
+        data: {
+            latlng: lat + "," + lon,
+            key: "AIzaSyCWY7xqWIram5PPPWVbXyN_I22rC02OQY0",
+            language: "es"
+        }
+    }).done(function (data) {
+        ciudad = data.results[0].address_components[4].long_name;
+        estado = data.results[0].address_components[5].long_name; //Guarda la entidad federativa del usuario
+        pais = data.results[0].address_components[6].long_name;
+        $.ajax({
+            url : api("localizacion.php"),
+            type : "post",
+            dataType : "json",
+            data : {
+                latitud : lat,
+                longitud : lon,
+                ciudad : ciudad,
+                estado : estado,
+                pais : pais
+            }
+        }).done(function(res){
+            switch(res.status_code){
+                case 200:
+                    window.localizacionDB = res.data.ID;
+                    break;
+            }
+        });
+    });
 }
 
 /**
@@ -487,7 +535,7 @@ function reg_buscar(token, coords, estado) {
     if (token.trim() != "") {
         $.ajax({
             url: api("reg_busqueda.php"),
-            dataType: "Json",
+            dataType: "json",
             type: "post",
             data: {
                 busqueda: token,
@@ -642,14 +690,14 @@ function show_noti(id, titulo, message, color) {
     }, 4000);
 }
 
-function socket_api(file){
-    const SOCKET_URL = location.protocol+"//localhost/ubimark_socket/"
+function socket_api(file) {
+    const SOCKET_URL = location.protocol + "//localhost/ubimark_socket/"
     return SOCKET_URL + file;
 }
 
 function solicitar_noti(notificacion, empresa = false) {
     $.ajax({
-        url: api("notificacion.php?notificacion="+notificacion),
+        url: api("notificacion.php?notificacion=" + notificacion),
         type: "get",
         dataType: "json"
     }).done(function (res) {
@@ -821,7 +869,7 @@ $(document).ready(function (e) {
                 case 200:
                     cargarDatos();
                     check_progress_compra();
-                    
+
                     break;
             }
         });
@@ -852,9 +900,10 @@ $(document).ready(function (e) {
         $("#noti_cont").addClass("d-none");
         $("#noti_cont").html("0");
         var noti_estado = setInterval(noti_close, 5000);
-        function noti_close(){
+
+        function noti_close() {
             if ($("#drpdwn_noti").hasClass("show") == false) {
-                if(unread_noti.length > 0){
+                if (unread_noti.length > 0) {
                     read_notifications();
                 }
                 clearInterval(noti_estado);
@@ -862,7 +911,7 @@ $(document).ready(function (e) {
         }
     });
 
-   
+
     $("#dropdownNoti").change()
 
     $("#company_tab").click(function (e) {
@@ -897,5 +946,5 @@ $(document).ready(function (e) {
         $("#personal_tab").addClass("active");
     });
 
-    
+
 });

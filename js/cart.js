@@ -69,8 +69,8 @@ function borrarCarrito(folio) {
     var total = parseFloat($("#cart-total").html());
     total -= parseFloat($("#t_" + folio).html());
     $.ajax({
-        url:api("quitar-carrito.php"),
-        type: "post",
+        url:api("carrito.php"),
+        type: "delete",
         dataType: "json",
         data: {
             folio_carrito: folio
@@ -92,8 +92,8 @@ function borrarCarrito(folio) {
  */
 function cargarCarrito() {
     $.ajax({
-        url:api("obtenerCarrito.php"),
-        type: "post",
+        url:api("carrito.php"),
+        type: "get",
         dataType: "json"
     }).done(function (result) {
         switch (result.status_code) {
@@ -151,21 +151,8 @@ function cargarCarrito() {
 }
 
 function comprarCarrito() {
-    $.ajax({
-        url:api("comprar_carrito.php"),
-        dataType: "json",
-        type: "post"
-    }).done(function (result) {
-        switch (result.status_code) {
-            case 200:
-                addAlert("comprado", "Compra realizada correctamente", "alert-success", "", "fa-check", "", true);
-                break;
-            case 304:
-                addAlert("existencias", "No hay existencias suficientes para procesar la compra de " + result.data.nombre_producto, "alert-warning", "", "fa-warning", "", true);
-                break;
-        }
-        cargarCarrito();
-    });
+    href("paginas/form-compra-carrito.html");
+    
 }
 
 $(document).ready(function(e){

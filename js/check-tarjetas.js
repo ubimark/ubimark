@@ -11,6 +11,10 @@ function formTarjetasCompleto(){
 				$("#pago-envio").addClass("d-none d-md-block");
 				$("#info-compra").removeClass("d-none d-md-block")
 			}
+			$("#boton-confirmar").click(function (e) {
+				e.preventDefault();
+				comprarCarro();
+			});
 		}else{
 			addAlert("existe_boton", "Presiona el botón confirmar para realizar tu compra", "alert-success","","fa fa-check-circle","",true);
 		}

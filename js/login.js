@@ -7,13 +7,16 @@
  */
 
 function login() {
+    
+
     $.ajax({
         url: api("login.php"),
         dataType: "json",
         type: "post",
         data: {
             email: $("#inputEmail").val(),
-            password: $("#inputPassword").val()
+            password: $("#inputPassword").val(),
+            Id_localizacion: localizacionDB
         }
 
     }).done(function (result) {
@@ -35,10 +38,11 @@ function login() {
 }
 
 $(document).ready(function (e) {
-
+    getGeolocation();
     //Petición a php para iniciar sesión
     $("form").submit(function (e) {
         e.preventDefault();
+        
         login();
     });
 
