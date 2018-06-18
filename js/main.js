@@ -53,6 +53,7 @@ function acomodarContenido($reintento = false) {
             acomodarContenido(true);
             break;
     }
+    $("#contenido").css("padding-bottom", "3rem");
 }
 
 /**
