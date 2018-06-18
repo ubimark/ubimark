@@ -10,7 +10,7 @@ function check_progress_compra() {
         $.ajax({
             type: "post",
             dataType: "json",
-            url: dir + "php/check-progress-compra.php"
+            url: api("check-progress-compra.php")
         }).done(function (result) {
             switch (result.status_code) {
                 case 200:

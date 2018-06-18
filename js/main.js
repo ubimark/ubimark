@@ -6,6 +6,7 @@ var sess = 2; //Guarda la sesion 0:inactiva 1:activa 2:sin comprobar
 var user = 0;
 var socket;
 var unread_noti;
+
 var empresa = 0;
 
 
@@ -201,8 +202,9 @@ function cargarNotificacionEmpresa(title, data, estado) {
 function cargarNotificaciones() {
     unread_noti = [];
     $.ajax({
-        url: api("cargar_notificaciones.php"),
-        type: "post"
+        url: api("notificacion.php"),
+        type: "get",
+        dataType:"json"
     }).done(function (res) {
         switch (res.status_code) {
             case 200:
@@ -437,10 +439,9 @@ function href(url) {
  */
 function logout() {
     $.ajax({
-        url: api("logout.php"),
+        url: api("sesion.php"),
         dataType: "json",
-        type: "post",
-        data: {}
+        type: "delete"
     }).done(function (result) {
         switch (result.status_code) {
             case 200:
@@ -452,8 +453,8 @@ function logout() {
 
 function read_notifications() {
     $.ajax({
-        url: api("cambiar_estado_notificacion.php"),
-        type: "post",
+        url: api("notificacion.php"),
+        type: "put",
         dataType: "json",
         data: {
             estado: "LEIDO",
@@ -462,6 +463,7 @@ function read_notifications() {
     }).done(function (res) {
         switch (res.status_code) {
             case 200:
+                unread_noti = new array();
                 $(".unread").addClass("read");
                 $(".read").removeClass("unread")
                 break;
@@ -506,7 +508,7 @@ function reg_buscar(token, coords, estado) {
 
 function send_notificacion(tipo, remitente, origen, destino, fecha, tipo_destino) {
     $.ajax({
-        url: api("send_notificacion.php"),
+        url: api("notificacion.php"),
         dataType: "json",
         type: "post",
         data: {
@@ -646,12 +648,9 @@ function socket_api(file){
 
 function solicitar_noti(notificacion, empresa = false) {
     $.ajax({
-        url: api("cargar_notificacion.php"),
-        type: "post",
-        dataType: "json",
-        data: {
-            notificacion: notificacion
-        }
+        url: api("notificacion.php?notificacion="+notificacion),
+        type: "get",
+        dataType: "json"
     }).done(function (res) {
         switch (res.status_code) {
             case 200:
@@ -851,11 +850,19 @@ $(document).ready(function (e) {
     $("#dropdownNoti").click(function (e) {
         $("#noti_cont").addClass("d-none");
         $("#noti_cont").html("0");
-        if ($("#drpdwn_noti").hasClass("show") && unread_noti.length > 0) {
-            read_notifications();
+        var noti_estado = setInterval(noti_close, 5000);
+        function noti_close(){
+            if ($("#drpdwn_noti").hasClass("show") == false) {
+                if(unread_noti.length > 0){
+                    read_notifications();
+                }
+                clearInterval(noti_estado);
+            }
         }
-
     });
+
+   
+    $("#dropdownNoti").change()
 
     $("#company_tab").click(function (e) {
         e.preventDefault();
