@@ -232,30 +232,19 @@
                 <button type="button" class="btn btn-outline-info d-md-none d-block" id="boton-regresar" onclick="regresar()">
                     <i class="fa fa-angle-left"></i>Regresar</button>
                 <h6 class="mb-3 mt-4">Información de compra</h6>
-                <p class="mb-0">Costos de envio:
-                    <strong>$0.00</strong>
+                
+                <p class="mb-0">
+                    Subtotal:  <strong id="subtotal" class="pull-right"></strong><br>
+                    Costos de envio:
+                    <strong class="pull-right">$ 500.00</strong>
                 </p>
-                <strong>Total : $0.00</strong>
+                <strong class="pull-right">Total : $ <span id="total_compra"></span></strong>
                 <br>
                 <div id="confirmar-pago"></div>
                 <p class="mb-0 mt-3">Productos:</p>
                 <div class="pay-product">
-                    <div class="" id="publicaciones">
-                        <div class="d-flex flex-nowrap mb-2">
-                            <div class="card col-2 col-md-3">
-                                <img class="card-img" src="../intranet/usuarios/2/uploads/7121331318222635280.jpg" alt="Foto del producto">
-                            </div>
-                            <div class="card col-9">
-                                <ul class="list-unstyled">
-                                    <li class="">
-                                        <h6>Nombre producto</h6>
-                                    </li>
-                                    <li class="">
-                                        <strong>Precio</strong>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="" id="productos_carrito">
+                        
                     </div>
                 </div>
             </div>
@@ -374,6 +363,7 @@
     <script src="../lib/js/popper.min.js" type="application/javascript"></script>
     <script src="../lib/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="../js/check-tarjetas.js" type="application/javascript"></script>
+    <script src="../js/compra_carrito.js" type="application/javascript"></script>
     
 </body>
 

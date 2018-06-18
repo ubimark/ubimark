@@ -115,7 +115,7 @@ function registrar() {
     var pass = $("#inputPass").val();
     if (validate()) {
         $.ajax({
-                url: '../php/sign-up.php',
+                url: api('sign-up.php'),
                 dataType: 'JSON',
                 type: 'post',
                 data: {
